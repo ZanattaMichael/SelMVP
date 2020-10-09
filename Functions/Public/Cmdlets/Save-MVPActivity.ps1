@@ -1,14 +1,4 @@
 function Save-MVPActivity {
-    [CmdletBinding()]
-    param (
-        [Parameter(Mandatory)]
-        [ValidateScript({
-            ($_ -is [OpenQA.Selenium.Firefox.FirefoxDriver]) -or
-            ($_ -is [OpenQA.Selenium.Chrome.ChromeDriver])
-        })]
-        [Object]
-        $Driver
-    )
     
     # Test if the Driver is active. If not throw a terminating error.
     Test-SEDriver
@@ -16,7 +6,7 @@ function Save-MVPActivity {
     #
     # Save the Activity
 
-    $SaveButton = Find-SeElement -Driver $Driver -Id "submitActivityButton"
+    $SaveButton = Find-SeElement -Driver (Get-SEDriver) -Id "submitActivityButton"
     Invoke-SeClick -Element $SaveButton
    
     # Snooze. The more entries you add, it's better to sleep for a little longer.

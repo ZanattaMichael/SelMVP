@@ -5,13 +5,6 @@ function Select-ContributionArea {
         DefaultParameterSetName = 'Standard'
     )]
     param (
-        [Parameter(Mandatory)]
-        [ValidateScript({
-            ($_ -is [OpenQA.Selenium.Firefox.FirefoxDriver]) -or
-            ($_ -is [OpenQA.Selenium.Chrome.ChromeDriver])
-        })]
-        [Object]
-        $Driver,
         [parameter(Mandatory)]
         [ValidateSet("PowerShell","Other")]
         [String]
@@ -30,7 +23,7 @@ function Select-ContributionArea {
         'Other' { $value = 'ff6464de-179a-e411-bbc8-6c3be5a82b68' }
     }
     
-    $ActivityType = Find-SeElement -Driver $Driver -Id 'select_contributionAreasDDL'
+    $ActivityType = Find-SeElement -Driver (Get-SEDriver) -Id 'select_contributionAreasDDL'
     $SelectElement = [OpenQA.Selenium.Support.UI.SelectElement]::new($ActivityType)
     $SelectElement.SelectByValue($value)
     

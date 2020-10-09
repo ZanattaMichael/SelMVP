@@ -13,7 +13,7 @@ Function Update-Element {
     Test-SEDriver
     
     # Fetches the Element and Updates the Field
-    $Element = Find-SeElement -Driver $Driver -Id $ElementId
+    $Element = Find-SeElement -Driver (Get-SEDriver) -Id $ElementId
     if ($null -eq $Element) { return }
     Send-SeKeys -Element $Element -Keys $Value
 }

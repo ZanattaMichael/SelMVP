@@ -14,7 +14,7 @@ Test-Path -LiteralPath $ModuleDirectory &&
 $ModuleObj = New-Item $ModuleDirectory -ItemType Directory -Force
 
 # Create PowerShell Module File
-$PSMFile = New-Item ([System.IO.Path]::Join($ModuleObj,'SubmitMVP.psm1')) -ItemType File  
+$PSMFile = New-Item ([System.IO.Path]::Join($ModuleObj,'SelMVP.psm1')) -ItemType File  
 
 '#CompiledByBuildScript' | Out-File $PSMFile.FullName -Append
 

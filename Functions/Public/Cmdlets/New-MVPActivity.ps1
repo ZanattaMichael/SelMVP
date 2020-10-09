@@ -1,14 +1,4 @@
 function New-MVPActivity {
-    [CmdletBinding()]
-    param (
-        [Parameter(Mandatory)]
-        [ValidateScript({
-            ($_ -is [OpenQA.Selenium.Firefox.FirefoxDriver]) -or
-            ($_ -is [OpenQA.Selenium.Chrome.ChromeDriver])
-        })]
-        [Object]
-        $Driver
-    )
     
     # Test if the Driver is active. If not throw a terminating error.
     Test-SEDriver
@@ -16,7 +6,7 @@ function New-MVPActivity {
     $params = @{
         Try = {
             # Try and click "Add New Activity"
-            $ActivityButton = Find-SeElement -Driver $Driver -Id "addNewActivityBtn" -Wait -Timeout 120
+            $ActivityButton = Find-SeElement -Driver (Get-SEDriver) -Id "addNewActivityBtn" -Wait -Timeout 120
             Invoke-SeClick -Element $ActivityButton
         }
         Catch = {
