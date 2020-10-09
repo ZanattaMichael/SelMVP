@@ -16,7 +16,7 @@ Function Wait-ForJavascript {
     $retry = 0
 
     Do {
-        if ($Global:Driver.PageSource -like ("*{0}*" -f $ElementTextToSearch)) { break }
+        if ((Get-SEDriver).PageSource -like ("*{0}*" -f $ElementTextToSearch)) { break }
         Start-Sleep -Seconds 1
         $retry++
     } Until ($retry -eq 3)
