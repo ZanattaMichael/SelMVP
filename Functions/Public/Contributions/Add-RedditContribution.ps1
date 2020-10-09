@@ -30,7 +30,7 @@ Function Add-RedditContribution {
 
     # Select ForumParticipation3rdParty Forums in the DropDown Box
     # The reason why it's in a loop is becuase the javascript won't load and will need to be retriggered.
-    Select-AreaDropdown-SelectedValue ForumParticipation3rdParty
+    Select-AreaDropdown -SelectedValue ForumParticipation3rdParty
 
     #
     # Select the Contribution Area
