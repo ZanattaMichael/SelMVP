@@ -20,6 +20,9 @@ function ConnectTo-Selenium {
         $PSCmdlet.ThrowTerminatingError($_)
     }
 
+    # Load the HTML Agility Pack
+    Add-Type -LiteralPath $HTMLAgilityPackPath
+
 }
 
 Export-ModuleMember ConnectTo-Selenium
