@@ -12,7 +12,7 @@ function Add-TypeContribution {
 
     #
     # Select the Area DropDown
-    Select-AreaDropdown -SelectedValue ForumParticipation3rdParty
+    Select-ActivityType -SelectedValue ForumParticipation3rdParty
 
     #
     # Select the Contribution Area
