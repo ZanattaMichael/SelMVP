@@ -14,7 +14,7 @@ Function Get-ContributionAreas {
     # Filter by Non-Disabled Attributes. Disabled Attributes are headers
     $OptionElements = $ContributionAreas.ChildNodes.Where{$_.Attributes.Name -notcontains 'disabled'}
 
-    if ($OptionElements.count -eq 0) { $PSCmdlet.ThrowTerminatingError("Error: Unable to enumerate ContributionAreas from source HTML.")}
+    if ($OptionElements.count -eq 0) { $PSCmdlet.ThrowTerminatingError($LocalizedData.ErrorMissingContributionType)}
 
     # Build Custom Object
     Write-Output ($OptionElements | Select-Object @{

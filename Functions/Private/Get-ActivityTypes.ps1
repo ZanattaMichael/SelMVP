@@ -12,7 +12,7 @@ Function Get-ActivityTypes {
     # Retrive the Contribution Areas
     $ActivityTypes = $HTMLDoc.GetElementbyId("activityTypeSelector").ChildNodes.Where{$_.Name -eq 'option'}
 
-    if ($ActivityTypes.count -eq 0) { $PSCmdlet.ThrowTerminatingError("Error: Unable to enumerate ActivityTypes from source HTML.")}
+    if ($ActivityTypes.count -eq 0) { $PSCmdlet.ThrowTerminatingError($LocalizedData.ErrorMissingActivityType)}
 
     # Build Custom Object
     Write-Output ($ActivityTypes | Select-Object @{

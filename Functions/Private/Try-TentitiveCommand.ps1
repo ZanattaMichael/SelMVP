@@ -26,7 +26,7 @@ function Try-TentitiveCommand {
     } Until ($Count -eq $RetryLimit)
 
     if ($Count -eq $RetryLimit) {
-        Write-Error "Exceeded Retry Limit!"
+        Write-Error $LocalizedData.ErrorTryTentitiveCommand
     }
 
     return $Result

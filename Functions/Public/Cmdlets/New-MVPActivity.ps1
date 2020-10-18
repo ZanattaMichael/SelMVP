@@ -18,7 +18,7 @@ function New-MVPActivity {
     $result = Try-TentitiveCommand @params
 
     if ($null -eq $result) {
-        $PSCmdlet.ThrowTerminatingError("Cannot Click Add New Activity Button")
+        $PSCmdlet.ThrowTerminatingError($LocalizedData.ErrorNoActivityButton)
     }
 
     Start-Sleep -Seconds 1

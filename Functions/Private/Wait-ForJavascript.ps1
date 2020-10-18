@@ -22,7 +22,7 @@ Function Wait-ForJavascript {
     } Until ($retry -eq 3)
     
     if ($retry -eq 3) {
-        $PSCmdlet.ThrowTerminatingError("Javascript Timeout!")
+        $PSCmdlet.ThrowTerminatingError($LocalizedData.ErrorJavaScriptTimeout)
     }
     
 }
