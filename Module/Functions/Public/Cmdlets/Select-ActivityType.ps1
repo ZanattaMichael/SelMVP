@@ -3,7 +3,7 @@ function Select-AreaDropdown {
     param()
     DynamicParam {
 
-        $ParameterName = "SelectedValue"
+        $ParameterName = $LocalizedData.DynamicParameterAreaNameParameterName
         $ContributionArea = [String[]](Get-ActivityTypes).Name 
 
         $selectedValueAttribute = [System.Management.Automation.ParameterAttribute]::new()
@@ -30,14 +30,14 @@ function Select-AreaDropdown {
         Test-SEDriver
 
         ttry {
-            Select-DropDown -elementId activityTypeSelector -selectedValue $selectedValue
+            Select-DropDown -elementId $LocalizedData.ElementIdActivityType -selectedValue $selectedValue
             # We are using Views of answers to dertmine if the Javascript has ran
             Wait-ForJavascript -Driver (Get-SEDriver) -ElementText 'Views of answers'
         } -Catch {       
             # If the Javascript Fails to Populate the Sub entries within the form       
             # it will retrigger by select the "Article"
             Start-Sleep -Seconds 1
-            Select-DropDown -elementId activityTypeSelector -selectedValue Article   
+            Select-DropDown -elementId $LocalizedData.ElementIdActivityType -selectedValue $LocalizedData.ElementValueArticle   
         } -RetryLimit 10
         
     }

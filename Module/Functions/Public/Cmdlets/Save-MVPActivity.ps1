@@ -6,12 +6,22 @@ function Save-MVPActivity {
     #
     # Save the Activity
 
-    $SaveButton = Find-SeElement -Driver (Get-SEDriver) -Id "submitActivityButton"
+    $GetDriverParams = @{
+        Driver = Get-SEDriver
+        Id = $LocalizedData.ElementButtonSubmitActivity
+    }
+
+    $SaveButton = Find-SeElement @GetDriverParams
     Invoke-SeClick -Element $SaveButton
    
     # Snooze. The more entries you add, it's better to sleep for a little longer.
 
-    if ($null -eq (Get-Variable "SaveActivitySleepCounter" -ErrorAction SilentlyContinue)) {
+    $GetVariableParams = @{
+        Name = $LocalizedData.VariableSaveActivitySleepCounter
+        ErrorAction = SilentlyContinue
+    }
+    
+    if ($null -eq (Get-Variable @GetVariableParams)) {
         $Script:SaveActivitySleepCounter = 1
     }
 

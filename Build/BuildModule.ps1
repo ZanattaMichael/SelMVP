@@ -5,11 +5,19 @@ Write-Verbose "Building PowerShell Module"
 $BuildDirectory = Split-Path -parent $PSCommandPath
 $ModuleDirectory = ([System.IO.Path]::Join($BuildDirectory, "Module"))
 
+
+
 $ModuleFunctions = $BuildDirectory.Replace('Build','Functions')
 
+
+
+$ModuleFile = [System.IO.Path]::Join($BuildDirectory,'Module.ps1')
+$ContributionsDirectory = $BuildDirectory.Replace('Contributions')
+
 # Create Module Directory
-Test-Path -LiteralPath $ModuleDirectory && 
+if (Test-Path -LiteralPath $ModuleDirectory) { 
     Remove-Item $ModuleDirectory -Force -Recurse -Confirm:$false
+}
 
 $ModuleObj = New-Item $ModuleDirectory -ItemType Directory -Force
 
@@ -17,6 +25,12 @@ $ModuleObj = New-Item $ModuleDirectory -ItemType Directory -Force
 $PSMFile = New-Item ([System.IO.Path]::Join($ModuleObj,'SelMVP.psm1')) -ItemType File  
 
 '#CompiledByBuildScript' | Out-File $PSMFile.FullName -Append
+
+# Interpolate the PowerShell Module
+
+
+# Interpolate the Localized Data 
+
 
 # Interpolate the Private Functions in:
 Get-ChildItem -LiteralPath ([System.IO.Path]::Join($ModuleFunctions,'Private')) -File |
@@ -33,51 +47,4 @@ Get-ChildItem -LiteralPath ([System.IO.Path]::Join($ModuleFunctions,'Public')) -
     }
 
 
-<#
-[-Path] <String>
-[-NestedModules <Object[]>]
-[-Guid <Guid>]
-[-Author <String>]
-[-CompanyName <String>]
-[-Copyright <String>]
-[-RootModule <String>]
-[-ModuleVersion <Version>]
-[-Description <String>]
-[-ProcessorArchitecture <ProcessorArchitecture>]
-[-PowerShellVersion <Version>]
-[-CLRVersion <Version>]
-[-DotNetFrameworkVersion <Version>]
-[-PowerShellHostName <String>]
-[-PowerShellHostVersion <Version>]
-[-RequiredModules <Object[]>]
-[-TypesToProcess <String[]>]
-[-FormatsToProcess <String[]>]
-[-ScriptsToProcess <String[]>]
-[-RequiredAssemblies <String[]>]
-[-FileList <String[]>]
-[-ModuleList <Object[]>]
-[-FunctionsToExport <String[]>]
-[-AliasesToExport <String[]>]
-[-VariablesToExport <String[]>]
-[-CmdletsToExport <String[]>]
-[-DscResourcesToExport <String[]>]
-[-CompatiblePSEditions <String[]>]
-[-PrivateData <Object>]
-[-Tags <String[]>]
-[-ProjectUri <Uri>]
-[-LicenseUri <Uri>]
-[-IconUri <Uri>]
-[-ReleaseNotes <String>]
-[-Prerelease <String>]
-[-RequireLicenseAcceptance]
-[-ExternalModuleDependencies <String[]>]
-[-HelpInfoUri <String>]
-[-PassThru]
-[-DefaultCommandPrefix <String>]
-[-WhatIf]
-[-Confirm] 
-[<CommonParameters>]
-
-# Create 
-New-ModuleManifest
-#>
+# Interpolate the Contributions into a Seperate Directory

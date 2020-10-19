@@ -6,5 +6,11 @@ data LocalizedData {
     ErrorTryTentitiveCommand=Try-TentitiveCommand: Exceeded Retry Limit.
     ErrorJavaScriptTimeout=Javascript Timeout.
     ErrorNoActivityButton=Cannot Select Add New Activity Button.
+    ElementIdActivityType=activityTypeSelector    
+    ElementButtonNewActivity=addNewActivityBtn
+    ElementButtonSubmitActivity=submitActivityButton
+    ElementValueArticle=Article
+    VariableSaveActivitySleepCounter=SaveActivitySleepCounter
+    DynamicParameterAreaNameParameterName=SelectedValue
 '@
 }
