@@ -32,7 +32,7 @@ function Select-AreaDropdown {
         ttry {
             Select-DropDown -elementId $LocalizedData.ElementIdActivityType -selectedValue $selectedValue
             # We are using Views of answers to dertmine if the Javascript has ran
-            Wait-ForJavascript -Driver (Get-SEDriver) -ElementText 'Views of answers'
+            Wait-ForJavascript -Driver $Global:MVPDriver -ElementText 'Views of answers'
         } -Catch {       
             # If the Javascript Fails to Populate the Sub entries within the form       
             # it will retrigger by select the "Article"

@@ -7,7 +7,7 @@ function Save-MVPActivity {
     # Save the Activity
 
     $GetDriverParams = @{
-        Driver = Get-SEDriver
+        Driver = $Global:MVPDriver
         Id = $LocalizedData.ElementButtonSubmitActivity
     }
 

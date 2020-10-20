@@ -44,7 +44,7 @@ function Select-ContributionArea {
         # You will need to inspect the elements on the HTML to add additional drop down settings.
         # Make sure you set the id as the value
     
-        $ActivityType = Find-SeElement -Driver (Get-SEDriver) -Id $ContributionArea.value 
+        $ActivityType = Find-SeElement -Driver ($Global:MVPDriver) -Id $ContributionArea.value 
         $SelectElement = [OpenQA.Selenium.Support.UI.SelectElement]::new($ActivityType)
         $SelectElement.SelectByValue($value)
     }

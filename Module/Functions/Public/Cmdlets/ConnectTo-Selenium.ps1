@@ -15,13 +15,11 @@ function ConnectTo-Selenium {
     }
 
     try {
-        $Global:Driver = $cmdlet.Invoke()
+        $Global:MVPDriver = Start-SeFirefox -StartURL 'https://mvp.microsoft.com/en-us/Account/SignIn'
+        #$Global:MVPDriver = [ScriptBlock]::Create($cmdlet).Invoke()
     } catch {
         $PSCmdlet.ThrowTerminatingError($_)
     }
-
-    # Load the HTML Agility Pack
-    Add-Type -LiteralPath $HTMLAgilityPackPath
 
 }
 

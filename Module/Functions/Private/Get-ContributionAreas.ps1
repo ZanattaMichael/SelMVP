@@ -6,7 +6,7 @@ Function Get-ContributionAreas {
 
     # Load and Parse the HTML
     $HTMLDoc = [HtmlAgilityPack.HtmlDocument]::new()
-    $HTMLDoc.LoadHtml((Get-SEDriver).PageSource)
+    $HTMLDoc.LoadHtml(($Global:MVPDriver).PageSource)
 
     # Retrive the Contribution Areas
     $ContributionAreas = $HTMLDoc.GetElementbyId("select_contributionAreasDDL").ChildNodes.Where{$_.Name -eq "optgroup"}
