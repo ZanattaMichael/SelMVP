@@ -4,27 +4,28 @@ UpWrite-Verbose "Building PowerShell Module:"
 
 $BuildDirectory = Split-Path -parent $PSCommandPath
 $BuildModuleDirectory = [System.IO.Path]::Join($BuildDirectory, "Module")
-$BuildModuleDirectoryLibraries = [System.IO.Path]::Join($BuildDirectory, "Libraries")
-$BuildModuleDirectoryContributions = [System.IO.Path]::Join($BuildDirectory, "Contributions")
+$BuildModuleFile = [System.IO.Path]::Join($BuildModuleDirectory, "SelMVP.psm1")
+$BuildModuleDirectoryLibraries = [System.IO.Path]::Join($BuildModuleDirectory, "Libraries")
+$BuildModuleDirectoryContributions = [System.IO.Path]::Join($BuildModuleDirectory, "Contributions")
 
 $ModuleDirectory = $BuildDirectory -replace "Build","Module"
 $ModuleFile = [System.IO.Path]::Join($ModuleDirectory, "Module.ps1")
 $ModuleDirectoryPrivateFunctions = [System.IO.Path]::Join($ModuleDirectory, "Functions","Private")
-$ModuleDirectoryPublicFunctions = [System.IO.Path]::Join($ModuleDirectory, "Functions","Public")
+$ModuleDirectoryPublicFunctions = [System.IO.Path]::Join($ModuleDirectory, "Functions","Public","Cmdlets")
 $ModuleDirectoryDLLibraries = [System.IO.Path]::Join($ModuleDirectory, "Libraries")
 $ModuleDirectoryContributions = [System.IO.Path]::Join($ModuleDirectory, "ModuleFileContributions")
-$ModuleDirectoryLocalizedData = [System.IO.Path]::Join($ModuleDirectory, "Resources","LocalizedData.ps1")
+$ModuleLocalizedData = [System.IO.Path]::Join($ModuleDirectory, "Resources","LocalizedData.ps1")
 
 Write-Debug "`$BuildDirectory: $BuildDirectory"
 Write-Debug "`$BuildModuleDirectory: $BuildModuleDirectory"
 Write-Debug "`$BuildModuleDirectoryLibraries: $BuildModuleDirectoryLibraries"
 Write-Debug "`$BuildModuleDirectoryContributions: $BuildModuleDirectoryContributions"
 Write-Debug "`$ModuleFile: $ModuleFile"
-Write-Debug "`$ModuleFilePrivateFunctions: $ModuleFilePrivateFunctions"
-Write-Debug "`$ModuleFilePublicFunctions: $ModuleFilePublicFunctions"
-Write-Debug "`$ModuleFileDLLibraries: $ModuleFileDLLibraries"
-Write-Debug "`$ModuleFileLocalizedData: $ModuleFileLocalizedData"
-
+Write-Debug "`$ModuleDirectoryPrivateFunctions: $ModuleDirectoryPrivateFunctions"
+Write-Debug "`$ModuleDirectoryPublicFunctions: $ModuleDirectoryPublicFunctions"
+Write-Debug "`$ModuleDirectoryDLLibraries: $ModuleDirectoryDLLibraries"
+Write-Debug "`$ModuleDirectoryContributions: $ModuleDirectoryContributions"
+Write-Debug "`$ModuleDirectoryLocalizedData: $ModuleDirectoryLocalizedData"
 #
 # Create Module Directory
 #
@@ -37,14 +38,14 @@ if (Test-Path -LiteralPath $BuildModuleDirectory) {
 
 $null = New-Item $BuildModuleDirectory -ItemType Directory -Force
 # Create SubDirectories
-$null = New-Item $BuildModuleDirectoryContributions -ItemType Directory -Force
 $null = New-Item $BuildModuleDirectoryLibraries -ItemType Directory -Force
+$null = New-Item $BuildModuleDirectoryContributions -ItemType Directory -Force
 
 #
 # Create PowerShell Module File
 #
 
-$PSMFile = New-Item ([System.IO.Path]::Join($ModuleObj,'SelMVP.psm1')) -ItemType File  
+$PSMFile = New-Item $BuildModuleFile -ItemType File  
 
 '#CompiledByBuildScript' | Out-File $PSMFile.FullName -Append
 
@@ -56,17 +57,17 @@ $PSMFile = New-Item ([System.IO.Path]::Join($ModuleObj,'SelMVP.psm1')) -ItemType
 Get-Content -LiteralPath $ModuleFile | Out-File $PSMFile.FullName -Append
 
 # Interpolate the Localized Data 
-Get-Content -LiteralPath $ModuleFileLocalizedData | Out-File $PSMFile.FullName -Append
+Get-Content -LiteralPath $ModuleLocalizedData | Out-File $PSMFile.FullName -Append
 
 # Interpolate the Private Functions in:
-Get-ChildItem -LiteralPath $ModuleFilePrivateFunctions -File |
+Get-ChildItem -LiteralPath $ModuleDirectoryPrivateFunctions -File |
     ForEach-Object {
         ('#BuildFileName: {0}' -f $_.Name) | Out-File $PSMFile.FullName -Append
         Get-Content $_.FullName | Out-File $PSMFile.FullName -Append
     }
 
 # Interpolate the Public Functions in:
-Get-ChildItem -LiteralPath $ModuleFilePublicFunctions -File -Recurse |
+Get-ChildItem -LiteralPath $ModuleDirectoryPublicFunctions -File -Recurse |
     ForEach-Object {
         ('#BuildFileName: {0}' -f $_.Name) | Out-File $PSMFile.FullName -Append
         Get-Content $_.FullName | Out-File $PSMFile.FullName -Append
@@ -76,13 +77,13 @@ Get-ChildItem -LiteralPath $ModuleFilePublicFunctions -File -Recurse |
 # Add Contributions as Seperate Directories
 #
 
-Copy-Item -Path $ModuleFileDLLibraries -Destination $BuildModuleDirectoryContributions -Recurse
+Copy-Item -Path $ModuleDirectoryContributions -Destination $BuildModuleDirectoryContributions -Recurse
 
 #
 # Add Library Resources
 #
 
-Copy-Item -Path $ModuleFileDLLibraries -Destination $BuildModuleDirectoryContributions -Recurse
+Copy-Item -Path $ModuleDirectoryDLLibraries -Destination $BuildModuleDirectoryLibraries -Recurse
 
 
 
