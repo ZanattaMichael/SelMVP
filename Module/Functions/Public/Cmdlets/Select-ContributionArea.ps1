@@ -34,6 +34,9 @@ function Select-ContributionArea {
     }
 
     Process {
+
+        #TODO: WORK ON THIS!
+
         # Test if the Driver is active. If not throw a terminating error.
         Test-SEDriver       
 
@@ -44,6 +47,8 @@ function Select-ContributionArea {
         # You will need to inspect the elements on the HTML to add additional drop down settings.
         # Make sure you set the id as the value
     
+        Select-DropDown -elementId  $ContributionArea.value  -selectedValue
+
         $ActivityType = Find-SeElement -Driver ($Global:MVPDriver) -Id $ContributionArea.value 
         $SelectElement = [OpenQA.Selenium.Support.UI.SelectElement]::new($ActivityType)
         $SelectElement.SelectByValue($value)
