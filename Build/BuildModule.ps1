@@ -1,6 +1,16 @@
 #Requires -Version 7.0
 
-UpWrite-Verbose "Building PowerShell Module:"
+Write-Verbose "Building PowerShell Module:"
+
+$ModuleManifestParams = @{
+    Path =
+    Guid =
+    Author = 'Michael.Zanatta'
+    ModuleVersion =
+    Description =
+    PowerShellVersion =
+    RequiredModules =
+}
 
 $BuildDirectory = Split-Path -parent $PSCommandPath
 $BuildModuleDirectory = [System.IO.Path]::Join($BuildDirectory, "Module")
@@ -13,7 +23,8 @@ $ModuleFile = [System.IO.Path]::Join($ModuleDirectory, "Module.ps1")
 $ModuleDirectoryPrivateFunctions = [System.IO.Path]::Join($ModuleDirectory, "Functions","Private")
 $ModuleDirectoryPublicFunctions = [System.IO.Path]::Join($ModuleDirectory, "Functions","Public","Cmdlets")
 $ModuleDirectoryDLLibraries = [System.IO.Path]::Join($ModuleDirectory, "Libraries")
-$ModuleDirectoryContributions = [System.IO.Path]::Join($ModuleDirectory, "ModuleFileContributions")
+$ModuleDirectoryContributions = [System.IO.Path]::Join($ModuleDirectory, "Functions","Public","Contributions")
+
 $ModuleLocalizedData = [System.IO.Path]::Join($ModuleDirectory, "Resources","LocalizedData.ps1")
 
 Write-Debug "`$BuildDirectory: $BuildDirectory"
@@ -85,7 +96,10 @@ Copy-Item -Path $ModuleDirectoryContributions -Destination $BuildModuleDirectory
 
 Copy-Item -Path $ModuleDirectoryDLLibraries -Destination $BuildModuleDirectoryLibraries -Recurse
 
+#
+# Create Module Manifest
+#
 
 
-# Interpolate the Contributions into a Seperate Directory
 
+New-ModuleManifest -
