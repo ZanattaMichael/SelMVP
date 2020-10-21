@@ -8,7 +8,6 @@ data LocalizedData {
     ErrorNoActivityButton=Cannot Select Add New Activity Button.
     ElementIdActivityType=activityTypeSelector 
     ElementIdContributionArea=select_contributionAreasDDL
-    ElementIdContributionArea2=select_contributionAreasDDL2
     ElementButtonNewActivity=addNewActivityBtn
     ElementButtonSubmitActivity=submitActivityButton
     ElementValueArticle=e36464de-179a-e411-bbc8-6c3be5a82b68

@@ -1,4 +1,4 @@
-function Select-ContributionAreaDropDown {
+function Add-ContributionAreaDropDown {
     #
     # Selects a Value in a DropDown box.
     [cmdletbinding(
