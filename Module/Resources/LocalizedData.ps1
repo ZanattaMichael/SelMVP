@@ -9,7 +9,7 @@ data LocalizedData {
     ElementIdActivityType=activityTypeSelector    
     ElementButtonNewActivity=addNewActivityBtn
     ElementButtonSubmitActivity=submitActivityButton
-    ElementValueArticle=Article
+    ElementValueArticle=e36464de-179a-e411-bbc8-6c3be5a82b68
     VariableSaveActivitySleepCounter=SaveActivitySleepCounter
     DynamicParameterAreaNameParameterName=SelectedValue
 '@

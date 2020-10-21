@@ -29,10 +29,15 @@ function Select-AreaDropdown {
         # Test if the Driver is active. If not throw a terminating error.
         Test-SEDriver
 
+        $matchedActivityType = Get-ActivityTypes | Where-Object {
+            $_.Name -eq
+            $paramDictionary."$($LocalizedData.DynamicParameterAreaNameParameterName)".Value
+        }
+        
         ttry {
-            Select-DropDown -elementId $LocalizedData.ElementIdActivityType -selectedValue $selectedValue
+            Select-DropDown -elementId $LocalizedData.ElementIdActivityType -selectedValue $matchedActivityType.Value
             # We are using Views of answers to dertmine if the Javascript has ran
-            Wait-ForJavascript -Driver $Global:MVPDriver -ElementText 'Views of answers'
+            Wait-ForJavascript -ElementText 'Views of answers'
         } -Catch {       
             # If the Javascript Fails to Populate the Sub entries within the form       
             # it will retrigger by select the "Article"
