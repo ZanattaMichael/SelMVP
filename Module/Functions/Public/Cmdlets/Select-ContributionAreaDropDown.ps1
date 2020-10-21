@@ -1,4 +1,4 @@
-function Select-ContributionArea {
+function Select-ContributionAreaDropDown {
     #
     # Selects a Value in a DropDown box.
     [cmdletbinding(
@@ -12,7 +12,7 @@ function Select-ContributionArea {
     )
     DynamicParam {
 
-        $ParameterName = "SelectedValue"
+        $ParameterName = $LocalizedData.DynamicParameterAreaNameParameterName
         $ContributionArea = [String[]](Get-ContributionAreas).Name 
 
         $selectedValueAttribute = [System.Management.Automation.ParameterAttribute]::new()
@@ -35,23 +35,33 @@ function Select-ContributionArea {
 
     Process {
 
-        #TODO: WORK ON THIS!
-
         # Test if the Driver is active. If not throw a terminating error.
-        Test-SEDriver       
+        Test-SEDriver
 
-        # Get the Contribution Area
-        $ContributionArea = Get-ContributionAreas | Where-Object Name -eq $SelectedValue.Name
+        $matchedActivityType = Get-ContributionAreas | Where-Object {
+            $_.Name -eq
+            $paramDictionary."$($LocalizedData.DynamicParameterAreaNameParameterName)".Value
+        }
+
+        # Get the ID of the Contribution DropDown Element
+        if ($Type -eq 'Primary') { $elementId = $LocalizedData.ElementIdContributionArea } 
+        else { $elementId = $LocalizedData.ElementIdContributionArea2 }
 
         #
         # You will need to inspect the elements on the HTML to add additional drop down settings.
         # Make sure you set the id as the value
     
-        Select-DropDown -elementId  $ContributionArea.value  -selectedValue
+        ttry {
+            Select-DropDown -elementId $elementId -selectedValue $matchedActivityType.Value
+            # We are using Views of answers to dertmine if the Javascript has ran
+            Wait-ForJavascript -ElementText 'Views of answers'
+        } -Catch {       
+            # If the Javascript Fails to Populate the Sub entries within the form       
+            # it will retrigger by select the "Chef/Puppet in Datacenter"
+            Start-Sleep -Seconds 1
+            Select-DropDown -elementId $elementId -selectedValue $LocalizedData.ElementValueChefPuppetInDataCenter   
+        } -RetryLimit 10
 
-        $ActivityType = Find-SeElement -Driver ($Global:MVPDriver) -Id $ContributionArea.value 
-        $SelectElement = [OpenQA.Selenium.Support.UI.SelectElement]::new($ActivityType)
-        $SelectElement.SelectByValue($value)
     }
 
 }
