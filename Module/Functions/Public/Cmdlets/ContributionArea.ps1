@@ -6,6 +6,10 @@ Function ContributionArea {
     )
     DynamicParam {
 
+        # Check the call stack and ensure that MVPActivity is a parent.
+        # This is executed within the DynamicParam block since it requires a new MVP window to be open.
+        if (-not(Test-CallStack)) { Throw $LocalizedData.ErrorContributionAreaNotNested }
+
         $ParameterName = $LocalizedData.DynamicParameterAreaNameParameterName
         $ContributionArea = [String[]](Get-ContributionAreas).Name 
 
@@ -30,8 +34,7 @@ Function ContributionArea {
 
     begin {
 
-        # TODO: Check the stack trace, the cmdlet is only accessable from MVPActivity
-        
+        # TODO: Check the stack trace, the cmdlet is only accessable from MVPActivity        
         Test-SEDriver
 
     }

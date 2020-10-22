@@ -11,6 +11,8 @@ data LocalizedData {
     ErrorTryTentitiveCommand=Try-TentitiveCommand: Exceeded Retry Limit.
     ErrorJavaScriptTimeout=Javascript Timeout.
     ErrorNoActivityButton=Cannot Select Add New Activity Button.
+    ErrorAreaNotNested=Error. 'Area' is not nested within MVPActivity.
+    ErrorContributionAreaNotNested=Error. 'ContributionArea' is not nested within MVPActivity.
     ElementIdActivityType=activityTypeSelector 
     ElementIdContributionArea=select_contributionAreasDDL
     ElementButtonNewActivity=addNewActivityBtn
