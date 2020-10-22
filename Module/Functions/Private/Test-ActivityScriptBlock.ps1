@@ -14,7 +14,7 @@ function Test-ActivityScriptBlock {
     # Requirement 1:
     # Ensure that there are no additional MVPActivity scriptblocks within it.
     if ($CommandAst -match $LocalizedData.TestActivityRegexMVPActivity) {
-        $PSCmdlet.ThrowTerminatingError($LocalizedData.ErrorNestedMVPActivity)
+        Throw $LocalizedData.ErrorNestedMVPActivity
     }
 
     # Requirement 2:
@@ -22,22 +22,22 @@ function Test-ActivityScriptBlock {
     $areaInstance = $CommandAst -match $LocalizedData.TestActivityRegexMVPArea
     if ($areaInstance.count -eq 0) {
         # No Instances were found
-        $PSCmdlet.ThrowTerminatingError($LocalizedData.ErrorMissingMVPActivityArea)
+        Throw $LocalizedData.ErrorMissingMVPActivityArea
     } elseif ($areaInstance.count -ne 1 ) {
         # Multiple Statements of Area was defined
-        $PSCmdlet.ThrowTerminatingError($LocalizedData.ErrorMissingMVPActivityAreaMultiple)
+        Throw $LocalizedData.ErrorMissingMVPActivityAreaMultiple
     }
 
     # Requirement 3:
     # Ensure that the ContributionArea is present.   
-    if ($CommandAst -match $LocalizedData.TestActivityRegexMVPContributionArea) {
-        $PSCmdlet.ThrowTerminatingError($LocalizedData.ErrorMissingMVPActivityContributionArea)
+    if (-not($CommandAst -match $LocalizedData.TestActivityRegexMVPContributionArea)) {
+        Throw $LocalizedData.ErrorMissingMVPActivityContributionArea
     }
 
-    # Requirement 3:
+    # Requirement 4:
     # Ensure that the Element is present.   
-    if ($CommandAst -match $LocalizedData.TestActivityRegexMVPElement) {
-        $PSCmdlet.ThrowTerminatingError($LocalizedData.ErrorMissingMVPActivityElement)
+    if (-not($CommandAst -match $LocalizedData.TestActivityRegexMVPElement)) {
+        Throw $LocalizedData.ErrorMissingMVPActivityElement
     }   
 
     #

@@ -3,6 +3,10 @@ function MVPActivity {
     param (
         # Scriptblock of the Activity
         [Parameter(Mandatory)]
+        [String]
+        $Name,    
+        # Scriptblock of the Activity
+        [Parameter(Mandatory)]
         [ScriptBlock]
         $Fixture    
     )
