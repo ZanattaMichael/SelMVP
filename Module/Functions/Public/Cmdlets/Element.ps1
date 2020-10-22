@@ -18,4 +18,3 @@ Function Update-Element {
     Send-SeKeys -Element $Element -Keys $Value
 }
 
-Export-ModuleMember Update-Element

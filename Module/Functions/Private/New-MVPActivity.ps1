@@ -56,5 +56,3 @@ function New-MVPActivity {
     Start-Sleep -Seconds 1
 
 }
-
-Export-ModuleMember New-MVPActivity

@@ -32,5 +32,3 @@ function Save-MVPActivity {
     if ($Script:SaveActivitySleepCounter -le 50) { $Script:SaveActivitySleepCounter++ }
     
 }
-
-Export-ModuleMember Save-MVPActivity

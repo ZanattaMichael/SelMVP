@@ -1,4 +1,4 @@
-function Select-AreaDropdown {
+function Area {
     [CmdletBinding()]
     param()
     DynamicParam {
@@ -48,5 +48,3 @@ function Select-AreaDropdown {
     }
 
 }
-
-Export-ModuleMember Select-AreaDropdown

@@ -49,3 +49,22 @@ Function Add-RedditContribution {
 }
 
 Export-ModuleMember Add-RedditContribution
+
+
+
+MVPActivity {
+    param ($Date, $Title, $URL, $Description)
+    
+    # Select the Area
+    Area ForumParticipation3rdParty
+
+    # Contribution Areas
+    ContributionArea 'Windows Mixed Reality'
+    ContributionArea 'Windows Design'
+    ContributionArea 'Windows for IT'
+
+    # Set the Elements
+    Element DateOfActivity $Date
+    Element TitleOfActivity $Title
+
+}

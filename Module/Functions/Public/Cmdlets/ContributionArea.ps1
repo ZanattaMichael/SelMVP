@@ -1,14 +1,10 @@
-function Add-ContributionAreaDropDown {
+Function ContributionArea {
     #
     # Selects a Value in a DropDown box.
     [cmdletbinding(
         DefaultParameterSetName = 'Standard'
     )]
     param(
-        [parameter()]
-        [ValidateSet("Primary","Additional")]
-        [String]
-        $Type="Primary"    
     )
     DynamicParam {
 
@@ -18,6 +14,7 @@ function Add-ContributionAreaDropDown {
         $selectedValueAttribute = [System.Management.Automation.ParameterAttribute]::new()
         $selectedValueAttribute.Position = 2
         $selectedValueAttribute.Mandatory = $true
+        $selectedValueAttribute.ValueFromPipeline = $true
 
         $attributeCollection = [System.Collections.ObjectModel.Collection[System.Attribute]]::New()
         $attributeCollection.Add($selectedValueAttribute)
@@ -33,19 +30,30 @@ function Add-ContributionAreaDropDown {
 
     }
 
-    Process {
+    begin {
 
-        # Test if the Driver is active. If not throw a terminating error.
         Test-SEDriver
+
+    }
+
+    process {
 
         $matchedActivityType = Get-ContributionAreas | Where-Object {
             $_.Name -eq
             $paramDictionary."$($LocalizedData.DynamicParameterAreaNameParameterName)".Value
         }
+        
+        # Generate the ElementId
+        $elementId = $(
+            if ($Script:ContributionAreas.Count -eq 0) { $LocalizedData.ElementIdContributionArea }
+            else { "{0}{1}" -f $LocalizedData.ElementIdContributionArea, ($Script:ContributionAreas.Count + 1) }
+        )
 
-        # Get the ID of the Contribution DropDown Element
-        if ($Type -eq 'Primary') { $elementId = $LocalizedData.ElementIdContributionArea } 
-        else { $elementId = $LocalizedData.ElementIdContributionArea2 }
+        # Add to the Contribution Areas
+        $Script:ContributionAreas += [PSCustomObject]@{
+            elementId = $matchedActivityType
+            selectedValue = $matchedActivityType.Value
+        }
 
         #
         # You will need to inspect the elements on the HTML to add additional drop down settings.
@@ -59,8 +67,8 @@ function Add-ContributionAreaDropDown {
             # If the Javascript Fails to Populate the Sub entries within the form       
             # it will retrigger by select the "Chef/Puppet in Datacenter"
             Start-Sleep -Seconds 1
-            Select-DropDown -elementId $elementId -selectedValue $LocalizedData.ElementValueChefPuppetInDataCenter   
-        } -RetryLimit 10
+            Select-DropDown -elementId $ContributionArea.elementId -selectedValue $LocalizedData.ElementValueChefPuppetInDataCenter   
+        } -RetryLimit 10     
 
     }
 
