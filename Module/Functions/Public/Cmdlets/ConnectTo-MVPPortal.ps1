@@ -1,4 +1,4 @@
-function ConnectTo-Selenium {
+function ConnectTo-MVPPortal {
     [CmdletBinding()]
     param (
         [Parameter()]
@@ -23,4 +23,4 @@ function ConnectTo-Selenium {
 
 }
 
-Export-ModuleMember ConnectTo-Selenium
+Export-ModuleMember ConnectTo-MVPPortal

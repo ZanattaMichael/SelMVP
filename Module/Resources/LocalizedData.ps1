@@ -24,9 +24,5 @@ data LocalizedData {
     TestActivityRegexMVPArea=^Area
     TestActivityRegexMVPContributionArea=^ContributionArea
     TestActivityRegexMVPElement=^Element
-  
-
-    Area, ContributionArea & Element
-    Test
 '@
 }

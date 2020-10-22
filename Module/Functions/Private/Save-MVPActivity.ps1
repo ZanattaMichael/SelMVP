@@ -1,5 +1,7 @@
 function Save-MVPActivity {
-    
+    [cmdletbinding()]
+    param()
+
     # Test if the Driver is active. If not throw a terminating error.
     Test-SEDriver
     

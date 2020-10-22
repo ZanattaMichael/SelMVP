@@ -1,9 +1,7 @@
 Function ContributionArea {
     #
     # Selects a Value in a DropDown box.
-    [cmdletbinding(
-        DefaultParameterSetName = 'Standard'
-    )]
+    [cmdletbinding()]
     param(
     )
     DynamicParam {
@@ -32,6 +30,8 @@ Function ContributionArea {
 
     begin {
 
+        # TODO: Check the stack trace, the cmdlet is only accessable from MVPActivity
+        
         Test-SEDriver
 
     }

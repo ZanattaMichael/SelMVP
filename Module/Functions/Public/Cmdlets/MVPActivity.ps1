@@ -1,11 +1,7 @@
 function MVPActivity {
     [CmdletBinding()]
     param (
-        # Name of the MVP Activity
-        [Parameter(Mandatory)]
-        [String]
-        $Name,
-        # Name of the MVP Activity
+        # Scriptblock of the Activity
         [Parameter(Mandatory)]
         [ScriptBlock]
         $Fixture    

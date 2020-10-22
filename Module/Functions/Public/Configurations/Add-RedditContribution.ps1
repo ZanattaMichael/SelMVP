@@ -50,7 +50,7 @@ Function Add-RedditContribution {
 
 Export-ModuleMember Add-RedditContribution
 
-
+<#
 
 MVPActivity {
     param ($Date, $Title, $URL, $Description)
@@ -68,3 +68,5 @@ MVPActivity {
     Element TitleOfActivity $Title
 
 }
+
+#>
