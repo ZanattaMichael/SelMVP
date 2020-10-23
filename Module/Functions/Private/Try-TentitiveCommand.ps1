@@ -29,6 +29,8 @@ function Try-TentitiveCommand {
         Write-Error $LocalizedData.ErrorTryTentitiveCommand
     }
 
+    Write-Debug "[Try-TentitiveCommand] Returning:"
+    
     return $Result
 
 }

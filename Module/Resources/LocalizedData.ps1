@@ -4,6 +4,7 @@ data LocalizedData {
     ErrorMissingMVPActivityArea=Missing 'Area' Statement.
     ErrorMissingMVPActivityAreaMultiple=Multiple Statements of 'Area' was detected. Only a single instance is permitted.
     ErrorMissingMVPActivityContributionArea=Missing 'ContributionArea' Statement.
+    ErrorExceedMVPActivityContributionArea=Exceeded 'ContributionArea' Limit. Limit is 2. Count was '{0}'.
     ErrorMissingMVPActivityElement=Missing 'Element' Statement.
     ErrorMissingActivityType=Unable to enumerate ActivityTypes from source HTML.
     ErrorMissingContributionType=Unable to enumerate ContributionAreas from source HTML.

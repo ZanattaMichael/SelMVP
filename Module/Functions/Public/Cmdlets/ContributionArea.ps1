@@ -4,6 +4,7 @@ Function ContributionArea {
     [cmdletbinding()]
     param(
     )
+
     DynamicParam {
 
         # Check the call stack and ensure that MVPActivity is a parent.
@@ -56,6 +57,14 @@ Function ContributionArea {
         $Script:ContributionAreas += [PSCustomObject]@{
             elementId = $matchedActivityType
             selectedValue = $matchedActivityType.Value
+        }
+
+        #
+        # If the $Script:ContributionAreas count is gt then 3, then select the 'add more' link
+
+        if ($Script:ContributionAreas.count -ge 3) {
+            $AddMoreButton = Find-SeElement -Driver $Global:MVPDriver -By ClassName -Selection 'add' 
+            Invoke-SeClick -Element $AddMoreButton 
         }
 
         #

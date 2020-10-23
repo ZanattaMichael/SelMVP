@@ -7,6 +7,8 @@ function Test-ActivityScriptBlock {
         $Fixture
     )
 
+    Write-Debug "[Test-ActivityScriptBlock] Validating Scriptblock:"
+
     #
     # Return a list of Commands
     $CommandAst = $Fixture.ast.FindAll({$args[0] -is [System.Management.Automation.Language.CommandAst]}, $true)
@@ -29,9 +31,12 @@ function Test-ActivityScriptBlock {
     }
 
     # Requirement 3:
-    # Ensure that the ContributionArea is present.   
-    if (-not($CommandAst -match $LocalizedData.TestActivityRegexMVPContributionArea)) {
+    # Ensure that the ContributionArea is present and that there is a maximum of two contributions.
+    $MVPContributionArea = $CommandAst -match $LocalizedData.TestActivityRegexMVPContributionArea
+    if (($MVPContributionArea).Count -eq 0) {
         Throw $LocalizedData.ErrorMissingMVPActivityContributionArea
+    } elseif (($MVPContributionArea).Count -gt 3)  {
+        Throw ($LocalizedData.ErrorExceedMVPActivityContributionArea -f $MVPContributionArea.Count)
     }
 
     # Requirement 4:
@@ -40,9 +45,6 @@ function Test-ActivityScriptBlock {
         Throw $LocalizedData.ErrorMissingMVPActivityElement
     }   
 
-    #
-    # Ensure that the statements are organized as follows (Area, ContributionArea, Element)
-
-    
+    Write-Debug "[Test-ActivityScriptBlock] All Tests Passed:"
 
 }

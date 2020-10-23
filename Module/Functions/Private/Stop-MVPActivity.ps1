@@ -3,15 +3,10 @@ function Stop-MVPActivity {
     # Test if the Driver is active. If not throw a terminating error.
     Test-SEDriver
     
-    #
-    # Save the Activity
-
-    $GetDriverParams = @{
-        Driver = $Global:MVPDriver
-        Id = $LocalizedData.ElementButtonCancelActivity
+    try {
+        $CancelButton = Find-SeElement -Driver $Global:MVPDriver -Id $LocalizedData.ElementButtonCancelActivity
+        Invoke-SeClick -Element $CancelButton 
+    } catch {
     }
-
-    $SaveButton = Find-SeElement @GetDriverParams
-    Invoke-SeClick -Element $SaveButton
        
 }

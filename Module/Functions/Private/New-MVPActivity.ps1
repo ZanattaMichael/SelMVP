@@ -31,7 +31,9 @@ function New-MVPActivity {
         Catch = {
             # Update Debug
             Write-Debug ("[New-MVPActivity] Tentative-Try: Error Raised {0}" -f $_.Exception)
-
+            # Try and close the activity if the window is already open.
+            Stop-MVPActivity
+            # Sleep for a second
             Start-Sleep -Seconds 1
         }
         RetryLimit = 4
@@ -47,7 +49,7 @@ function New-MVPActivity {
         # Update Verbose Stream
         Write-Verbose "New-MVPActivity: Failure"
 
-        $PSCmdlet.ThrowTerminatingError($LocalizedData.ErrorNoActivityButton)
+        Throw $LocalizedData.ErrorNoActivityButton
     }
 
     # Update Verbose Stream
