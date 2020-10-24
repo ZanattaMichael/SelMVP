@@ -7,14 +7,14 @@ function MVPActivity {
         [String]
         $Name,
         # Scriptblock of the Activity
-        [Parameter(Position=2,ParameterSetName="Arguments")]
-        [HashTable]
-        $ArgumentList,
-        # Scriptblock of the Activity
-        [Parameter(Mandatory,Position=3,ParameterSetName="Arguments")]
-        [Parameter(Mandatory,Position=3,ParameterSetName="Default")]
+        [Parameter(Mandatory,Position=2,ParameterSetName="Arguments")]
+        [Parameter(Mandatory,Position=2,ParameterSetName="Default")]
         [ScriptBlock]
-        $Fixture
+        $Fixture,
+        # ArgumentList of the Activity
+        [Parameter(Position=3,ParameterSetName="Arguments")]
+        [HashTable]
+        $ArgumentList        
     )
     
     begin {
@@ -28,6 +28,7 @@ function MVPActivity {
         # Setup of Contributions and Areas
         $Script:ContributionAreas = @()
         $Script:MVPArea = $null
+        $Script:MVPHTMLFormStructure = $null
 
         try {
             #
@@ -38,7 +39,8 @@ function MVPActivity {
             # Test that the MVPActivity elements is present.
             Wait-ForMVPElement
             # Create new MVPActivity
-            New-MVPActivity     
+            New-MVPActivity    
+             
         } catch {
             Write-Debug "[MVPActivity] Failed MVP Validation Error Below:"
             Write-Error $_
@@ -92,7 +94,8 @@ function MVPActivity {
         } finally {
             # TearDown of Contributions and Areas
             $Script:ContributionAreas = @()
-            $Script:MVPArea = $null           
+            $Script:MVPArea = $null    
+            $Script:MVPHTMLFormStructure = $null       
         }
 
         Write-Debug "[MVPActivity] END: Completed"

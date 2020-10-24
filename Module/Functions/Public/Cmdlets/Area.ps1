@@ -1,49 +1,37 @@
 function Area {
     [CmdletBinding()]
-    param()
-    DynamicParam {
-
-        # Check the call stack and ensure that MVPActivity is a parent.
-                # This is executed within the DynamicParam block since it requires a new MVP window to be open.
-        if (-not(Test-CallStack)) { Throw $LocalizedData.ErrorAreaNotNested }
-
-        $ParameterName = $LocalizedData.DynamicParameterAreaNameParameterName
-        $ContributionArea = [String[]](Get-ActivityTypes).Name 
-
-        $selectedValueAttribute = [System.Management.Automation.ParameterAttribute]::new()
-        $selectedValueAttribute.Position = 1
-        $selectedValueAttribute.Mandatory = $true
-
-        $attributeCollection = [System.Collections.ObjectModel.Collection[System.Attribute]]::New()
-        $attributeCollection.Add($selectedValueAttribute)
-
-        $selectedValueValidateSet = [System.Management.Automation.ValidateSetAttribute]::new($ContributionArea)
-        $attributeCollection.add($selectedValueValidateSet)
-
-        $selectedValueParam = [System.Management.Automation.RuntimeDefinedParameter]::New($ParameterName, [String], $attributeCollection)
-        $paramDictionary = [System.Management.Automation.RuntimeDefinedParameterDictionary]::New()
-        $paramDictionary.Add($ParameterName, $selectedValueParam)
-
-        return $paramDictionary
-
-    }
+    param(
+        # Selected Value
+        [Parameter(Mandatory=$true)]
+        [String]
+        $SelectedValue
+    )
    
     begin {
 
-
-
         # Test if the Driver is active. If not throw a terminating error.
         Test-SEDriver
-
-        $matchedActivityType = Get-ActivityTypes | Where-Object {
-            $_.Name -eq
-            $paramDictionary."$($LocalizedData.DynamicParameterAreaNameParameterName)".Value
-        }
         
+    }
+
+    Process {
+
+
+        # Validate the $SelectedValue Attributes
+        [Array]$matchedActivityType = Get-ActivityTypes | Where-Object { $_.Name -eq $SelectedValue }
+        if ($matchedActivityType.Count -eq 0) { Throw ($LocalizedData.ErrorMissingSelectedValue -f $SelectedValue) }
+        if ($matchedActivityType.Count -ne 1) { Throw ($LocalizedData.ErrorTooManySelectedValue -f $SelectedValue, $matchedActivityType.count) }
+        
+        #
+        # Select the Element
+                
         ttry {
             Select-DropDown -elementId $LocalizedData.ElementIdActivityType -selectedValue $matchedActivityType.Value
             # We are using Views of answers to dertmine if the Javascript has ran
             Wait-ForJavascript -ElementText 'Views of answers'
+            # Update the Area
+            $Script:MVPArea = $SelectedValue
+            $Script:MVPHTMLFormStructure = Get-HTMLFormStructure $SelectedValue
         } -Catch {       
             # If the Javascript Fails to Populate the Sub entries within the form       
             # it will retrigger by select the "Article"

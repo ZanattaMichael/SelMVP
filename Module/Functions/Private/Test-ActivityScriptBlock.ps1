@@ -40,11 +40,26 @@ function Test-ActivityScriptBlock {
     }
 
     # Requirement 4:
-    # Ensure that the Element is present.   
-    if (-not($CommandAst -match $LocalizedData.TestActivityRegexMVPElement)) {
-        Throw $LocalizedData.ErrorMissingMVPActivityElement
-    }   
+    # Ensure that the Value Cmdlet is present.
+    [Array]$valueInstance = $CommandAst -match $LocalizedData.TestActivityRegexMVPValue
+    if ($valueInstance.Count -eq 0) {
+        Throw $LocalizedData.ErrorMissingMVPActivityValue
+    }
 
+    # Requirement 5:
+    # Ensure that the Mandatory Element Names are present for the Area
+    
+    # Find the Area and Load the Type
+    $HTMLFormType = $Global:HTMLFormStructure
+    $areaType = $areaInstance.CommandElements[1].Value
+    # Retrive the HTML Form Structure
+    $HTMLFormStructure = Get-HTMLFormStructure -Name $areaType
+    # Retrive the Parameter Values
+    $ParameterValues = $valueInstance.CommandElements.Where{ $_.Value -match $LocalizedData.TestActivityRegexMVPValue}
+    
+  
+    #$areaInstance.CommandElements[1]
+    
     Write-Debug "[Test-ActivityScriptBlock] All Tests Passed:"
 
 }

@@ -16,9 +16,11 @@ function ConnectTo-MVPPortal {
 
     try {
         $Global:MVPDriver = Start-SeFirefox -StartURL 'https://mvp.microsoft.com/en-us/Account/SignIn'
-        #$Global:MVPDriver = [ScriptBlock]::Create($cmdlet).Invoke()
+        # Pause Execution until login box is no longer present
+        Start-Sleep -Seconds 15
     } catch {
-        $PSCmdlet.ThrowTerminatingError($_)
+        $Global:MVPDriver = $null
+        Throw $_        
     }
 
 }
