@@ -3,6 +3,8 @@ function Wait-ForMVPElement {
     param (    
     )
 
+    Write-Verbose "[Wait-ForMVPElement] Started:"
+
     ttry {
         $ActivityButton = Find-SeElement -Driver $Global:MVPDriver -Id $LocalizedData.ElementButtonNewActivity
         if ($null -eq $ActivityButton) {
@@ -13,5 +15,7 @@ function Wait-ForMVPElement {
         Write-Debug ("Waiting for New Activity Button. {0}" -f $LocalizedData.ElementButtonNewActivity)
         Write-Warning "Waiting for New Activity Button."
     } -RetryLimit 10
+
+    Write-Verbose "[Wait-ForMVPElement] Completed:"
     
 }
