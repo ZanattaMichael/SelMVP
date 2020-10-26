@@ -20,6 +20,9 @@ data LocalizedData {
     ErrorHTMLFormStructureMissingName=Error. Could not match name '{0}' with HTMLFormStructure.
     ErrorCannotFindHTMLElement=Error. Could not match HTML element '{0}' with HTMLFormStructure.
     ErrorTooManyHTMLElements=Error. Too many results with HTML element '{0} with HTMLFormStructure. Count '{1}'
+    ErrorFieldValidationError=Error. A field validation error was found within the form. Error: '{0}'"
+    ErrorMissingRequiredEntries=Error. Missing Required HTML Fields: '{0}'
+    WarningEntryWasNotSaved=An Error occured when attempting to add the entry. Please note that the entry WAS NOT SAVED.
     ElementIdActivityType=activityTypeSelector 
     ElementIdContributionArea=select_contributionAreasDDL
     ElementButtonNewActivity=addNewActivityBtn

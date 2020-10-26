@@ -16,13 +16,16 @@ function ConnectTo-MVPPortal {
 
     try {
         $Global:MVPDriver = Start-SeFirefox -StartURL 'https://mvp.microsoft.com/en-us/Account/SignIn'
-        # Pause Execution until login box is no longer present
-        Start-Sleep -Seconds 15
     } catch {
         $Global:MVPDriver = $null
         Throw $_        
     }
 
+    # Pause Execution until login box is no longer present
+    while ($Global:MVPDriver.Url -match '^https:\/\/login\.((microsoftonline)|(live))\.com') {
+        Write-Verbose "Waiting for Login to complete:"
+        Start-Sleep -Seconds 1
+    }
 }
 
 Export-ModuleMember ConnectTo-MVPPortal

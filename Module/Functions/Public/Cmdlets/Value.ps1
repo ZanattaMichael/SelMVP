@@ -31,5 +31,8 @@ Function Value {
     if ($null -eq $Element) { return }
     Send-SeKeys -Element $Element -Keys $Value
 
+    # Locate and Update the HTMLElement
+    $matched[0].isSet = $true
+
 }
 

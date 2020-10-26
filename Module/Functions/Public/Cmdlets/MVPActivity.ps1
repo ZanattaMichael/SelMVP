@@ -66,8 +66,11 @@ function MVPActivity {
             #}
 
             $null = $Fixture.Invoke()
+            # Save the MVP Activity
+            Save-MVPActivity            
         } catch {
             Write-Error $_
+            Write-Warning $LocalizedData.WarningEntryWasNotSaved
             Write-Debug "Error was triggered, initiate the teardown of the MVPActivity"
             $invokeTearDown = $true
         }
@@ -86,9 +89,6 @@ function MVPActivity {
             if ($invokeTearDown) {
                 # Close the MVP Activity
                 Stop-MVPActivity
-            } else {
-                # Save the MVP Activity
-                Save-MVPActivity
             }
 
         } finally {
