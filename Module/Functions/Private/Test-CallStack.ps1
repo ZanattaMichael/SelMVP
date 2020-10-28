@@ -1,7 +1,14 @@
 function Test-CallStack {
     [CmdletBinding()]
-    param()
+    param(
+        # Parameter help description
+        [Parameter(Mandatory)]
+        [String]
+        $Name
+    )
 
-    return ((Get-PSCallStack).Command -contains "MVPActivity")
+    if ((Get-PSCallStack).Command -notcontains "MVPActivity") {
+        Throw ($LocalizedData.ErrorMissingMVPActivityInCallStack -f $Name)
+    }
 
 }

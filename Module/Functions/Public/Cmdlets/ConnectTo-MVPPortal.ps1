@@ -4,18 +4,19 @@ function ConnectTo-MVPPortal {
         [Parameter()]
         [String]
         $URLPath=(Read-Host "Enter in URL Path"),
-        [ValidateSet("Firefox","Chrome")]
+        [ValidateSet("Firefox","Chrome","Edge")]
         [String]
         $DriverType = 'Firefox'
     )
 
-    switch ($DriverType) {
-        'Firefox' { $cmdlet = "Start-SeFirefox -StartURL '$URLPath'" }
-        'Chrome' { $cmdlet = "Start-SeChrome -StartURL '$URLPath'" }
-    }
-
     try {
-        $Global:MVPDriver = Start-SeFirefox -StartURL 'https://mvp.microsoft.com/en-us/Account/SignIn'
+
+        switch ($DriverType) {
+            'Firefox' { $Global:MVPDriver = Start-SeFirefox -StartURL 'https://mvp.microsoft.com/en-us/Account/SignIn' }
+            'Chrome'  { $Global:MVPDriver = Start-SeChrome  -StartURL 'https://mvp.microsoft.com/en-us/Account/SignIn' }
+            'Edge'    { $Global:MVPDriver = Start-SeEdge  -StartURL 'https://mvp.microsoft.com/en-us/Account/SignIn' }
+        }
+                
     } catch {
         $Global:MVPDriver = $null
         Throw $_        

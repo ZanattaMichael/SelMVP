@@ -22,6 +22,7 @@ data LocalizedData {
     ErrorTooManyHTMLElements=Error. Too many results with HTML element '{0} with HTMLFormStructure. Count '{1}'
     ErrorFieldValidationError=Error. A field validation error was found within the form. Error: '{0}'"
     ErrorMissingRequiredEntries=Error. Missing Required HTML Fields: '{0}'
+    ErrorMissingMVPActivityInCallStack=Error. '{0}' can only be called from within MVPActivity.
     WarningEntryWasNotSaved=An Error occured when attempting to add the entry. THE ENTRY WAS NOT SAVED.
     ElementIdActivityType=activityTypeSelector 
     ElementIdContributionArea=select_contributionAreasDDL

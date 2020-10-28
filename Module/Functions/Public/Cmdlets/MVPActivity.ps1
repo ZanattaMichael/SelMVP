@@ -13,8 +13,8 @@ function MVPActivity {
         $Fixture,
         # ArgumentList of the Activity
         [Parameter(Position=3,ParameterSetName="Arguments")]
-        [HashTable]
-        $ArgumentList        
+        [String[]]
+        $ArgumentList       
     )
     
     begin {
@@ -61,11 +61,7 @@ function MVPActivity {
 
         try {
             # Invoke the variables
-            #$ArgumentList | ForEach-Object { 
-            #    New-Variable -Name $_.Key -Value $_.Value
-            #}
-
-            $null = $Fixture.Invoke()
+            $null = $Fixture.Invoke($ArgumentList)
             # Save the MVP Activity
             Save-MVPActivity            
         } catch {

@@ -11,6 +11,8 @@ function Area {
 
         # Test if the Driver is active. If not throw a terminating error.
         Test-SEDriver
+        # Test the Callstack.
+        Test-CallStack $PSCmdlet.MyInvocation.MyCommand.Name
         
     }
 
