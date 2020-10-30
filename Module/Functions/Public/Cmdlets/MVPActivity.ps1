@@ -13,7 +13,7 @@ function MVPActivity {
         $Fixture,
         # ArgumentList of the Activity
         [Parameter(Position=3,ParameterSetName="Arguments")]
-        [String[]]
+        [HashTable]
         $ArgumentList       
     )
     
@@ -60,10 +60,16 @@ function MVPActivity {
         # Invoke the Fixture
 
         try {
-            # Invoke the variables
-            $null = $Fixture.Invoke($ArgumentList)
+
+            if ($ArgumentList) {
+                # Invoke the Fixture Splatting the Args in as parameters.
+                & $Fixture @ArgumentList
+            } else {
+                $null = $Fixture.Invoke()
+            }
             # Save the MVP Activity
-            Save-MVPActivity            
+            Save-MVPActivity
+            
         } catch {
             Write-Error $_
             Write-Warning $LocalizedData.WarningEntryWasNotSaved
