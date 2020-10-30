@@ -23,6 +23,7 @@ data LocalizedData {
     ErrorFieldValidationError=Error. A field validation error was found within the form. Error: '{0}'"
     ErrorMissingRequiredEntries=Error. Missing Required HTML Fields: '{0}'
     ErrorMissingMVPActivityInCallStack=Error. '{0}' can only be called from within MVPActivity.
+    ErrorFormattingValue=Error. There was an error raised when attempting to format '{0}' with '{1}'. Error Message: {2}
     WarningEntryWasNotSaved=An Error occured when attempting to add the entry. THE ENTRY WAS NOT SAVED.
     ElementIdActivityType=activityTypeSelector 
     ElementIdContributionArea=select_contributionAreasDDL

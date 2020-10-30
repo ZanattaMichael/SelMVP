@@ -67,6 +67,16 @@ function Get-HTMLFormStructure {
 
     }
 
+    #
+    # Join the Formatting Scriptblock form the HTMLFormStructureValidate Variable.
+    $output = $output | Select-Object *, @{
+        Name = "Format"
+        Expression = { 
+            $Name = $_.Name
+            try { ($Global:HTMLFormStructureValidate.Where{$_.Name -eq $Name}).Format } catch {}
+        }
+    }
+
     Write-Output $output      
     Write-Verbose "Get-HTMLFormStructure Completed:"
 

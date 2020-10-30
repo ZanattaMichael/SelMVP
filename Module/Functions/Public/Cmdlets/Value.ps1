@@ -2,7 +2,7 @@ Function Value {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory)]
-        [String[]]
+        [String]
         $Name,
         [Parameter(Mandatory)]
         [String]
@@ -29,10 +29,27 @@ Function Value {
         Throw ($LocalizedData.ErrorTooManyHTMLElements -f $Name, $matched.count)
     }    
     
+    $params = @{
+        Keys = $Value
+    }
+
+    # If there is a formatting property, then we invoke the scriptblock and format the data
+    if ($matched.Format) {
+
+        try {
+            # Invoke the Scriptblock
+            $params.Keys = $matched.Format.Invoke($Value)
+        } catch {
+            # Throw an Error if there was a problem.
+            Throw ($LocalizedData.ErrorFormattingValue -f $Name, $Value, $_.ToString())
+        }
+        
+    }
+
     # Fetches the Element and Updates the Field
     $Element = Find-SeElement -Driver ($Global:MVPDriver) -Id $matched[0].Element
     if ($null -eq $Element) { return }
-    Send-SeKeys -Element $Element -Keys $Value
+    Send-SeKeys $Element @params
 
     # Locate and Update the HTMLElement
     $matched[0].isSet = $true
