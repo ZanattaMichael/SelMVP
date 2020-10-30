@@ -33,7 +33,7 @@ function MVPActivity {
         try {
             #
             # Test the configuration is valid.
-            Test-ActivityScriptBlock $Fixture
+            $parameterCmdlets = Test-ActivityScriptBlock $Fixture
             # Test that the driver is active
             Test-SEDriver
             # Test that the MVPActivity elements is present.
@@ -60,6 +60,15 @@ function MVPActivity {
         # Invoke the Fixture
 
         try {
+
+            # If the Parameter is used instead of the cmdlet itself, invoke the cmdlet parsing in the parametervalue
+            if ($parameterCmdlets.ParametrizedArea) {
+                Area $ArgumentList.Area
+            }
+            
+            if ($parameterCmdlets.ParametrizedContributionArea) {
+                ContributionArea $ArgumentList.ContributionArea
+            }
 
             if ($ArgumentList) {
                 # Invoke the Fixture Splatting the Args in as parameters.
