@@ -1,7 +1,9 @@
-#Requires -Modules Selenium
 #Requires -Version 5.1
 
 $ErrorActionPreference = "Stop"
+
+# Only suported on Windows PowerShell. For the time being.
+if ($IsCoreCLR) { Throw "Due to limitations with the Selenium PowerShell Module. This module is not supported on PowerShell Core yet." }
 
 #
 # Parameters
@@ -24,8 +26,4 @@ Write-Verbose "Loading HTML Agility Pack:"
 
 Add-Type -LiteralPath $HTMLAgilityPackPath
 
-
-#
-# Interpolated Code
-#
 
