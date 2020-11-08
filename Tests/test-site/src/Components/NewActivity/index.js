@@ -218,15 +218,16 @@ function NewActivity (props) {
 			setStateButton(true)
 		}
 
-		const updateState = (props, value) => {
+		const updateState = (e) => {
+			console.log('clicked',e);
 			setStateForm({
 				id: value
 			})
-			console.log('clicked');
 		}
 
 		const setElement = () => {
-				let config = configuration.filter( (config) => config.id === stateForm.id)
+				let config = configuration.filter( (config) => config.id === stateForm.id).flat()
+				if (config === null) { return }
 				let elements = config[0].Elements
 				return createTextFields(elements)
 		}
@@ -250,7 +251,7 @@ function NewActivity (props) {
 								<button class='ui-button-text'>Save</button>
 								<button id='submitCloseButton'>Cancel</button>
 								<p>Mock Form</p>
-								<DropDown id='activityTypeSelector' name='Activity' options={areaOptions} headerName='Activity type' defaultValue={areaOptions[0].value} onchange={setStateForm}></DropDown>
+								<DropDown id='activityTypeSelector' name='Activity' options={areaOptions} headerName='Activity type' defaultValue={areaOptions[0].value} onchange={updateState(this._handleChange)}></DropDown>
 								<DropDown id='select_contributionAreasDDL' name='ContributionArea' options={contributionArea} headerName='Primary Contribution Area'></DropDown>
 								<DropDown id='select_contributionAreasDDL2' name='ContributionArea2' options={contributionArea} headerName='Secondary Contribution Area'></DropDown>
 								<button class='add' onClick={ () => { addContributionArea() }}>add more</button>
