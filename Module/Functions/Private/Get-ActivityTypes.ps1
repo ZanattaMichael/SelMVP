@@ -30,7 +30,7 @@ Function Get-ActivityTypes {
                                         Expression={($_.Attributes.Where{$_.Name -eq 'value'}).Value}
                                     })
 
-    Write-Debug ("[Get-ActivityType] Global:SEActivityTypes: {1}" -f $Global:SEActivityTypes | ConvertTo-Json)
+    Write-Debug ("[Get-ActivityType] Global:SEActivityTypes: {0}" -f ($Global:SEActivityTypes | ConvertTo-Json))
 
     Write-Output $Global:SEActivityTypes
 

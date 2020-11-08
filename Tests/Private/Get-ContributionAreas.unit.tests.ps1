@@ -1,16 +1,35 @@
 Describe "Get-ContributionAreas" {
     
-    BeforeAll {
-        Add-Type -LiteralPath 'Libraries\HTMLAgilityPack\HtmlAgilityPack.dll'
+    BeforeEach {
+        $Global:SEContributionAreas = "TEST"
     }
 
-    It "will return a list of data" {
+    AfterEach  {
+        try { Remove-Variable -Name SEContributionAreas -ErrorAction Stop} catch {}
+    }
+
+    It "When already invoked, will return a cached list" {
+        
+        Mock -CommandName Test-SEDriver -MockWith {}
+        Mock -CommandName Test-SEContributionAreas -MockWith { return "TEST" }
+        Mock -CommandName Write-Verbose -MockWith {}
+
+        $Result = Get-ContributionAreas
+
+        Should -Invoke "Write-Verbose" -Exactly 2
+        $Result | Should -be "TEST"
+
+    }
+
+    It "When invoked without the cache, will enumerate, cache and return a list" {
 
         Mock -CommandName Test-SEDriver -MockWith {}
-        Mock -CommandName Get-SEDriver -MockWith {
-            [PSCustomObject]@{
-                PageSource = Get-Content 'Tests\Mocks\Add-NewActivityArea.html.mock'
-            }
+        Mock -CommandName Test-SEContributionAreas -MockWith {}
+        Mock -CommandName Write-Verbose -MockWith {}
+
+        # Mock the Global Variable
+        $Global:MVPDriver = [PSCustomObject]@{
+            PageSource = Get-Content '..\Mocks\Add-NewActivityArea.html.mock'
         }
 
         $Result = Get-ContributionAreas
@@ -22,13 +41,14 @@ Describe "Get-ContributionAreas" {
 
     }
 
-    it "will return an error (If empty)" {
+    it "When invoked without the cache and HTML content. It will fail and throw an error" {
 
         Mock -CommandName Test-SEDriver -MockWith {}
-        Mock -CommandName Get-SEDriver -MockWith {
-            [PSCustomObject]@{
-                PageSource = "EMPTY"
-            }
+        Mock -CommandName Test-SEContributionAreas -MockWith {}
+        Mock -CommandName Write-Verbose -MockWith {}
+
+        $Global:MVPDriver = [PSCustomObject]@{
+            PageSource = "BAD DATA"
         }
         
         {Get-ContributionAreas} | Should -Throw "*Unable to enumerate ContributionAreas*"

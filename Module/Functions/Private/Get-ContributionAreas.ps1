@@ -33,7 +33,7 @@ Function Get-ContributionAreas {
                                         Expression={($_.Attributes.Where{$_.Name -eq 'data-contributionid'}).Value}
                                     })
     
-    Write-Debug ("[Get-ContributionAreas] Global:SEContributionAreas: {1}" -f $Global:SEActivityTypes | ConvertTo-Json)
+    Write-Debug ("[Get-ContributionAreas] Global:SEContributionAreas: {0}" -f ($Global:SEActivityTypes | ConvertTo-Json))
     Write-Output $Global:SEContributionAreas
 
 }
