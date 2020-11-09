@@ -14,12 +14,7 @@ function New-MVPActivity {
     $params = @{
         Try = {
             # Try and click "Add New Activity"
-            $params = @{
-                Driver = $Global:MVPDriver
-                Id = $LocalizedData.ElementButtonNewActivity
-                #Wait = $true
-                #Timeout = 120        
-            }
+
             $ActivityButton = Find-SeElement -Driver $Global:MVPDriver -Id $LocalizedData.ElementButtonNewActivity
             Invoke-SeClick -Element $ActivityButton
 
