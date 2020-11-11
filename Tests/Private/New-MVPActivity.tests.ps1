@@ -37,6 +37,7 @@ Describe "New-MVPActivity" {
         Mock -CommandName Find-SeElement -MockWith { Throw "Bad" }
         Mock -CommandName Start-Sleep -MockWith {}
         Mock -CommandName Stop-MVPActivity -MockWith {}
+        Mock -CommandName Write-Error -MockWith {}
 
         {New-MVPActivity} | Should -Throw $LocalizedData.ErrorNoActivityButton
         Should -Invoke "Find-SeElement" -Exactly 4
@@ -54,6 +55,7 @@ Describe "New-MVPActivity" {
         Mock -CommandName Invoke-SeClick -MockWith { Throw "Error"} -RemoveParameterType 'Element'
         Mock -CommandName Start-Sleep -MockWith {}
         Mock -CommandName Stop-MVPActivity -MockWith {}
+        Mock -CommandName Write-Error -MockWith {}
 
         {New-MVPActivity} | Should -Throw $LocalizedData.ErrorNoActivityButton
         Should -Invoke "Find-SeElement" -Exactly 4

@@ -86,7 +86,7 @@ Describe "Get-HTMLFormStructure" {
 
         Mock -CommandName Write-Verbose -MockWith {}
         Mock -CommandName Write-Debug -MockWith {}
-
+        
         $Result = Get-HTMLFormStructure -Name "Test"
         
         $Result | Should -Not -BeNullOrEmpty

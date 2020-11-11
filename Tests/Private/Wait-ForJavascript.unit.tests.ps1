@@ -2,13 +2,13 @@
 Describe "Wait-ForJavascript" {
 
     BeforeAll {
-        $Global:Driver = [PSCustomObject]@{
+        $Global:MVPDriver = [PSCustomObject]@{
             PageSource = "THIS IS A TEST STRING"
         } 
     }
 
     AfterAll {
-        Remove-Variable -Name Driver -Scope Global
+        try {Remove-Variable -Name MVPDriver -Scope Global } finally {}
     }
 
     $TestCases = @(
