@@ -25,6 +25,7 @@ data LocalizedData {
     ErrorMissingMVPActivityInCallStack=Error. '{0}' can only be called from within MVPActivity.
     ErrorFormattingValue=Error. There was an error raised when attempting to format '{0}' with '{1}'. Error Message: {2}
     ErrorSavingMVPActivity=Error. There was an error raised when attempting to save the MVP activity. Error: '{0}'
+    ErrorSelectingDropDown=Error. There was an error raised when attempting to select the dropDown '{0}' with the value: '{1}'. Error: '{2}'
     WarningEntryWasNotSaved=An Error occured when attempting to add the entry. THE ENTRY WAS NOT SAVED.
     ElementIdActivityType=activityTypeSelector 
     ElementIdContributionArea=select_contributionAreasDDL

@@ -11,10 +11,10 @@ function Select-DropDown {
 
     try {
         $ActivityType = Find-SeElement -Driver $Global:MVPDriver -Id $elementId
-        $SelectElement = [OpenQA.Selenium.Support.UI.SelectElement]::new($ActivityType)
+        $SelectElement = New-Object -TypeName OpenQA.Selenium.Support.UI.SelectElement $ActivityType
         $SelectElement.SelectByValue($selectedValue)
     } catch {
-        $PSCmdlet.ThrowTerminatingError($_)
+        $PSCmdlet.ThrowTerminatingError($LocalizedData.ErrorSelectingDropDown -f $elementId, $selectedValue, $_)
     }
 
 }
