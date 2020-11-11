@@ -24,6 +24,7 @@ data LocalizedData {
     ErrorMissingRequiredEntries=Error. Missing Required HTML Fields: '{0}'
     ErrorMissingMVPActivityInCallStack=Error. '{0}' can only be called from within MVPActivity.
     ErrorFormattingValue=Error. There was an error raised when attempting to format '{0}' with '{1}'. Error Message: {2}
+    ErrorSavingMVPActivity=Error. There was an error raised when attempting to save the MVP activity. Error: '{0}'
     WarningEntryWasNotSaved=An Error occured when attempting to add the entry. THE ENTRY WAS NOT SAVED.
     ElementIdActivityType=activityTypeSelector 
     ElementIdContributionArea=select_contributionAreasDDL
@@ -32,6 +33,7 @@ data LocalizedData {
     ElementButtonSubmitActivity=submitActivityButton
     ElementValueArticle=e36464de-179a-e411-bbc8-6c3be5a82b68
     ElementValueChefPuppetInDataCenter=b803f4ef-066b-e511-810b-fc15b428ced0
+    ElementFieldValidationError=field-validation-error
     VariableSaveActivitySleepCounter=SaveActivitySleepCounter
     TestActivityRegexMVPActivity=^MVPActivity
     TestActivityRegexMVPArea=^Area

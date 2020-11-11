@@ -16,7 +16,7 @@ function Save-MVPActivity {
     #
     # Search for Field Validation Errors
 
-    $fieldValidationErrors = Find-SeElement -Target $Global:MVPDriver -By ClassName -Selection 'field-validation-error'
+    $fieldValidationErrors = Find-SeElement -Target $Global:MVPDriver -By ClassName -Selection $LocalizedData.ElementFieldValidationError
     if ($fieldValidationErrors) {
         Throw ($LocalizedData.ErrorFieldValidationError -f $fieldValidationErrors.Text)
     }
@@ -29,14 +29,18 @@ function Save-MVPActivity {
         Id = $LocalizedData.ElementButtonSubmitActivity
     }
 
-    $SaveButton = Find-SeElement @GetDriverParams
-    Invoke-SeClick -Element $SaveButton
+    try {
+        $SaveButton = Find-SeElement @GetDriverParams
+        Invoke-SeClick -Element $SaveButton
+    } catch {
+        $PSCmdlet.ThrowTerminatingError($LocalizedData.ErrorSavingMVPActivity -f $_)
+    }
    
     # Snooze. The more entries you add, it's better to sleep for a little longer.
 
     $GetVariableParams = @{
         Name = $LocalizedData.VariableSaveActivitySleepCounter
-        ErrorAction = SilentlyContinue
+        ErrorAction = 'SilentlyContinue'
     }
     
     if ($null -eq (Get-Variable @GetVariableParams)) {
