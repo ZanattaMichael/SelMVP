@@ -33,7 +33,7 @@ function Save-MVPActivity {
         $SaveButton = Find-SeElement @GetDriverParams
         Invoke-SeClick -Element $SaveButton
     } catch {
-        $PSCmdlet.ThrowTerminatingError($LocalizedData.ErrorSavingMVPActivity -f $_)
+        Throw ($LocalizedData.ErrorSavingMVPActivity -f $_)
     }
    
     # Snooze. The more entries you add, it's better to sleep for a little longer.

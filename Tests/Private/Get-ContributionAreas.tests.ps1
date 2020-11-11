@@ -1,5 +1,14 @@
 Describe "Get-ContributionAreas" {
     
+    BeforeAll {
+        # Load the 
+        if ($Script:TestRootPath) {
+            $Script:MockMVPDriver = Join-Path -Path $Script:TestRootPath -ChildPath 'Mocks\Add-NewActivityArea.html.mock'
+        } else {
+            $Script:MockMVPDriver = '..\Mocks\Add-NewActivityArea.html.mock'
+        }        
+    }
+
     BeforeEach {
         $Global:SEContributionAreas = "TEST"
     }
@@ -29,7 +38,7 @@ Describe "Get-ContributionAreas" {
 
         # Mock the Global Variable
         $Global:MVPDriver = [PSCustomObject]@{
-            PageSource = Get-Content '..\Mocks\Add-NewActivityArea.html.mock'
+            PageSource = Get-Content $Script:MockMVPDriver
         }
 
         $Result = Get-ContributionAreas
