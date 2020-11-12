@@ -1,10 +1,10 @@
-param($RootPath)
-
 $Location = Split-Path -Path (Get-Location) -Leaf
 # Is the Executing Path of the Script inside the Tests Directory
 if ($Location -eq 'Tests') {
     # Update the Root Path
     $RootPath = Split-Path -Path (Get-Location) -Parent
+} else {
+    $RootPath = (Get-Location).Path
 }
 
 $UpdatedPath = Join-Path -Path $RootPath -ChildPath 'build\LocalLoader.ps1' 
