@@ -26,22 +26,23 @@ jobs:
       # Install PowerShell 
       - name: InstallPester
         run:
-          $ErrorActionPreference = 'Stop'
-          Set-PSRepository psgallery -InstallationPolicy trusted
-          Install-Module -Name Pester -RequiredVersion 5.0.4 -Confirm:$false -Force
+          $ErrorActionPreference = 'Stop';
+          Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor;
+          Set-PSRepository psgallery -InstallationPolicy trusted;
+          Install-Module -Name Pester -RequiredVersion 5.0.4 -Confirm:$false -Force;
         shell: powershell
 
       - name: InstallSelenium
         run:
-          $ErrorActionPreference = 'Stop'
-          Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor
-          Set-PSRepository psgallery -InstallationPolicy trusted
-          Install-Module Selenium -Confirm:$false -Force
+          $ErrorActionPreference = 'Stop';
+          Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor;
+          Set-PSRepository psgallery -InstallationPolicy trusted;
+          Install-Module Selenium -Confirm:$false -Force;
         shell: powershell
 
       - name: InvokePesterTests
         run: |
-          . .\Tests\Invoke-Tests.ps1
+          . .\Tests\Invoke-Tests.ps1;
           if ($Error[0].Fullyqualifiederrorid -eq 'PesterAssertionFailed') { exit 1 }
         shell: powershell
 
