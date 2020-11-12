@@ -15,6 +15,9 @@ $Script:TestRootPath = Join-Path -Path $RootPath -ChildPath "Tests"
 # Set the FilePath
 . $UpdatedPath $RootPath
 
+# Import the Selenium Module
+Import-Module Selenium
+
 # Invoke the Pester Tests
 Invoke-Pester -Path (Join-Path -Path $Script:TestRootPath -ChildPath 'Private')
 #Invoke-Pester -Path (Join-Path -Path $Script:TestRootPath -ChildPath 'Public')

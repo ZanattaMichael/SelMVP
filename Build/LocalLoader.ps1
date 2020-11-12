@@ -38,6 +38,7 @@ Get-ChildItem -LiteralPath "$RootPath\Module\Functions\Public" -File -Recurse | 
 }
 
 # Set it back
+
 $ErrorActionPreference = 'Continue'
 
 Write-Host "Loader Complete."
