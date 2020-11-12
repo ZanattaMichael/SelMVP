@@ -13,11 +13,11 @@ $UpdatedPath = Join-Path -Path $RootPath -ChildPath 'build\LocalLoader.ps1'
 $Script:TestRootPath = Join-Path -Path $RootPath -ChildPath "Tests"
 
 # Set the FilePath
-. $UpdatedPath
+. $UpdatedPath $RootPath
 
 # Invoke the Pester Tests
 Invoke-Pester -Path 'Private'
-Invoke-Pester -Path 'Public'
+#Invoke-Pester -Path 'Public'
 
 # Clear the Variable
 Remove-Variable TestRootPath -Scope Script 
