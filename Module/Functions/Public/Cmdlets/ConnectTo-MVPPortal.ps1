@@ -12,9 +12,9 @@ function ConnectTo-MVPPortal {
     try {
 
         switch ($DriverType) {
-            'Firefox' { $Global:MVPDriver = Start-SeFirefox -StartURL 'https://mvp.microsoft.com/en-us/Account/SignIn' }
-            'Chrome'  { $Global:MVPDriver = Start-SeChrome  -StartURL 'https://mvp.microsoft.com/en-us/Account/SignIn' }
-            'Edge'    { $Global:MVPDriver = Start-SeEdge  -StartURL 'https://mvp.microsoft.com/en-us/Account/SignIn' }
+            'Firefox' { $Global:MVPDriver = Start-SeFirefox -StartURL $URLPath }
+            'Chrome'  { $Global:MVPDriver = Start-SeChrome  -StartURL $URLPath }
+            'Edge'    { $Global:MVPDriver = Start-SeEdge  -StartURL $URLPath }
         }
                 
     } catch {
