@@ -31,6 +31,13 @@ jobs:
           Install-Module -Name Pester -RequiredVersion 5.0.4 -Confirm:$false -Force
         shell: powershell
 
+      - name: InstallSelenium
+        run:
+          Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor
+          Set-PSRepository psgallery -InstallationPolicy trusted
+          Install-Module Selenium -Confirm:$false -Force
+        shell: powershell
+
       - name: InvokePesterTests
         run: |
           . .\Tests\Invoke-Tests.ps1
@@ -54,9 +61,16 @@ jobs:
           Install-Module -Name Pester -RequiredVersion 5.0.4 -Confirm:$false -Force
         shell: pwsh
 
+      - name: InstallSelenium
+        run:
+          Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor
+          Set-PSRepository psgallery -InstallationPolicy trusted
+          Install-Module Selenium -Confirm:$false -Force
+        shell: pwsh
+
       # Runs a set of commands using the runners shell
       - name: InvokePesterTests
         run: |
           . .\Tests\Invoke-Tests.ps1
-        shell: powershell
+        shell: pwsh
        
