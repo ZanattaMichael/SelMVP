@@ -16,8 +16,8 @@ $Script:TestRootPath = Join-Path -Path $RootPath -ChildPath "Tests"
 . $UpdatedPath $RootPath
 
 # Invoke the Pester Tests
-Invoke-Pester -Path 'Private'
-#Invoke-Pester -Path 'Public'
+Invoke-Pester -Path (Join-Path -Path $Script:TestRootPath -ChildPath 'Private')
+#Invoke-Pester -Path (Join-Path -Path $Script:TestRootPath -ChildPath 'Public')
 
 # Clear the Variable
 Remove-Variable TestRootPath -Scope Script 
