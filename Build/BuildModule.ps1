@@ -1,83 +1,106 @@
 #Requires -Version 7.0
 
-Write-Verbose "Building PowerShell Module"
+Write-Verbose "Building PowerShell Module:"
+
+$ModuleManifestParams = @{
+    Path = ''
+    Guid = ''
+    Author = 'Michael.Zanatta'
+    ModuleVersion = ''
+    Description = ''
+    PowerShellVersion = ''
+    RequiredModules = ''
+}
 
 $BuildDirectory = Split-Path -parent $PSCommandPath
-$ModuleDirectory = ([System.IO.Path]::Join($BuildDirectory, "Module"))
+$BuildModuleDirectory = [System.IO.Path]::Join($BuildDirectory, "Module")
+$BuildModuleFile = [System.IO.Path]::Join($BuildModuleDirectory, "Module.ps1")
+$BuildModuleDirectoryLibraries = [System.IO.Path]::Join($BuildModuleDirectory, "Libraries")
+$BuildModuleDirectoryContributions = [System.IO.Path]::Join($BuildModuleDirectory, "Contributions")
 
-$ModuleFunctions = $BuildDirectory.Replace('Build','Functions')
+$ModuleDirectory = $BuildDirectory -replace "Build","Module"
+$ModuleFile = [System.IO.Path]::Join($ModuleDirectory, "Module.ps1")
+$ModuleDirectoryPrivateFunctions = [System.IO.Path]::Join($ModuleDirectory, "Functions","Private")
+$ModuleDirectoryPublicFunctions = [System.IO.Path]::Join($ModuleDirectory, "Functions","Public","Cmdlets")
+$ModuleDirectoryDLLibraries = [System.IO.Path]::Join($ModuleDirectory, "Libraries")
+$ModuleDirectoryContributions = [System.IO.Path]::Join($ModuleDirectory, "Functions","Public","Contributions")
 
+$ModuleResourceData = [System.IO.Path]::Join($ModuleDirectory, "Resources")
+
+Write-Debug "`$BuildDirectory: $BuildDirectory"
+Write-Debug "`$BuildModuleDirectory: $BuildModuleDirectory"
+Write-Debug "`$BuildModuleDirectoryLibraries: $BuildModuleDirectoryLibraries"
+Write-Debug "`$BuildModuleDirectoryContributions: $BuildModuleDirectoryContributions"
+Write-Debug "`$ModuleFile: $ModuleFile"
+Write-Debug "`$ModuleDirectoryPrivateFunctions: $ModuleDirectoryPrivateFunctions"
+Write-Debug "`$ModuleDirectoryPublicFunctions: $ModuleDirectoryPublicFunctions"
+Write-Debug "`$ModuleDirectoryDLLibraries: $ModuleDirectoryDLLibraries"
+Write-Debug "`$ModuleDirectoryContributions: $ModuleDirectoryContributions"
+Write-Debug "`$ModuleDirectoryLocalizedData: $ModuleDirectoryLocalizedData"
+
+#
 # Create Module Directory
-Test-Path -LiteralPath $ModuleDirectory && 
-    Remove-Item $ModuleDirectory -Force -Recurse -Confirm:$false
+#
 
-$ModuleObj = New-Item $ModuleDirectory -ItemType Directory -Force
+Write-Verbose "Creating Module Directory:"
 
+if (Test-Path -LiteralPath $BuildModuleDirectory) { 
+    Remove-Item $BuildModuleDirectory -Force -Recurse -Confirm:$false
+}
+
+$null = New-Item $BuildModuleDirectory -ItemType Directory -Force
+# Create SubDirectories
+$null = New-Item $BuildModuleDirectoryLibraries -ItemType Directory -Force
+$null = New-Item $BuildModuleDirectoryContributions -ItemType Directory -Force
+
+#
 # Create PowerShell Module File
-$PSMFile = New-Item ([System.IO.Path]::Join($ModuleObj,'SubmitMVP.psm1')) -ItemType File  
+#
 
+$null = Copy-Item -LiteralPath $ModuleFile -Destination $BuildModuleFile
+$PSMFile = Get-Item $BuildModuleFile
+
+#
+# Add Header
 '#CompiledByBuildScript' | Out-File $PSMFile.FullName -Append
 
+#
+# Interpolate Functions and Module into Script
+#
+
+#
+# Interpolate Resources
+
+# Add Library Resources. Sort
+Get-ChildItem -LiteralPath $ModuleResourceData | Sort-Object | ForEach-Object { 
+    ('#Resource: {0}' -f $_.Name) | Out-File $PSMFile.FullName -Append
+    Get-Content $_.FullName | Out-File $PSMFile.FullName -Append    
+}
+
+#
+# Interpolate the Functions
+
+# Interpolate the Localized Data 
+Get-Content -LiteralPath $ModuleLocalizedData | Out-File $PSMFile.FullName -Append
+
 # Interpolate the Private Functions in:
-Get-ChildItem -LiteralPath ([System.IO.Path]::Join($ModuleFunctions,'Private')) -File |
+Get-ChildItem -LiteralPath $ModuleDirectoryPrivateFunctions -File |
     ForEach-Object {
         ('#BuildFileName: {0}' -f $_.Name) | Out-File $PSMFile.FullName -Append
         Get-Content $_.FullName | Out-File $PSMFile.FullName -Append
     }
 
 # Interpolate the Public Functions in:
-Get-ChildItem -LiteralPath ([System.IO.Path]::Join($ModuleFunctions,'Public')) -File -Recurse |
+Get-ChildItem -LiteralPath $ModuleDirectoryPublicFunctions -File -Recurse |
     ForEach-Object {
         ('#BuildFileName: {0}' -f $_.Name) | Out-File $PSMFile.FullName -Append
         Get-Content $_.FullName | Out-File $PSMFile.FullName -Append
     }
 
+#
+# Create Module Manifest
+#
 
-<#
-[-Path] <String>
-[-NestedModules <Object[]>]
-[-Guid <Guid>]
-[-Author <String>]
-[-CompanyName <String>]
-[-Copyright <String>]
-[-RootModule <String>]
-[-ModuleVersion <Version>]
-[-Description <String>]
-[-ProcessorArchitecture <ProcessorArchitecture>]
-[-PowerShellVersion <Version>]
-[-CLRVersion <Version>]
-[-DotNetFrameworkVersion <Version>]
-[-PowerShellHostName <String>]
-[-PowerShellHostVersion <Version>]
-[-RequiredModules <Object[]>]
-[-TypesToProcess <String[]>]
-[-FormatsToProcess <String[]>]
-[-ScriptsToProcess <String[]>]
-[-RequiredAssemblies <String[]>]
-[-FileList <String[]>]
-[-ModuleList <Object[]>]
-[-FunctionsToExport <String[]>]
-[-AliasesToExport <String[]>]
-[-VariablesToExport <String[]>]
-[-CmdletsToExport <String[]>]
-[-DscResourcesToExport <String[]>]
-[-CompatiblePSEditions <String[]>]
-[-PrivateData <Object>]
-[-Tags <String[]>]
-[-ProjectUri <Uri>]
-[-LicenseUri <Uri>]
-[-IconUri <Uri>]
-[-ReleaseNotes <String>]
-[-Prerelease <String>]
-[-RequireLicenseAcceptance]
-[-ExternalModuleDependencies <String[]>]
-[-HelpInfoUri <String>]
-[-PassThru]
-[-DefaultCommandPrefix <String>]
-[-WhatIf]
-[-Confirm] 
-[<CommonParameters>]
 
-# Create 
-New-ModuleManifest
-#>
+
+#New-ModuleManifest -
