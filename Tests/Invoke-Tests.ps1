@@ -1,3 +1,5 @@
+param([Switch]$CI)
+
 $Location = Split-Path -Path (Get-Location) -Leaf
 # Is the Executing Path of the Script inside the Tests Directory
 if ($Location -eq 'Tests') {
@@ -19,8 +21,8 @@ $Script:TestRootPath = Join-Path -Path $RootPath -ChildPath "Tests"
 Import-Module Selenium
 
 # Invoke the Pester Tests
-Invoke-Pester -Path (Join-Path -Path $Script:TestRootPath -ChildPath 'Private')
-#Invoke-Pester -Path (Join-Path -Path $Script:TestRootPath -ChildPath 'Public')
+Invoke-Pester -Path (Join-Path -Path $Script:TestRootPath -ChildPath 'Private') -CI:$CI
+#Invoke-Pester -Path (Join-Path -Path $Script:TestRootPath -ChildPath 'Public') -CI:$CI
 
 # Clear the Variable
 Remove-Variable TestRootPath -Scope Script 
