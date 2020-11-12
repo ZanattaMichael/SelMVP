@@ -1,4 +1,4 @@
-Describe "Test-ActivityScriptBlock" {
+Describe "Test-ActivityScriptBlock" -Tag Unit {
 
     $testCases = @(
         @{

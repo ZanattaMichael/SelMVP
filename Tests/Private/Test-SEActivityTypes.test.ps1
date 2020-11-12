@@ -1,4 +1,4 @@
-Describe "Test-SEActivityTypes" {
+Describe "Test-SEActivityTypes" -Tag Unit {
 
     afterAll {
         Remove-Variable -Name SEActivityTypes -Scope Global

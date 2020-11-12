@@ -1,4 +1,4 @@
-Describe "Test-SEDriver" {
+Describe "Test-SEDriver" -Tag Unit {
 
     BeforeEach {
         Try { Remove-Variable MVPDriver -Scope Global -ErrorAction SilentlyContinue } Catch { }

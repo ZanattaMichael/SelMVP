@@ -1,4 +1,4 @@
-Describe "Wait-ForMVPElement" {
+Describe "Wait-ForMVPElement" -Tag Unit {
 
     BeforeAll {
         $Global:MVPDriver = [PSCustomObject]@{

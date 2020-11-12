@@ -1,4 +1,4 @@
-Describe "Get-ContributionAreas" {
+Describe "Get-ContributionAreas" -Tag Unit {
     
     BeforeAll {
         # Load the 

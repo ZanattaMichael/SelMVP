@@ -1,4 +1,4 @@
-Describe "Stop-MVPActivity" {
+Describe "Stop-MVPActivity" -Tag Unit {
 
     it "Standard Exeuction - No Issues" {
 

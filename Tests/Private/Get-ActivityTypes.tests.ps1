@@ -1,4 +1,4 @@
-Describe "Get-ActivityTypes" {
+Describe "Get-ActivityTypes" -Tag Unit {
     
     BeforeAll {
         # Load the 

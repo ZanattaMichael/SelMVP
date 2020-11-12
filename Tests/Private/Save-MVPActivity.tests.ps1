@@ -1,4 +1,4 @@
-Describe "Save-MVPActivity" {
+Describe "Save-MVPActivity" -Tag Unit {
 
     BeforeAll {
         # Clear the Global Variables

@@ -1,5 +1,5 @@
 
-Describe "Select-DropDown" {
+Describe "Select-DropDown" -Tag Unit {
 
     it "Standard Execution" {
 

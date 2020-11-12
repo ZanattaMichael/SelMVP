@@ -1,4 +1,4 @@
-Describe "Get-HTMLFormStructure" {
+Describe "Get-HTMLFormStructure" -Tag Unit {
 
     BeforeAll {
         # Define the HTMLFormStructure

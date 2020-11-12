@@ -1,4 +1,4 @@
-Describe "Test-SEContributionAreas" {
+Describe "Test-SEContributionAreas" -Tag Unit {
 
     afterAll {
         Remove-Variable -Name SEContributionAreas -Scope Global

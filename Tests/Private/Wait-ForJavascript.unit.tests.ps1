@@ -1,5 +1,5 @@
 
-Describe "Wait-ForJavascript" {
+Describe "Wait-ForJavascript" -Tag Unit {
 
     BeforeAll {
         $Global:MVPDriver = [PSCustomObject]@{

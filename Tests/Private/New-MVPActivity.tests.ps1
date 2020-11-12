@@ -1,4 +1,4 @@
-Describe "New-MVPActivity" {
+Describe "New-MVPActivity" -Tag Unit {
 
     BeforeAll {
         $Global:MVPDriver = [PSCustomObject]@{ Data = "Test"}

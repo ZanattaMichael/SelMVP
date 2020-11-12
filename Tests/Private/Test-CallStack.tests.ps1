@@ -1,6 +1,6 @@
 # This Test is Disabled until I can figure out an effective way to test the logic
 # within the Pester Framework.
-Describe "Test-CallStack" -Skip {
+Describe "Test-CallStack" -Skip -Tag Unit {
 
     BeforeAll {
         # We need to unload the MVPActivity public cmdlet so we can mock it

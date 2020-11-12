@@ -1,5 +1,5 @@
 
-Describe "Testing Try-Tentitive Command" {
+Describe "Testing Try-Tentitive Command" -Tag Unit {
 
     BeforeAll {
         $PSCommandPath.Replace(".ps1",".tests.ps1")
