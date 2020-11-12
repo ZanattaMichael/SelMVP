@@ -27,7 +27,7 @@ jobs:
       - name: InstallPester
         run:
           $ErrorActionPreference = 'Stop'
-          Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor
+          #Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor
           Set-PSRepository psgallery -InstallationPolicy trusted
           Install-Module -Name Pester -RequiredVersion 5.0.4 -Confirm:$false -Force
         shell: powershell
@@ -35,7 +35,7 @@ jobs:
       - name: InstallSelenium
         run:
           $ErrorActionPreference = 'Stop'
-          Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor
+          #Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor
           Set-PSRepository psgallery -InstallationPolicy trusted
           Install-Module Selenium -Confirm:$false -Force
         shell: powershell
