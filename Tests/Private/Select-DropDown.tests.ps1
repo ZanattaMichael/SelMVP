@@ -1,22 +1,14 @@
 
-class fake_nonError_Select_Element {
-    fake_Select_Element($val) {
-    }
-    [void] SelectByValue($val) {
-    }
-}
-
-class fake_Error_Select_Element {
-    fake_Select_Element($val) {
-    }
-    [void] SelectByValue($val) {
-        Throw "TEST"
-    }
-}    
-
 Describe "Select-DropDown" {
 
     it "Standard Execution" {
+
+        class fake_nonError_Select_Element {
+            fake_Select_Element($val) {
+            }
+            [void] SelectByValue($val) {
+            }
+        }
 
         Mock -CommandName 'Find-SeElement' -MockWith {
             [PSCustomObject]@{
@@ -36,7 +28,7 @@ Describe "Select-DropDown" {
     }
 
     it "An error is raised when searching for the Element" {
-
+       
         Mock -CommandName 'Find-SeElement' -MockWith { Throw "Test" }
         {Select-DropDown -elementId "Id" -selectedValue "Value" } | Should -Throw
         Should -Invoke 'New-Object' -Exactly 0
@@ -44,6 +36,15 @@ Describe "Select-DropDown" {
     }
 
     it "An error is raised when selecting the dropdown on the found Element" {
+
+        class fake_Error_Select_Element {
+            fake_Select_Element($val) {
+            }
+            [void] SelectByValue($val) {
+                Throw "TEST"
+            }
+        }    
+        
 
         Mock -CommandName 'Find-SeElement' -MockWith {
             [PSCustomObject]@{
