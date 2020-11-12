@@ -5,7 +5,7 @@ Describe "Test-SEActivityTypes" -Tag Unit {
     }
 
     it 'test GHA' {
-        1 | should be 2
+        1 | should -be 2
     }
 
     it "When the variable is empty will return `$false" {
