@@ -28,5 +28,3 @@ function ConnectTo-MVPPortal {
         Start-Sleep -Seconds 1
     }
 }
-
-Export-ModuleMember ConnectTo-MVPPortal
