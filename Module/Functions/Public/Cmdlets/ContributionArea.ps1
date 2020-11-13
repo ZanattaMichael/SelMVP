@@ -1,5 +1,4 @@
 Function ContributionArea {
-    #
     # Selects a Value in a DropDown box.
     [cmdletbinding()]
     param(
@@ -11,14 +10,18 @@ Function ContributionArea {
 
     begin {
 
-        # TODO: Check the stack trace, the cmdlet is only accessable from MVPActivity        
+        # Test if the Driver is active. If not throw a terminating error.
         Test-SEDriver
-
+        # Test the Callstack.
+        Test-CallStack $PSCmdlet.MyInvocation.MyCommand.Name
+        
     }
 
     process {
 
+        # Multiple Contribution Areas can be parsed in.
         ForEach ($Param in $SelectedValue) {
+
             # Validate the $SelectedValue Parameters
             [Array]$matchedActivityType = Get-ContributionAreas | Where-Object { $_.Name -eq $Param }
             if ($matchedActivityType.Count -eq 0) { Throw ($LocalizedData.ErrorMissingSelectedValue -f $Param) }
@@ -32,7 +35,7 @@ Function ContributionArea {
 
             # Add to the Contribution Areas
             $Script:ContributionAreas += [PSCustomObject]@{
-                elementId = $matchedActivityType
+                elementId = $matchedActivityType.Name
                 selectedValue = $matchedActivityType.Value
             }
 
@@ -56,12 +59,8 @@ Function ContributionArea {
                 # If the Javascript Fails to Populate the Sub entries within the form       
                 # it will retrigger by select the "Chef/Puppet in Datacenter"
                 Start-Sleep -Seconds 1
-                Select-DropDown -elementId $ContributionArea.elementId -selectedValue $LocalizedData.ElementValueChefPuppetInDataCenter   
+                Select-DropDown -elementId $Script:ContributionAreas[-1].elementId -selectedValue $LocalizedData.ElementValueChefPuppetInDataCenter   
             } -RetryLimit 10     
-        }
-
-      
-
+        }   
     }
-
 }
