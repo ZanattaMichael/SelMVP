@@ -27,6 +27,7 @@ data LocalizedData {
     ErrorSavingMVPActivity=Error. There was an error raised when attempting to save the MVP activity. Error: '{0}'
     ErrorSelectingDropDown=Error. There was an error raised when attempting to select the dropDown '{0}' with the value: '{1}'. Error: '{2}'
     ErrorStopMVPActivity=Error. There was an error raised when attempting to cancel the MVP activity. Error: '{0}'
+    ErrorAreaFailure=Error. Could not set MVP Area within HTML Form, unable to continue.
     WarningEntryWasNotSaved=An Error occured when attempting to add the entry. THE ENTRY WAS NOT SAVED.
     ElementIdActivityType=activityTypeSelector 
     ElementIdContributionArea=select_contributionAreasDDL
