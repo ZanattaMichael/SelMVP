@@ -1,5 +1,5 @@
 
-function Get-ContributionAreasMockedData {
+function Global:Get-ContributionAreasMockedData {
 
     return @(
         [PSCustomObject]@{
@@ -18,7 +18,7 @@ function Get-ContributionAreasMockedData {
 
 }
 
-Function Get-ContributionAreaGlobalMock {
+Function Global:Get-ContributionAreaGlobalMock {
     Mock -CommandName "Test-SEDriver" -MockWith {}
     Mock -CommandName "Test-CallStack" -MockWith {}
     Mock -CommandName "Start-Sleep" -MockWith {} 

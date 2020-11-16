@@ -1,6 +1,6 @@
 
 
-Function Get-HTMLFormStructureMockedData  {
+Function Global:Get-HTMLFormStructureMockedData  {
 
     return @(
         [PSCustomObject]@{
@@ -28,7 +28,7 @@ Function Get-HTMLFormStructureMockedData  {
 
 }
 
-function Get-ActivityTypesMockedData {
+function Global:Get-ActivityTypesMockedData {
 
     return @(
         [PSCustomObject]@{
@@ -47,7 +47,7 @@ function Get-ActivityTypesMockedData {
 
 }
 
-Function Get-AreaGlobalMock {
+Function Global:Get-AreaGlobalMock {
     Mock -CommandName "Test-SEDriver" -MockWith {}
     Mock -CommandName "Test-CallStack" -MockWith {}
     Mock -CommandName "Start-Sleep" -MockWith {}        
