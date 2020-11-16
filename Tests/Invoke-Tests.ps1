@@ -22,7 +22,7 @@ Import-Module Selenium
 
 # Invoke the Pester Tests
 Invoke-Pester -Path (Join-Path -Path $Script:TestRootPath -ChildPath 'Private') -CI:$CI
-#Invoke-Pester -Path (Join-Path -Path $Script:TestRootPath -ChildPath 'Public') -CI:$CI
+Invoke-Pester -Path (Join-Path -Path $Script:TestRootPath -ChildPath 'Public') -CI:$CI
 
 # Clear the Variable
 Remove-Variable TestRootPath -Scope Script 

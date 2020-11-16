@@ -19,7 +19,7 @@ function ConnectTo-MVPPortal {
                 
     } catch {
         $Global:MVPDriver = $null
-        Throw $_        
+        Throw ($LocalizedData.ErrorConnectToMVPPortal -f $_)       
     }
 
     # Pause Execution until login box is no longer present
@@ -28,5 +28,3 @@ function ConnectTo-MVPPortal {
         Start-Sleep -Seconds 1
     }
 }
-
-Export-ModuleMember ConnectTo-MVPPortal

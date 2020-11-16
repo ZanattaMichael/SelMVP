@@ -24,16 +24,24 @@ function Area {
         if ($matchedActivityType.Count -eq 0) { Throw ($LocalizedData.ErrorMissingSelectedValue -f $SelectedValue) }
         if ($matchedActivityType.Count -ne 1) { Throw ($LocalizedData.ErrorTooManySelectedValue -f $SelectedValue, $matchedActivityType.count) }
         
-        #
+        # If the Activity Type matches, we need to do a lookup to get the HTML Form structure
+        $HTMLFormStructure = Get-HTMLFormStructure $SelectedValue
         # Select the Element
                 
-        ttry {
+        $output = ttry {
             Select-DropDown -elementId $LocalizedData.ElementIdActivityType -selectedValue $matchedActivityType.Value
-            # We are using Views of answers to dertmine if the Javascript has ran
-            Wait-ForJavascript -ElementText 'Views of answers'
+
+            # We are using Views of Answers to dertmine if the Javascript has ran
+            $HTMLFormStructure | ForEach-Object {
+                Wait-ForJavascript -ElementText $_.Name
+            }
+
             # Update the Area
             $Script:MVPArea = $SelectedValue
-            $Script:MVPHTMLFormStructure = Get-HTMLFormStructure $SelectedValue
+            $Script:MVPHTMLFormStructure = $HTMLFormStrucutrue
+
+            Write-Output $true
+
         } -Catch {       
             # If the Javascript Fails to Populate the Sub entries within the form       
             # it will retrigger by select the "Article"
@@ -41,6 +49,12 @@ function Area {
             Select-DropDown -elementId $LocalizedData.ElementIdActivityType -selectedValue $LocalizedData.ElementValueArticle   
         } -RetryLimit 10
         
+        # If it failed to select the Area, we need to fail the cmdlet
+        if ($output -ne $true) {
+            # Throw a terminating error
+            Throw $LocalizedData.ErrorAreaFailure
+        }
+
     }
 
 }

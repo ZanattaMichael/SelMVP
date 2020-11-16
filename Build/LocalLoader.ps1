@@ -22,10 +22,6 @@ Write-Host "Dot-Sourcing Localized Data Resources:"
 . "$RootPath\Module\Resources\00_HTMLElements.ps1"
 . "$RootPath\Module\Resources\01_HTMLFormStrucuture.ps1"
 
-# Set the Error Action Preference to Silently Continue
-# to supress Export-Module Member Errors
-$ErrorActionPreference = "SilentlyContinue"
-
 # Dot Source the Private Directory
 Get-ChildItem -LiteralPath "$RootPath\Module\Functions\Private" -File -Recurse | ForEach-Object {
     write-host ("Dot-Sourcing Private Functions: {0}" -f $($_.Fullname))
@@ -36,9 +32,5 @@ Get-ChildItem -LiteralPath "$RootPath\Module\Functions\Public" -File -Recurse | 
     write-host ("Dot-Sourcing Public Functions: {0}" -f $($_.Fullname))
     . $_.FullName
 }
-
-# Set it back
-
-$ErrorActionPreference = 'Continue'
 
 Write-Host "Loader Complete."

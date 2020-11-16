@@ -1,5 +1,6 @@
 data LocalizedData {
     ConvertFrom-StringData @'
+    ErrorConnectToMVPPortal=An Error occured when attempting to connect to the portal. Details: '{0}'
     ErrorNestedMVPActivity=Nested MVPActivity. MVPActivity is only requried for the top-level declaration. Refer to usage.
     ErrorMissingMVPActivityArea=Missing 'Area' Statement.
     ErrorMissingMVPActivityAreaMultiple=Multiple Statements of 'Area' was detected. Only a single instance is permitted.
@@ -27,6 +28,7 @@ data LocalizedData {
     ErrorSavingMVPActivity=Error. There was an error raised when attempting to save the MVP activity. Error: '{0}'
     ErrorSelectingDropDown=Error. There was an error raised when attempting to select the dropDown '{0}' with the value: '{1}'. Error: '{2}'
     ErrorStopMVPActivity=Error. There was an error raised when attempting to cancel the MVP activity. Error: '{0}'
+    ErrorAreaFailure=Error. Could not set MVP Area within HTML Form, unable to continue.
     WarningEntryWasNotSaved=An Error occured when attempting to add the entry. THE ENTRY WAS NOT SAVED.
     ElementIdActivityType=activityTypeSelector 
     ElementIdContributionArea=select_contributionAreasDDL
