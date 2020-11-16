@@ -1,5 +1,6 @@
 data LocalizedData {
     ConvertFrom-StringData @'
+    ErrorConnectToMVPPortal=An Error occured when attempting to connect to the portal. Details: '{0}'
     ErrorNestedMVPActivity=Nested MVPActivity. MVPActivity is only requried for the top-level declaration. Refer to usage.
     ErrorMissingMVPActivityArea=Missing 'Area' Statement.
     ErrorMissingMVPActivityAreaMultiple=Multiple Statements of 'Area' was detected. Only a single instance is permitted.
