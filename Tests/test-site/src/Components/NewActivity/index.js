@@ -3,9 +3,9 @@ import DropDown from '../dropdown'
 
 const areaOptions = [
 		{
-				id : 0,
-				name: "Article",
-				value: "e36464de-179a-e411-bbc8-6c3be5a82b68"
+			id : 0,
+			name: "Article",
+			value: "e36464de-179a-e411-bbc8-6c3be5a82b68"
 		},  
 		{
 			id : 1,
@@ -23,10 +23,10 @@ const areaOptions = [
 			value: 'dd6464de-179a-e411-bbc8-6c3be5a82b68'
 		},
 		{
-				id : 4,
-				name: 'Conference (Staffing)',
-				value: 'f16464de-179a-e411-bbc8-6c3be5a82b68'
-			}        
+			id : 4,
+			name: 'Conference (Staffing)',
+			value: 'f16464de-179a-e411-bbc8-6c3be5a82b68'
+		}        
 	]
 	
 const contributionArea = [
@@ -219,17 +219,19 @@ function NewActivity (props) {
 		}
 
 		const updateState = (e) => {
-			console.log('clicked',e);
+
+			// Match the Value to the ID within the areaOptions
+			const matchedObj = areaOptions.filter( area => ( area.value === e.target.value ) )
 			setStateForm({
-				id: value
+				id: matchedObj[0].id
 			})
 		}
 
 		const setElement = () => {
-				let config = configuration.filter( (config) => config.id === stateForm.id).flat()
-				if (config === null) { return }
-				let elements = config[0].Elements
-				return createTextFields(elements)
+			let config = configuration.filter( config => config.id === stateForm.id).flat()
+			if (config === null) { return }
+			let elements = config[0].Elements
+			return createTextFields(elements)
 		}
 
 		const createText = (element) => {
@@ -248,10 +250,10 @@ function NewActivity (props) {
 		return (
 						<div>
 								<p>Mock Buttons</p>
-								<button class='ui-button-text'>Save</button>
-								<button id='submitCloseButton'>Cancel</button>
+								<button class='ui-button-text' onClick={ props.onClose }>Save</button>
+								<button id='submitCloseButton' onClick={ props.onClose }>Cancel</button>
 								<p>Mock Form</p>
-								<DropDown id='activityTypeSelector' name='Activity' options={areaOptions} headerName='Activity type' defaultValue={areaOptions[0].value} onchange={updateState(this._handleChange)}></DropDown>
+								<DropDown id='activityTypeSelector' name='Activity' options={areaOptions} headerName='Activity type' defaultValue={areaOptions[0].value} onchange={updateState}></DropDown>
 								<DropDown id='select_contributionAreasDDL' name='ContributionArea' options={contributionArea} headerName='Primary Contribution Area'></DropDown>
 								<DropDown id='select_contributionAreasDDL2' name='ContributionArea2' options={contributionArea} headerName='Secondary Contribution Area'></DropDown>
 								<button class='add' onClick={ () => { addContributionArea() }}>add more</button>

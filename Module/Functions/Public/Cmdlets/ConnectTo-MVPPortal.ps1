@@ -23,7 +23,7 @@ function ConnectTo-MVPPortal {
     }
 
     # Pause Execution until login box is no longer present
-    while ($Global:MVPDriver.Url -match '^https:\/\/login\.((microsoftonline)|(live))\.com') {
+    while ($Global:MVPDriver.Url -match $LocalizedData.ConnectToMVPPortalRegexURLMatch) {
         Write-Verbose "Waiting for Login to complete:"
         Start-Sleep -Seconds 1
     }
