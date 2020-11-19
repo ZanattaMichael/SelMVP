@@ -13,6 +13,7 @@ class Contributions extends Component {
     }
 
     handleHide = () => {
+        console.log('hiding')
         this.setState({isActive: false})
     }
 
@@ -22,7 +23,7 @@ class Contributions extends Component {
                 <h1>Phony Contributions Page</h1>
                 <button id='addNewActivityBtn' onClick={this.handleShow}>addNewActivityBtn</button>
                 { 
-                    this.state.isActive ? <NewActivity></NewActivity> : null
+                    this.state.isActive ? <NewActivity onClose={this.handleHide}></NewActivity> : null
                 }
             </div>
         )

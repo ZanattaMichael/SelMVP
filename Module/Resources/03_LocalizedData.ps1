@@ -43,5 +43,6 @@ data LocalizedData {
     TestActivityRegexMVPArea=^Area
     TestActivityRegexMVPContributionArea=^ContributionArea
     TestActivityRegexMVPValue=^Value
+    ConnectToMVPPortalRegexURLMatch=^https:\/\/login\.((microsoftonline)|(live))\.com
 '@
 }
