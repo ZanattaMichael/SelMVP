@@ -1,12 +1,12 @@
-function New-MVPActivity {
+function Invoke-MVPActivity {
     [CmdletBinding()]
     param()
 
     # Update Streams
-    Write-Verbose "New-MVPActivity:"
+    Write-Verbose "Invoke-MVPActivity:"
 
     # Update Debug Stream
-    Write-Debug "[New-MVPActivity] Calling Test-SEDriver:"
+    Write-Debug "[Invoke-MVPActivity] Calling Test-SEDriver:"
 
     # Test if the Driver is active. If not throw a terminating error.
     Test-SEDriver
@@ -19,13 +19,13 @@ function New-MVPActivity {
             Invoke-SeClick -Element $ActivityButton
 
             # Update Debug
-            Write-Debug "[New-MVPActivity:] Tentative-Try: Success"
+            Write-Debug "[Invoke-MVPActivity:] Tentative-Try: Success"
 
             Write-Output $true
         }
         Catch = {
             # Update Debug
-            Write-Debug ("[New-MVPActivity] Tentative-Try: Error Raised {0}" -f $_.Exception)
+            Write-Debug ("[Invoke-MVPActivity] Tentative-Try: Error Raised {0}" -f $_.Exception)
             # Try and close the activity if the window is already open.
             Stop-MVPActivity
             # Sleep for a second
@@ -35,20 +35,20 @@ function New-MVPActivity {
     }
 
     # Update Debug Stream
-    Write-Debug "[New-MVPActivity] Calling Try-TentativeCommand:"
-    Write-Debug ("[New-MVPActivity] Try-TentativeCommand Params: {0}" -f ($params | ConvertTo-Json))
+    Write-Debug "[Invoke-MVPActivity] Calling Try-TentativeCommand:"
+    Write-Debug ("[Invoke-MVPActivity] Try-TentativeCommand Params: {0}" -f ($params | ConvertTo-Json))
 
     $result = Try-TentitiveCommand @params
 
     if ($null -eq $result) {
         # Update Verbose Stream
-        Write-Verbose "New-MVPActivity: Failure"
+        Write-Verbose "Invoke-MVPActivity: Failure"
 
         Throw $LocalizedData.ErrorNoActivityButton
     }
 
     # Update Verbose Stream
-    Write-Verbose "New-MVPActivity: Success"
+    Write-Verbose "Invoke-MVPActivity: Success"
 
     Start-Sleep -Seconds 1
 

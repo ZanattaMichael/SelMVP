@@ -1,4 +1,4 @@
-Describe "New-MVPActivity" -Tag Unit {
+Describe "Invoke-MVPActivity" -Tag Unit {
 
     BeforeAll {
         $Global:MVPDriver = [PSCustomObject]@{ Data = "Test"}
@@ -14,7 +14,7 @@ Describe "New-MVPActivity" -Tag Unit {
         Mock -CommandName Start-Sleep -MockWith {}
         Mock -CommandName Stop-MVPActivity -MockWith {}
 
-        $Result = New-MVPActivity
+        $Result = Invoke-MVPActivity
 
         Should -Invoke "Find-SeElement" -Exactly 1
         Should -Invoke "Invoke-SeClick" -Exactly 1
@@ -27,7 +27,7 @@ Describe "New-MVPActivity" -Tag Unit {
          
         Mock -CommandName Test-SEDriver -MockWith { throw "error"}
 
-        {New-MVPActivity} | Should -Throw
+        {Invoke-MVPActivity} | Should -Throw
 
     }    
 
@@ -39,7 +39,7 @@ Describe "New-MVPActivity" -Tag Unit {
         Mock -CommandName Stop-MVPActivity -MockWith {}
         Mock -CommandName Write-Error -MockWith {}
 
-        {New-MVPActivity} | Should -Throw $LocalizedData.ErrorNoActivityButton
+        {Invoke-MVPActivity} | Should -Throw $LocalizedData.ErrorNoActivityButton
         Should -Invoke "Find-SeElement" -Exactly 4
         Should -Invoke "Start-Sleep" -Exactly 4
         Should -Invoke "Stop-MVPActivity" -Exactly 4
@@ -57,7 +57,7 @@ Describe "New-MVPActivity" -Tag Unit {
         Mock -CommandName Stop-MVPActivity -MockWith {}
         Mock -CommandName Write-Error -MockWith {}
 
-        {New-MVPActivity} | Should -Throw $LocalizedData.ErrorNoActivityButton
+        {Invoke-MVPActivity} | Should -Throw $LocalizedData.ErrorNoActivityButton
         Should -Invoke "Find-SeElement" -Exactly 4
         Should -Invoke "Invoke-SeClick" -Exactly 4
         Should -Invoke "Start-Sleep" -Exactly 4
