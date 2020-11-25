@@ -45,7 +45,7 @@ function MVPActivity {
     }
 
     # Write-Host
-    Write-Host ('MVPActivity "{0}"' -f $Name)
+    Write-Host ('Executing MVPActivity: "{0}"' -f $Name)
 
     # Iterate Through Each of the Arguments and Create the MVPActivity
     foreach($Argument in $ArgumentList) {

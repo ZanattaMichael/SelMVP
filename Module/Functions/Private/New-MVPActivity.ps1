@@ -1,5 +1,4 @@
 function New-MVPActivity {
-    function New-MVPActivity {
     param (
         # Scriptblock of the Activity
         [Parameter(Mandatory,Position=2,ParameterSetName="Arguments")]
@@ -11,7 +10,6 @@ function New-MVPActivity {
         [HashTable]
         $ArgumentList      
     )
-    
     
     begin {
 
