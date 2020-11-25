@@ -36,5 +36,5 @@ function ConnectTo-MVPPortal {
         Start-Sleep -Seconds 1
     }
 
-    Write-Host "Success! Logged in."
+    Write-Verbose "Success! Logged in."
 }

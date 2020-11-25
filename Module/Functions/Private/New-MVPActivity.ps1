@@ -1,12 +1,13 @@
 function New-MVPActivity {
+    [CmdletBinding(DefaultParameterSetName="Default")]
     param (
         # Scriptblock of the Activity
-        [Parameter(Mandatory,Position=2,ParameterSetName="Arguments")]
-        [Parameter(Mandatory,Position=2,ParameterSetName="Default")]
+        [Parameter(Mandatory,Position=1,ParameterSetName="Arguments")]
+        [Parameter(Mandatory,Position=1,ParameterSetName="Default")]
         [ScriptBlock]
         $Fixture,
         # ArgumentList of the Activity
-        [Parameter(Position=3,ParameterSetName="Arguments")]
+        [Parameter(Position=2,ParameterSetName="Arguments")]
         [HashTable]
         $ArgumentList      
     )
@@ -34,7 +35,7 @@ function New-MVPActivity {
             # Test that the MVPActivity elements is present.
             Wait-ForMVPElement
             # Create new MVPActivity. Click the Button.
-            New-MVPActivity    
+            Invoke-MVPActivity    
              
         } catch {
             Write-Debug "[MVPActivity] Failed MVP Validation Error Below:"

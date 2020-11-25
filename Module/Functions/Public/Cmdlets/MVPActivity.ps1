@@ -40,6 +40,7 @@ function MVPActivity {
             
         }
         default {
+            # If the Default Execution is run, execute the Fixture and then return.
             $params.Fixture = $Fixture
         }
     }
@@ -47,13 +48,20 @@ function MVPActivity {
     # Write-Host
     Write-Host ('Executing MVPActivity: "{0}"' -f $Name)
 
-    # Iterate Through Each of the Arguments and Create the MVPActivity
-    foreach($Argument in $ArgumentList) {
+    # If Arguments are Present, then iterate each Fixture
+    if ($ArgumentList) {
+        # Iterate Through Each of the Arguments and Create the MVPActivity
+        foreach($Argument in $ArgumentList) {
 
-        $params.ArgumentList = $Argument
+            $params.ArgumentList = $Argument
 
+            New-MVPActivity @params
+
+        }
+    } else {
+        # Otherwise Execute the MVP Activity, since there is not additional fixtures.
         New-MVPActivity @params
-
     }
+
 
 }

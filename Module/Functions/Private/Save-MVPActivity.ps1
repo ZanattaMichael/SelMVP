@@ -30,7 +30,7 @@ function Save-MVPActivity {
     }
 
     try {
-        $SaveButton = Find-SeElement @GetDriverParams
+        $SaveButton = Find-SeElement -Driver $Global:MVPDriver -Id $LocalizedData.ElementButtonSubmitActivity
         Invoke-SeClick -Element $SaveButton
     } catch {
         Throw ($LocalizedData.ErrorSavingMVPActivity -f $_)

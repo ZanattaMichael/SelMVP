@@ -15,7 +15,7 @@ Function Value {
     Test-CallStack $PSCmdlet.MyInvocation.MyCommand.Name   
 
     # Get the HTML Element Data
-    $htmlElementData = Get-HTMLFormStructure -Name $Script:MVPArea
+    $htmlElementData = $Script:MVPHTMLFormStructure
 
     # Attempt to Locate the HTML Element that is needed to update.
     # If there is no value, then there is no data 
