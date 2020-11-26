@@ -4,6 +4,7 @@ function MVPActivity {
         # Scriptblock of the Name of the Contribution
         [Parameter(Mandatory,Position=1,ParameterSetName="Default")]
         [Parameter(Mandatory,Position=1,ParameterSetName="Arguments")]
+        [Parameter(Mandatory,Position=1,ParameterSetName="CSVFile")]
         [String]
         $Name,
         # Scriptblock of the Activity
@@ -13,104 +14,61 @@ function MVPActivity {
         $Fixture,
         # ArgumentList of the Activity
         [Parameter(Position=3,ParameterSetName="Arguments")]
-        [HashTable]
-        $ArgumentList       
+        [HashTable[]]
+        $ArgumentList,
+        # CSV File
+        [Parameter(Position=2,ParameterSetName="CSVFile")]
+        [HashTable[]]
+        $CSVPath
     )
-    
-    begin {
 
-        Write-Debug "[MVPActivity] BEGIN: Buildup of Activity"
+    # Construct the Parameters to Invoke
+    $params = @{}
 
-        #
-        # Activity Setup        
+    switch ($PSCmdlet.ParameterSetName) {
+        "Arguments" {
 
-        $invokeTearDown = $false
-        # Setup of Contributions and Areas
-        $Script:ContributionAreas = @()
-        $Script:MVPArea = $null
-        $Script:MVPHTMLFormStructure = $null
-
-        try {
-            #
-            # Test the configuration is valid.
-            $parameterCmdlets = Test-ActivityScriptBlock $Fixture
-            # Test that the driver is active
-            Test-SEDriver
-            # Test that the MVPActivity elements is present.
-            Wait-ForMVPElement
-            # Create new MVPActivity
-            New-MVPActivity    
-             
-        } catch {
-            Write-Debug "[MVPActivity] Failed MVP Validation Error Below:"
-            Write-Error $_
-            $invokeTearDown = $true
-        }
-
-        Write-Debug "[MVPActivity] BEGIN: Buildup Complete"
-   
-    }
-    
-    process {
-        
-        if ($invokeTearDown) { return }
-
-        Write-Debug "[MVPActivity] PROCESS:"
-
-        # Invoke the Fixture
-
-        try {
-
-            # If the Parameter is used instead of the cmdlet itself, invoke the cmdlet parsing in the parametervalue
-            if ($parameterCmdlets.ParametrizedArea) {
-                Area $ArgumentList.Area
-            }
+            $params.Fixture = $Fixture
             
-            if ($parameterCmdlets.ParametrizedContributionArea) {
-                ContributionArea $ArgumentList.ContributionArea
-            }
+        }
+        "CSVFile" {
 
-            if ($ArgumentList) {
-                # Invoke the Fixture Splatting the Args in as parameters.
-                & $Fixture @ArgumentList
-            } else {
-                $null = $Fixture.Invoke()
-            }
-            # Save the MVP Activity
-            Save-MVPActivity
+            # Test the CSV Schema to ensure that all the columns are present
+            Test-CSVSchema $CSVPath
+            # Create the Fixture
+            $params.Fixture = New-CSVFixture $CSVPath
+            # Create the Arguements for the Fixture
+            $ArgumentList = New-CSVArguments $CSVPath
             
-        } catch {
-            Write-Error $_
-            Write-Warning $LocalizedData.WarningEntryWasNotSaved
-            Write-Debug "Error was triggered, initiate the teardown of the MVPActivity"
-            $invokeTearDown = $true
         }
-        
+        default {
+
+            # If the Default Execution is run, execute the Fixture and then return.
+            $params.Fixture = $Fixture
+
+        }
     }
-    end {
 
-        Write-Debug "[MVPActivity] END: Beginning Teardown"
+    # Write-Host
+    Write-Host ('Executing MVPActivity: "{0}"' -f $Name)
 
-        #
-        # Activity Tear Down
-        #
+    # If Arguments are Present, then iterate each Fixture
+    if ($ArgumentList) {
+        # Iterate Through Each of the Arguments and Create the MVPActivity
+        foreach($Argument in $ArgumentList) {
 
-        try {
+            $params.ArgumentList = $Argument
 
-            if ($invokeTearDown) {
-                # Close the MVP Activity
-                Stop-MVPActivity
-            }
+            New-MVPActivity @params
 
-        } finally {
-            # TearDown of Contributions and Areas
-            $Script:ContributionAreas = @()
-            $Script:MVPArea = $null    
-            $Script:MVPHTMLFormStructure = $null       
         }
 
-        Write-Debug "[MVPActivity] END: Completed"
+    } else {
 
-        return $null
+        # Otherwise Execute the MVP Activity, since there is not additional fixtures.
+        New-MVPActivity @params
+
     }
+
+
 }

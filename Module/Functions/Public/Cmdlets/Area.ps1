@@ -38,7 +38,7 @@ function Area {
 
             # Update the Area
             $Script:MVPArea = $SelectedValue
-            $Script:MVPHTMLFormStructure = $HTMLFormStrucutrue
+            $Script:MVPHTMLFormStructure = $HTMLFormStructure
 
             Write-Output $true
 

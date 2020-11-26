@@ -1,55 +1,123 @@
 function New-MVPActivity {
-    [CmdletBinding()]
-    param()
+    [CmdletBinding(DefaultParameterSetName="Default")]
+    param (
+        # Scriptblock of the Activity
+        [Parameter(Mandatory,Position=1,ParameterSetName="Arguments")]
+        [Parameter(Mandatory,Position=1,ParameterSetName="Default")]
+        [ScriptBlock]
+        $Fixture,
+        # ArgumentList of the Activity
+        [Parameter(Position=2,ParameterSetName="Arguments")]
+        [HashTable]
+        $ArgumentList      
+    )
+    
+    begin {
 
-    # Update Streams
-    Write-Verbose "New-MVPActivity:"
+        Write-Debug "[New-MVPActivity] BEGIN: Buildup of Activity"
 
-    # Update Debug Stream
-    Write-Debug "[New-MVPActivity] Calling Test-SEDriver:"
+        #
+        # Activity Setup        
 
-    # Test if the Driver is active. If not throw a terminating error.
-    Test-SEDriver
+        $invokeTearDown = $false
+        # Setup of Contributions and Areas
+        $Script:MVPArea = $null
+        $Script:ContributionAreas = [System.Collections.Generic.List[PSCustomObject]]::New()
+        $Script:MVPHTMLFormStructure = $null
 
-    $params = @{
-        Try = {
-            # Try and click "Add New Activity"
+        try {
 
-            $ActivityButton = Find-SeElement -Driver $Global:MVPDriver -Id $LocalizedData.ElementButtonNewActivity
-            Invoke-SeClick -Element $ActivityButton
-
-            # Update Debug
-            Write-Debug "[New-MVPActivity:] Tentative-Try: Success"
-
-            Write-Output $true
+            #
+            # Test the configuration is valid.
+            $parameterCmdlets = Test-ActivityScriptBlock $Fixture
+            # Test that the driver is active
+            Test-SEDriver
+            # Test that the MVPActivity elements is present.
+            Wait-ForMVPElement
+            # Create new MVPActivity. Click the Button.
+            Invoke-MVPActivity    
+             
+        } catch {
+            Write-Debug "[MVPActivity] Failed MVP Validation Error Below:"
+            Write-Error $_
+            $invokeTearDown = $true
         }
-        Catch = {
-            # Update Debug
-            Write-Debug ("[New-MVPActivity] Tentative-Try: Error Raised {0}" -f $_.Exception)
-            # Try and close the activity if the window is already open.
-            Stop-MVPActivity
-            # Sleep for a second
-            Start-Sleep -Seconds 1
+
+        Write-Debug "[MVPActivity] BEGIN: Buildup Complete"
+   
+    }
+    
+    process {
+        
+        if ($invokeTearDown) { return }
+
+        Write-Debug "[New-MVPActivity] PROCESS:"
+
+        # Invoke the Fixture
+
+        try {
+
+            # If the Parameter is used instead of the cmdlet itself, invoke the cmdlet parsing in the parametervalue
+            if ($parameterCmdlets.ParametrizedArea) {
+                Area $ArgumentList.Area
+            }
+            
+            if ($parameterCmdlets.ParametrizedContributionArea) {
+                ContributionArea $ArgumentList.ContributionArea
+            }
+
+            if ($ArgumentList) {
+                # Invoke the Fixture Splatting the Args in as parameters.
+                & $Fixture @ArgumentList
+            } else {
+                $null = $Fixture.Invoke()
+            }
+            # Save the MVP Activity
+            Save-MVPActivity
+            
+        } catch {
+            Write-Error $_
+            Write-Warning $LocalizedData.WarningEntryWasNotSaved
+            Write-Debug "Error was triggered, initiate the teardown of the MVPActivity"
+            $invokeTearDown = $true
         }
-        RetryLimit = 4
+        
     }
+    end {
 
-    # Update Debug Stream
-    Write-Debug "[New-MVPActivity] Calling Try-TentativeCommand:"
-    Write-Debug ("[New-MVPActivity] Try-TentativeCommand Params: {0}" -f ($params | ConvertTo-Json))
+        Write-Debug "[New-MVPActivity] END: Beginning Teardown"
 
-    $result = Try-TentitiveCommand @params
+        #
+        # Activity Tear Down
+        #
 
-    if ($null -eq $result) {
-        # Update Verbose Stream
-        Write-Verbose "New-MVPActivity: Failure"
+        try {
 
-        Throw $LocalizedData.ErrorNoActivityButton
+            if ($invokeTearDown) {
+                # Close the MVP Activity
+                Stop-MVPActivity
+            }
+
+        } finally {
+            # TearDown of Contributions and Areas
+            $Script:MVPArea = $null
+            $Script:ContributionAreas = [System.Collections.Generic.List[PSCustomObject]]::New()
+            $Script:MVPHTMLFormStructure = $null               
+        }
+
+        Write-Debug "[New-MVPActivity] END: Completed"
+
+        #
+        # Wait for the Window to be closed
+        #
+
+        Wait-ForActivityWindow
+
+        #
+        # Return to the Caller
+        #
+
+        return $null
     }
-
-    # Update Verbose Stream
-    Write-Verbose "New-MVPActivity: Success"
-
-    Start-Sleep -Seconds 1
 
 }

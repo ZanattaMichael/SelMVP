@@ -16,6 +16,7 @@ Function Value {
 
     # Get the HTML Element Data
     $htmlElementData = $Script:MVPHTMLFormStructure
+
     # Attempt to Locate the HTML Element that is needed to update.
     # If there is no value, then there is no data 
     [array]$matched = $htmlElementData.Where{($_.Name -eq $Name) -or ($_.Element -eq $Name)}

@@ -73,7 +73,7 @@ Describe "ContributionArea" {
     # Before Each
 
     BeforeEach {
-        $Script:ContributionAreas = @()
+        $Script:ContributionAreas = [System.Collections.Generic.List[PSCustomObject]]::New()
     }
 
     #

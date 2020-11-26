@@ -30,27 +30,10 @@ function Save-MVPActivity {
     }
 
     try {
-        $SaveButton = Find-SeElement @GetDriverParams
+        $SaveButton = Find-SeElement -Driver $Global:MVPDriver -Id $LocalizedData.ElementButtonSubmitActivity
         Invoke-SeClick -Element $SaveButton
     } catch {
         Throw ($LocalizedData.ErrorSavingMVPActivity -f $_)
     }
-   
-    # Snooze. The more entries you add, it's better to sleep for a little longer.
-
-    $GetVariableParams = @{
-        Name = $LocalizedData.VariableSaveActivitySleepCounter
-        ErrorAction = 'SilentlyContinue'
-    }
-    
-    if ($null -eq (Get-Variable @GetVariableParams)) {
-        $Script:SaveActivitySleepCounter = 1
-    }
-
-    $SleepDuration = $Script:SaveActivitySleepCounter * 100
-    Start-Sleep -Milliseconds $SleepDuration
-
-    # 5 Seconds is the max wait Time
-    if ($Script:SaveActivitySleepCounter -le 50) { $Script:SaveActivitySleepCounter++ }
     
 }

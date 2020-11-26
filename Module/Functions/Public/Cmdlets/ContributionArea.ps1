@@ -34,10 +34,12 @@ Function ContributionArea {
             )
 
             # Add to the Contribution Areas
-            $Script:ContributionAreas += [PSCustomObject]@{
-                elementId = $matchedActivityType.Name
-                selectedValue = $matchedActivityType.Value
-            }
+            $Script:ContributionAreas.Add(
+                [PSCustomObject]@{
+                    elementId = $matchedActivityType.Name
+                    selectedValue = $matchedActivityType.Value
+                }
+            )
 
             #
             # If the $Script:ContributionAreas count is gt then 3, then select the 'add more' link
