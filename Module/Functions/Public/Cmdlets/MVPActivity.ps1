@@ -27,7 +27,9 @@ function MVPActivity {
 
     switch ($PSCmdlet.ParameterSetName) {
         "Arguments" {
+
             $params.Fixture = $Fixture
+            
         }
         "CSVFile" {
 
@@ -40,8 +42,10 @@ function MVPActivity {
             
         }
         default {
+
             # If the Default Execution is run, execute the Fixture and then return.
             $params.Fixture = $Fixture
+
         }
     }
 
@@ -58,9 +62,12 @@ function MVPActivity {
             New-MVPActivity @params
 
         }
+
     } else {
+
         # Otherwise Execute the MVP Activity, since there is not additional fixtures.
         New-MVPActivity @params
+
     }
 
 

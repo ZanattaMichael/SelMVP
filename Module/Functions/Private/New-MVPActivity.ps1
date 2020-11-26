@@ -107,6 +107,16 @@ function New-MVPActivity {
 
         Write-Debug "[New-MVPActivity] END: Completed"
 
+        #
+        # Wait for the Window to be closed
+        #
+
+        Wait-ForActivityWindow
+
+        #
+        # Return to the Caller
+        #
+
         return $null
     }
 
