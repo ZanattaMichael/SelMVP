@@ -4,7 +4,7 @@ function MVPActivity {
         # Scriptblock of the Name of the Contribution
         [Parameter(Mandatory,Position=1,ParameterSetName="Default")]
         [Parameter(Mandatory,Position=1,ParameterSetName="Arguments")]
-        [Parameter(Mandatory,Position=1,ParameterSetName="CSVFile")]
+        [Parameter(Position=1,ParameterSetName="CSVFile")]
         [String]
         $Name,
         # Scriptblock of the Activity
@@ -18,7 +18,7 @@ function MVPActivity {
         $ArgumentList,
         # CSV File
         [Parameter(Position=2,ParameterSetName="CSVFile")]
-        [HashTable[]]
+        [String]
         $CSVPath
     )
 
@@ -50,7 +50,8 @@ function MVPActivity {
     }
 
     # Write-Host
-    Write-Host ('Executing MVPActivity: "{0}"' -f $Name)
+    if ($Name) { Write-Host ('Executing MVPActivity: "{0}"' -f $Name) -ForegroundColor Green }
+    else { Write-Host ('Executing MVPActivity: (From CSV File) "{0}"' -f $CSVPath) -ForegroundColor Green }
 
     # If Arguments are Present, then iterate each Fixture
     if ($ArgumentList) {
