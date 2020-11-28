@@ -10,7 +10,7 @@ Using this approach means that you can group different contributions areas and c
 
 - Automates MVP Submissions using the Portal.
 - Required for Non-MVP nominees, since API is unavailable.
-- Written in a DSL (Domain Specific Language)
+- Written in a custom DSL (Domain Specific Language)
 ## Requirements:
 
 - [PowerShell Selenium](https://github.com/adamdriscoll/selenium-powershell)
@@ -38,15 +38,28 @@ OR if you want to explicitly specify a DriverType:
 
 ```
 
-## Create an Activity:
 
-### Syntax:
+## Create an Activity (using a CSV):
+### Usage:
+``` PowerShell
+# Import the CSV File and Parse it. Note that the headers for the Activity Need to be Present:
+MVPActivity -CSVPath 'Path to CSV File'
+```
+
+Example CSV File:
+``` CSV
+Date,Title,URL,Description,Number of Articles,Number of Views,Area,ContributionArea,SecondContributionArea,ThirdContributionArea
+28/11/2020,TEST,https://www.google.com,TEST,1,1,Article,PowerShell,Networking,Storage
+28/11/2020,TEST,https://www.google.com,TEST,1,1,Article,PowerShell,Networking,Storage
+```
+
+## Create an Activity (using DSL):
+
+### Activity Syntax:
 
 ``` PowerShell
-
-
    # Define Activity
-   MVPActivity "Name of Activity" [-ArgumentList $params] {
+   MVPActivity [String]"Name of Activity" [-ArgumentList [Hashtable[]]$params] [-CSVPath [String]'CSVPath'] {
        param()
 
        Area [String]"Area"
@@ -55,8 +68,7 @@ OR if you want to explicitly specify a DriverType:
 
    }
 ```
-
-### Usage
+### Usage:
 
 ``` PowerShell
 
@@ -71,12 +83,11 @@ OR if you want to explicitly specify a DriverType:
         Value 'URL' 'https:\\test.com'
         Value 'Description' 'THIS IS A TEST'
         Value 'Number of Posts' '1'
-        # Or you can use the HTML DivId Name
+        # Or you can use the HTML DivId
         Value 'Number of Subscribers' '1'
         Value 'Annual Unique Visitors' '1'
 
     }
-
 ```
 
 OR
@@ -96,17 +107,19 @@ OR
         Value 'URL' 'https:\\test.com'
         Value 'Description' 'THIS IS A TEST'
         Value 'Number of Posts' '1'
-        # Or you can use the HTML DivId Name
+        # Or you can use the HTML DivId
         Value 'Number of Subscribers' '1'
         Value 'Annual Unique Visitors' '1'
 
     }
-
 ```
-
 ### Advanced Usage
 
 ``` PowerShell
+
+    #
+    # Parameters can be parsed into the Fixture as a HashTable
+    #
 
     $params = @{
         Area = "Blog/Website Post"
@@ -126,18 +139,58 @@ OR
         Value 'URL' 'https:\\test.com'
         Value 'Description' 'THIS IS A TEST'
         Value 'Number of Posts' '1'
-        # Or you can use the HTML Div Id Name
+        # Or you can use the HTML Div Id
         Value 'Number of Subscribers' '1'
         Value 'Annual Unique Visitors' '1'
         # Still can execute PowerShell within the script block
         Start-Sleep -Seconds 3
 
    }
-
 ```
 
+OR
 
-## Example 1: 
+``` PowerShell
+
+    #
+    # For those who love complexity, the fixture supports an array of HashTables to be parsed into the fixture.
+    #
+
+    $params = @(
+        @{
+            Area = "Blog/Website Post"
+            ContributionArea = "PowerShell","Yammer","Word"
+            date = '26/10/2020'
+        }
+        @{
+            Area = "Blog/Website Post"
+            ContributionArea = "PowerShell","Yammer","Word"
+            date = '15/10/2020'
+        }
+    )
+
+    # Define Activity
+    MVPActivity "Name of Activity" -ArgumentList $params {
+        # If the Parameters -Area or -ContributionArea are defined in the param block, 
+        # the cmdlet is not required (Area or ContributionArea).
+        param($Area, $ContributionArea, $date)
+
+        # You can use the String Name
+        Value 'Date' $date
+        Value 'Title' 'TEST'
+        Value 'URL' 'https:\\test.com'
+        Value 'Description' 'THIS IS A TEST'
+        Value 'Number of Posts' '1'
+        # Or you can use the HTML Div Id
+        Value 'Number of Subscribers' '1'
+        Value 'Annual Unique Visitors' '1'
+        # Still can execute PowerShell within the script block
+        Start-Sleep -Seconds 3
+
+   }
+```
+
+## Example 1:
 
 ``` PowerShell
 # Prior to doing anything we need to connect to the portal
@@ -154,7 +207,6 @@ MVPActivity "Reddit Contributions" {
     ContributionArea "PowerShell"
 
 }
-
 ```
 
 # Description
@@ -174,6 +226,7 @@ This grouping is not specific to the activity, so you can have multiple `MVPActi
 So what does this look like?
 
 ```PowerShell
+
 MVPActivity "Personal Blogs" {
     Area 'Article'
     ContributionArea 'PowerShell'
@@ -182,7 +235,7 @@ MVPActivity "Personal Blogs" {
     Value 'URL' 'https:\\test.com'
     Value 'Description' 'THIS IS A TEST'
     Value 'Number of Posts' '1'
-    # Or you can use the HTML Div Id Name
+    # Or you can use the HTML Div Id
     Value 'Number of Subscribers' '1'
     Value 'Annual Unique Visitors' '1'
 }
@@ -191,25 +244,109 @@ MVPActivity "Another Random Blog" {
     Area 'Article'
     ContributionArea 'PowerShell'
     Value 'Date' '19/11/2020'
-    Value 'Title' 'TEST'
+    Value 'Title' 'TEST2'
     Value 'URL' 'https:\\test.com'
-    Value 'Description' 'THIS IS A TEST'
+    Value 'Description' 'THIS IS A TEST2'
     Value 'Number of Posts' '1'
-    # Or you can use the HTML Div Id Name
+    # Or you can use the HTML Div Id
     Value 'Number of Subscribers' '1'
     Value 'Annual Unique Visitors' '1'
 }
 
 ```
 
-`MVPActivity` supports arguments being parsed into it using the -ArgumentList parameter, similarly to the -TestCases parameter within Pester. Input is defined as a HashTable 
+`MVPActivity` supports arguments being parsed into it using the -ArgumentList parameter, similarly to the -TestCases parameter within Pester. Input is defined as a `[HashTable]` or a `[HashTable[]]`.
 
-Now if you have an understanding of PowerShell, you can refactor this logic as follows:
+Now we can refactor this logic to take advantage of the `-ArgumentList` parameter:
 
-```
+``` PowerShell
 
-$data = @{
-    Article = 
+$arguments = @(
+    @{
+        Area = 'Article'
+        ContributionArea = 'PowerShell'
+        Date = '19/11/2020'
+        Title = 'TEST'
+        Url = 'https:\\test.com'
+        Description = 'THIS IS A TEST'
+        NumberOfPosts = 1
+        NumberOfSubscribers = 1
+        NumberOfVisitors = 1
+    },
+    @{
+        Area = 'Article'
+        ContributionArea = 'PowerShell'
+        Date = '19/11/2020'
+        Title = 'TEST2'
+        Url = 'https:\\test.com'
+        Description = 'THIS IS A TEST2'
+        NumberOfPosts = 1
+        NumberOfSubscribers = 1
+        NumberOfVisitors = 1
+    }
+)
+
+MVPActivity "Another Random Blog" -ArgumentList $arguments {
+    param($Area, $ContributionArea, $Date, $Title, $Url, $Description, $NumberOfPosts, $NumberOfSubscribers, $NumberOfVisitors)
+
+    Area $Area
+    ContributionArea $ContributionArea
+    Value 'Date' $Date
+    Value 'Title' $Title
+    Value 'URL' $Url
+    Value 'Description' $Description
+    Value 'Number of Posts' $NumberOfPosts
+    Value 'Number of Subscribers' $NumberOfSubscribers
+    Value 'Annual Unique Visitors' $NumberOfVisitors
 }
 
 ```
+
+But we can refactor this further: The DSL enables automatic Area and ContributionArea execution within the fixture only by including `$Area` or `$ContributionArea` within the parameter:
+
+``` PowerShell
+
+$arguments = @(
+    @{
+        Area = 'Article'
+        ContributionArea = 'PowerShell'
+        Date = '19/11/2020'
+        Title = 'TEST'
+        Url = 'https:\\test.com'
+        Description = 'THIS IS A TEST'
+        NumberOfPosts = 1
+        NumberOfSubscribers = 1
+        NumberOfVisitors = 1
+    },
+    @{
+        Area = 'Article'
+        ContributionArea = 'PowerShell'
+        Date = '19/11/2020'
+        Title = 'TEST2'
+        Url = 'https:\\test.com'
+        Description = 'THIS IS A TEST2'
+        NumberOfPosts = 1
+        NumberOfSubscribers = 1
+        NumberOfVisitors = 1
+    }
+)
+
+MVPActivity "Another Random Blog" -ArgumentList $arguments {
+    param($Area, $ContributionArea, $Date, $Title, $Url, $Description, $NumberOfPosts, $NumberOfSubscribers, $NumberOfVisitors)
+
+    # Removed $Area and $ContributionArea, since they are included in the fixture's param block.
+    Value 'Date' $Date
+    Value 'Title' $Title
+    Value 'URL' $Url
+    Value 'Description' $Description
+    Value 'Number of Posts' $NumberOfPosts
+    Value 'Number of Subscribers' $NumberOfSubscribers
+    Value 'Annual Unique Visitors' $NumberOfVisitors
+
+}
+
+```
+# Contributing
+
+## Things to know
+
