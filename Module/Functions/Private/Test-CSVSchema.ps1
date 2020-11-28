@@ -1,4 +1,5 @@
 Function Test-CSVSchema {
+    [cmdletbinding()]
     param(
         [Parameter(Mandatory)]
         [String]
@@ -9,14 +10,14 @@ Function Test-CSVSchema {
 
     # Test-Path
     if (-not(Test-Path @PSBoundParameters -ErrorAction SilentlyContinue)) {
-        Throw "Missing CSV File: '$LiteralPath'"
+        Throw ($LocalizedData.ErrorTestCSVSchemaMissingCSVFile -f $LiteralPath)
     }
 
     try {
         # Import the CSV File
         $CSV = Import-Csv @PSBoundParameters
     } catch {
-        Throw ("An error occured when importing the CSV File: Error '{0}'" -f $_)
+        Throw ($LocalizedData.ErrorTestCSVSchemaImportCSVFile -f $_)
     }
 
     # Get the CSV Column Names
@@ -28,7 +29,7 @@ Function Test-CSVSchema {
     }
     # If items were matched then throw a terminating error.
     if ($MissingTopLevelColumns.Count -ne 0) {
-        Throw ("Error. Validation Failed: Missing Columns '{0}'" -f ($MissingTopLevelColumns -join ' , '))
+        Throw ($LocalizedData.ErrorTestCSVSchemaMissingColumns -f ($MissingTopLevelColumns -join ' , '))
     }
 
     # Ensure that the Areas are all the same. Group by the Property Area
@@ -36,7 +37,7 @@ Function Test-CSVSchema {
 
     # Retrive the Area and Contribution Areas
     if ($GroupedItems.Length -ne 1) {
-        Throw ("Formatting Error. Validation Failed: Cannot have different Areas ('{0}') within the same CSV File." -f $GroupedItems.Name -join ' , ')
+        Throw ($LocalizedData.ErrorTestCSVSchemaDifferentAreaColumn -f $GroupedItems.Name -join ' , ')
     }
 
     $Area = $GroupedItems[0].Name
@@ -46,11 +47,23 @@ Function Test-CSVSchema {
 
     # Validate that the required Name or Element is Present within the CSV File
     $MissingCSVColumns = $FormStructure | Where-Object { $_.Name -notin $CSVColumnNames }
-    if ($MissingCSVColumns.Count -ne 1) {
-        Throw ("Formatting Error. Validation Failed: Missing Column Names from CSV File. '{0}'" -f $MissingCSVColumns.Name -join ' , ')
+    if ($MissingCSVColumns.Count -ne 0) {
+        Throw ($LocalizedData.ErrorTestCSVSchemaMissingColumns -f $MissingCSVColumns.Name -join ' , ')
     }    
 
-    # Validate Duplicates
+    # Validate no duplicate Contribution Area's are present
 
+    ForEach($Row in $CSV) {
+
+        if ((-not([String]::IsNullOrEmpty($Row.SecondContributionArea))) -or (-not($Row.ThirdContributionArea))) {
+            $arr = $Row.ContributionArea, $Row.SecondContributionArea, $Row.ThirdContributionArea | Group-Object | Where-Object {$_.Count -ne 1}
+            
+            if ($arr.Count -ne 0) {
+                Throw ($LocalizedData.ErrorTestCSVSchemaDuplicateContributionArea)
+            }
+            
+        }
+
+    }
 
 }

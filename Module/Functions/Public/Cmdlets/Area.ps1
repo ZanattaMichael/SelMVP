@@ -26,9 +26,10 @@ function Area {
         
         # If the Activity Type matches, we need to do a lookup to get the HTML Form structure
         $HTMLFormStructure = Get-HTMLFormStructure $SelectedValue
-        # Select the Element
-                
+
+        # Select the Element        
         $output = ttry {
+
             Select-DropDown -elementId $LocalizedData.ElementIdActivityType -selectedValue $matchedActivityType.Value
 
             # We are using Views of Answers to dertmine if the Javascript has ran

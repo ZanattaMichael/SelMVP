@@ -29,6 +29,11 @@ data LocalizedData {
     ErrorSelectingDropDown=Error. There was an error raised when attempting to select the dropDown '{0}' with the value: '{1}'. Error: '{2}'
     ErrorStopMVPActivity=Error. There was an error raised when attempting to cancel the MVP activity. Error: '{0}'
     ErrorAreaFailure=Error. Could not set MVP Area within HTML Form, unable to continue.
+    ErrorTestCSVSchemaMissingCSVFile="Missing CSV File: '{0}'"
+    ErrorTestCSVSchemaImportCSVFile=An error occured when importing the CSV File: Error '{0}'
+    ErrorTestCSVSchemaMissingColumns=Error. Validation Failed: Missing Columns '{0}'
+    ErrorTestCSVSchemaDifferentAreaColumn=Formatting Error. Validation Failed: Cannot have different Areas ('{0}') within the same CSV File.
+    ErrorTestCSVSchemaDuplicateContributionArea=Duplicate Contribution Area Found with SecondContributionArea and ThirdContributionArea columns within the CSV File. Please correct this issue and try again!
     WarningEntryWasNotSaved=An Error occured when attempting to add the entry. THE ENTRY WAS NOT SAVED.
     ElementIdActivityType=activityTypeSelector 
     ElementIdContributionArea=select_contributionAreasDDL

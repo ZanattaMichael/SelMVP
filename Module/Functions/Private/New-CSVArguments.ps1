@@ -9,7 +9,7 @@ function New-CSVArguments {
     $CSV = Import-Csv @PSBoundParameters
 
     # Get the CSV Column Names, excluding 'Area' & ContributionArea
-    $CSVColumnNames = ($CSV | Get-Member).Name
+    $CSVColumnNames = ($CSV | Get-Member -MemberType NoteProperty).Name
 
     # Get the HTMLForm Structure and Get the Column Names Match from the CSV File
     $FormStructure = Get-HTMLFormStructure $CSV.Area[0] | Where-Object { $_.Name -in $CSVColumnNames }
@@ -20,7 +20,7 @@ function New-CSVArguments {
 
         $params = @{
             Area = $row.Area
-            ContributionArea = $row.ContributionArea, $row.SecondContributionArea, $row.ThirdContributionArea
+            ContributionArea = ($row.ContributionArea, $row.SecondContributionArea, $row.ThirdContributionArea | Where-Object {$null -ne $_})
         }
 
         # Iterate Through the Matched Items and Add them
