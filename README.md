@@ -424,7 +424,43 @@ MVPActivity "Test" {
 
 ```
 
-## Value `'Name' 'Value'`
+## Value `[String]'Name' [String]'Value'`
+
+The `Value` command is used to input the data into the HTML form, using the 'Name' (*Being the HTML Div Element ID or Text Name*) and 'Value' (Corresponding Value) syntax. Since different Area's have different fields, you can use `Get-AreaNamedValues 'AreaName'` to identify the fields.
+
+> `Value` is *mandatory*, within  `MVPActivity` and won't be automatically invoked when specified within the `Param()` bock.
+
+In the example below, we will use `Get-AreaNamedValues 'Article'` to get the `Value` names:  
+
+``` Text
+Get-AreaNamedValues Article
+
+Name               Mandatory
+----               ---------
+Number of Articles      True
+Title                   True
+Date                    True
+Number of Views        False
+URL                    False
+Description            False
+```
+
+Once the list is returned, we can construct the data structure using the output:
+
+``` PowerShell
+MVPActivity "Test" {
+    # Let's set the Area and the Contribution Area
+    Area 'Article'
+    ContributionArea 'PowerShell'
+
+    # We can set the mandatory parameters
+    Value "Number or Articles" 1
+    Value Title "Test Entry"
+    Value Date "30/11/2020"
+
+}
+
+```
 
 # Contributing
 
