@@ -29,7 +29,7 @@ Using this approach means that you can group different contributions areas and c
 
 ```
 
-OR if you want to explicitly specify a DriverType:
+OR if you want to explicitly specify the DriverType:
 
 ``` PowerShell
 
@@ -129,8 +129,8 @@ OR
 
     # Define Activity
     MVPActivity "Name of Activity" -ArgumentList $params {
-        # If the Parameters -Area or -ContributionArea are defined in the param block, 
-        # the cmdlet is not required (Area or ContributionArea).
+        # If the Parameters -Area or -ContributionArea are defined 
+        # in the param block, the cmdlet is not required (Area or ContributionArea).
         param($Area, $ContributionArea, $date)
 
         # You can use the String Name
@@ -153,7 +153,8 @@ OR
 ``` PowerShell
 
     #
-    # For those who love complexity, the fixture supports an array of HashTables to be parsed into the fixture.
+    # For those who love complexity, the fixture supports an array of HashTables to be parsed
+    # into the fixture.
     #
 
     $params = @(
@@ -190,30 +191,11 @@ OR
    }
 ```
 
-## Example 1:
-
-``` PowerShell
-# Prior to doing anything we need to connect to the portal
-ConnectTo-MVPPortal -URLPath "https://Your-URL-Path-Goes-Here.com"
-
-# Once Loaded we can define our MVP Activity
-# In this instance we are adding Reddit Contributions
-
-MVPActivity "Reddit Contributions" {
-
-    # This now follows the MVP Activity Form itself.
-    # You need to specify the Area and the Contribution Area
-    Area ""
-    ContributionArea "PowerShell"
-
-}
-```
-
 # Description
 
-### `MVPActivity`:
+## `MVPActivity`:
 
-`MVPActivity` is the top-level definition, which *groups* the MVP contribution types into their respective areas.
+`MVPActivity` is the top-level definition command, which *groups* the MVP contribution types into their respective areas.
 For Example: In the example below, I have a personal blog which I would like to group all my content:
 
 ```PowerShell
@@ -255,7 +237,7 @@ MVPActivity "Another Random Blog" {
 
 ```
 
-`MVPActivity` supports arguments being parsed into it using the -ArgumentList parameter, similarly to the -TestCases parameter within Pester. Input is defined as a `[HashTable]` or a `[HashTable[]]`.
+`MVPActivity` supports arguments being parsed into it using the `-ArgumentList` parameter, similarly to the -TestCases parameter within Pester. Input is defined as a `[HashTable]` or a `[HashTable[]]`.
 
 Now we can refactor this logic to take advantage of the `-ArgumentList` parameter:
 
@@ -299,6 +281,7 @@ MVPActivity "Another Random Blog" -ArgumentList $arguments {
     Value 'Number of Subscribers' $NumberOfSubscribers
     Value 'Annual Unique Visitors' $NumberOfVisitors
 }
+
 
 ```
 
@@ -346,6 +329,103 @@ MVPActivity "Another Random Blog" -ArgumentList $arguments {
 }
 
 ```
+
+## `Area [String]'Area Name'`
+
+`Area` is a command that defines the MVP Contribution Area that in the Portal. `Area` can only be used within MVPActivity.
+
+Usage:
+
+``` PowerShell
+MVPActivity "Test" {
+
+    # Specify the Area. In this instance we are specifying the article.
+    Area 'Article'
+
+}
+```
+
+`Area` is not required to be included when `$Area` is added to the `param()` within the Fixture. For Example:
+
+``` PowerShell
+
+MVPActivity "Test" -ArgumentList $params {
+    param($Area)
+}
+
+```
+
+The Current List of Areas are:
+
+- Article
+- Blog/WebSite Post
+- Book (Author)
+- Book (Co-Author)
+- Conference (Staffing)
+- Docs.Microsoft.com Contribution
+- Forum Moderator
+- Forum Participation (3rd Party forums)
+- Forum Participation (Microsoft Forums)
+- Mentorship
+- Microsoft Open Source Projects
+- Non-Microsoft Open Source Projects
+- Organizer (User Group/Meetup/Local Events)
+- Organizer of Conference
+- Other
+- Product Group Feedback
+- Sample Code/Projects/Tools
+- Site Owner
+- Speaking (Conference)
+- Speaking (User Group/Meetup/Local events)
+- Technical Social Media (Twitter, Facebook, LinkedIn...)
+- Translation Review, Feedback and Editing
+- Video/Webcast/Podcast
+- Workshop/Volunteer/Proctor
+
+## ContributionArea `[String[]]'ContributionAreas'`
+
+The `ContributionArea` is a command that defines the Contribution Areas within the MVP Portal. `ContributionArea` can be used as a String Array (`ContributionArea 'Area1','Area2','Area3'`), or by specifying multiple `ContributionArea` statements.
+
+Similarly to `Area`, if `ContributionArea` is included within the `Param()` block, it's not required to be defined and will be automatically invoked.
+
+Single:
+
+``` PowerShell
+
+MVPActivity "Test" {
+    ContributionArea 'Area1','Area2','Area3'
+}
+
+```
+
+Multiple:
+
+``` PowerShell
+
+MVPActivity "Test" {
+
+    ContributionArea 'Area1'
+    ContributionArea 'Area2'
+    ContributionArea 'Area3'
+
+}
+```
+
+Param Block:
+
+``` PowerShell
+
+MVPActivity "Test" {
+    Param($ContributionArea)
+
+    # ContributionArea is not required when included in the Param Block.
+}
+
+
+```
+
+## Value `'Name' 'Value'`
+
 # Contributing
 
 ## Things to know
