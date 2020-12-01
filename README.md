@@ -449,6 +449,7 @@ Once the list is returned, we can construct the data structure using the output:
 
 ``` PowerShell
 MVPActivity "Test" {
+    
     # Let's set the Area and the Contribution Area
     Area 'Article'
     ContributionArea 'PowerShell'
