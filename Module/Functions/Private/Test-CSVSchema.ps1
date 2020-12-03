@@ -40,7 +40,7 @@ Function Test-CSVSchema {
         Throw ($LocalizedData.ErrorTestCSVSchemaDifferentAreaColumn -f $GroupedItems.Name -join ' , ')
     }
 
-    $Area = $GroupedItems[0].Name
+    $Area = $GroupedItems | Select-Object -First 1 -ExpandProperty Name
 
     # Perform a Lookup to workout what columns we need
     $FormStructure = Get-HTMLFormStructure $Area | Where-Object {$_.isRequired}

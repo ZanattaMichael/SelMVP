@@ -130,9 +130,9 @@ Describe "Test-CSVSchema" {
 
     it "When the same contribution area value is defined will fail" {
 
-        Mock -CommandName "Test-Path" -MockWith { return $true }]
+        Mock -CommandName "Test-Path" -MockWith { return $true }
         Mock -CommandName "Get-HTMLFormStructure" -MockWith { "TEST" }
-        Mock -CommandName "Import-CSV" -MockWith { 
+        Mock -CommandName "Import-CSV" -MockWith { return (
             @(
                 [PSCustomObject]@{
                     Area = "Same"
@@ -146,13 +146,13 @@ Describe "Test-CSVSchema" {
                     SecondContributionArea = "SomthingElse"
                     ThrirdContributionArea = "AnotherItem"                    
                 }
-            )
+            ))
         }
 
         { Test-CSVSchema -LiteralPath "TEST" } | Should -Throw ($LocalizedData.ErrorTestCSVSchemaDuplicateContributionArea -f "*")
         Should -Invoke "Import-CSV" -Exactly 1
         Should -Invoke "Test-Path" -Exactly 1
-        Should -Invoke "Get-HTMLFormStructure" -Exactly 0
+        Should -Invoke "Get-HTMLFormStructure" -Exactly 1
 
     }
 
@@ -164,14 +164,6 @@ Describe "Test-CSVSchema" {
         Mock -CommandName "Get-HTMLFormStructure" -MockWith {}
 
         $Assert.Invoke()
-
-    }
-
-    it "Paramertized Execution: All input varients should fail." {
-
-    }
-
-    it "Parameterized Execution: All inputs varients should succeed." {
 
     }
 
