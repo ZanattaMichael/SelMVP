@@ -11,8 +11,13 @@ if ($Location -eq 'Tests') {
 
 $UpdatedPath = Join-Path -Path $RootPath -ChildPath 'build\LocalLoader.ps1' 
 
-# Set a Script Variable that sets the tests root path. This is used in Mocking with HTML
-$Script:TestRootPath = Join-Path -Path $RootPath -ChildPath "Tests"
+if ($IsCoreCLR) {
+    # Set a Script Variable that sets the tests root path. This is used in Mocking with HTML
+    $Script:TestRootPath = Join-Path -Path $RootPath -ChildPath "Tests"
+} else {
+    # Set a Script Variable that sets the tests root path. This is used in Mocking with HTML
+    $Script:TestRootPath = Join-Path -Path $RootPath -ChildPath "Tests"
+}
 
 # Set the FilePath
 . $UpdatedPath $RootPath
