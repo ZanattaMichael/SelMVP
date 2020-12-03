@@ -22,15 +22,15 @@ function ConnectTo-MVPPortal {
         Throw ($LocalizedData.ErrorConnectToMVPPortal -f $_)       
     }
 
-    # Wait for the Login Screen
+    # Wait until the Login Screen Loads
     do {
         Test-SEDriver
         Write-Verbose "Waiting for the URL to redirect to the Microsoft Login"
         Start-Sleep -Seconds 1
-    } Until ($Global:MVPDriver.Url -match $LocalizedData.ConnectToMVPPortalRegexURLMatch)
+    } Until (Test-MVPDriverisMicrosoftLogin -waitUntilLoaded)
 
-    # Pause Execution until login box is no longer present
-    while ($Global:MVPDriver.Url -match $LocalizedData.ConnectToMVPPortalRegexURLMatch) {
+    # Then Pause Execution until login process has completed
+    while (Test-MVPDriverisMicrosoftLogin -isCompleted) {
         Test-SEDriver
         Write-Verbose "Waiting for Login to complete:"
         Start-Sleep -Seconds 1

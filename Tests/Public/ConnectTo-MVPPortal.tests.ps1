@@ -43,12 +43,13 @@ Describe "ConnectTo-MVPPortal" {
 
     it "Standard Execution (with immediate redirection)" -TestCases $standardExecutionTestCases {
         param($Assert, $DriverType)
-        
         Mock -CommandName 'Start-SeFirefox' -MockWith { return [PSCustomObject]@{ Url = "Mocked" } }
         Mock -CommandName 'Start-SeChrome' -MockWith { return [PSCustomObject]@{ Url = "Mocked" }  }
         Mock -CommandName 'Start-SeEdge' -MockWith { return [PSCustomObject]@{ Url = "Mocked" } }
         Mock -CommandName 'Write-Verbose' -MockWith { return [PSCustomObject]@{ Url = "Mocked" } }
         Mock -CommandName 'Start-Sleep' -MockWith { return [PSCustomObject]@{ Url = "Mocked" } }
+        Mock -CommandName 'Test-MVPDriverisMicrosoftLogin' -ParameterFilter { $waitUntilLoaded -eq $true} -MockWith { $true }
+        Mock -CommandName 'Test-MVPDriverisMicrosoftLogin' -ParameterFilter { $isCompleted -eq $true} -MockWith { $false }
 
         $result = ConnectTo-MVPPortal -URLPath "https://test.com" -DriverType $DriverType
 
@@ -65,6 +66,9 @@ Describe "ConnectTo-MVPPortal" {
         Mock -CommandName 'Start-SeEdge' -MockWith { Throw "Test" }
         Mock -CommandName 'Write-Verbose' -MockWith {}
         Mock -CommandName 'Start-Sleep' -MockWith {}
+        Mock -CommandName 'Test-MVPDriverisMicrosoftLogin' -ParameterFilter { $waitUntilLoaded -eq $true} -MockWith { $true }
+        Mock -CommandName 'Test-MVPDriverisMicrosoftLogin' -ParameterFilter { $isCompleted -eq $true} -MockWith { $false }
+
 
         { ConnectTo-MVPPortal -URLPath "https://test.com" -DriverType $DriverType } | 
             Should -Throw ($LocalizedData.ErrorConnectToMVPPortal -f "*")
