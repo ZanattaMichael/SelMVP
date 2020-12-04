@@ -462,6 +462,12 @@ MVPActivity "Test" {
 
 ```
 
+`Value` supports auto-formatting of inputted data to meet the requirements of the MVP Portal.
+Currently the following Portal dependencies are auto-formatted:
+
+- Date (Required to be US Date Format) (MM-DD-YYYY)
+- URL (Required to meet URL format) (https://site.com)
+
 # Contributing
 
 ## Getting Started:
