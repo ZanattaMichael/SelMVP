@@ -9,17 +9,15 @@ if ($Location -eq 'Tests') {
     $RootPath = (Get-Location).Path
 }
 
+# Set a Script Variable that sets the tests root path. This is used in Mocking with HTML
+$Script:TestRootPath = Join-Path -Path $RootPath -ChildPath "Tests"
 $UpdatedPath = Join-Path -Path $RootPath -ChildPath 'build\LocalLoader.ps1' 
 
-if ($IsCoreCLR) {
-    # Set a Script Variable that sets the tests root path. This is used in Mocking with HTML
-    $Script:TestRootPath = Join-Path -Path $RootPath -ChildPath "Tests"
-} else {
-    # Set a Script Variable that sets the tests root path. This is used in Mocking with HTML
-    $Script:TestRootPath = Join-Path -Path $RootPath -ChildPath "Tests"
+if ($IsCoreCLR -and $CI) {
+    $UpdatedPath = $UpdatedPath.Replace('/SelMVP/SelMVP/', '/SelMVP/')
 }
 
-# Set the FilePath
+# Invoke the Local Loader and Point it to the Module Directory
 . $UpdatedPath $RootPath
 
 # Import the Selenium Module
