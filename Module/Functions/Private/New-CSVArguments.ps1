@@ -12,7 +12,7 @@ function New-CSVArguments {
     $CSVColumnNames = ($CSV | Get-Member -MemberType NoteProperty).Name
 
     # Get the HTMLForm Structure and Get the Column Names Match from the CSV File
-    $FormStructure = Get-HTMLFormStructure $CSV.Area[0] | Where-Object { $_.Name -in $CSVColumnNames }
+    $FormStructure = Get-HTMLFormStructure @($CSV.Area)[0] | Where-Object { $_.Name -in $CSVColumnNames }
 
     $ArgumentList = $CSV | ForEach-Object {
 
