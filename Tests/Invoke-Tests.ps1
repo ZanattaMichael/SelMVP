@@ -23,7 +23,7 @@ if ($IsCoreCLR) {
 . $UpdatedPath $RootPath
 
 # Import the Selenium Module
-Import-Module Selenium
+Import-Module Selenium -ErrorAction Stop
 
 # Invoke the Pester Tests
 Invoke-Pester -Path (Join-Path -Path $Script:TestRootPath -ChildPath 'Private') -CI:$CI
