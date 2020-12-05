@@ -75,6 +75,6 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: InvokePesterTests
         run: |
-          . .\Tests\Invoke-Tests.ps1
+          . .\Tests\Invoke-Tests.ps1 -CI
         shell: pwsh
        
