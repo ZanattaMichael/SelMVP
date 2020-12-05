@@ -14,6 +14,9 @@ Using this approach means that you can group different contributions areas and c
 ## Requirements:
 
 - [PowerShell Selenium](https://github.com/adamdriscoll/selenium-powershell)
+- Windows PowerShell 5.1 (Minimum)
+
+*Please note that the Module is not supported on PowerShell Core.*
 # Installation
 
 1. ` Install-Module SelMVP `
