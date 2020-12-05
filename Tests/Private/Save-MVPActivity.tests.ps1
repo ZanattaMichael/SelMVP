@@ -29,7 +29,6 @@ Describe "Save-MVPActivity" -Tag Unit {
             return ([PSCustomObject]@{ data = "TEST"})
         } -RemoveParameterType 'Target','Driver' -ParameterFilter { $Id -eq $LocalizedData.ElementButtonSubmitActivity }
         Mock -CommandName Invoke-SeClick -MockWith {} -RemoveParameterType 'Element'
-        Mock -CommandName Start-Sleep -MockWith {}
         
         $Script:MVPHTMLFormStructure = @(
             [PSCustomObject]@{
@@ -41,7 +40,6 @@ Describe "Save-MVPActivity" -Tag Unit {
 
         Should -Invoke "Find-SeElement" -Exactly 2
         Should -Invoke "Invoke-SeClick" -Exactly 1
-        Should -Invoke "Start-Sleep" -Exactly 1
 
     }
 
@@ -53,7 +51,6 @@ Describe "Save-MVPActivity" -Tag Unit {
             return ([PSCustomObject]@{ data = "TEST"})
         } -RemoveParameterType 'Target','Driver' -ParameterFilter { $Id -eq $LocalizedData.ElementButtonSubmitActivity }
         Mock -CommandName Invoke-SeClick -MockWith { Throw "TEST ERROR" } -RemoveParameterType 'Element'
-        Mock -CommandName Start-Sleep -MockWith {}
         
         $Script:MVPHTMLFormStructure = @(
             [PSCustomObject]@{
@@ -62,7 +59,6 @@ Describe "Save-MVPActivity" -Tag Unit {
         )
 
         { Save-MVPActivity } | Should -Throw ($LocalizedData.ErrorSavingMVPActivity -f "*")
-        Should -Invoke "Start-Sleep" -Exactly 0
 
     }
 
