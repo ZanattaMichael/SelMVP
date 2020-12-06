@@ -1,5 +1,7 @@
 # Selenium MVP PowerShell Module
 
+![example workflow name](https://github.com/ZanattaMIchael/SelMVP/workflows/Current%20%Test%20Status/badge.svg)
+
 Selenium MVP is a PowerShell module that uses PowerShell Selenium combined with a Domain Specific Language (DSL) to automate MVP Submissions. This module is built for *first time MVP nominees* who don't have access to the API.
 
 This module is intended to make submitting new submissions *as simple as possible*, by using the Domain Specific Language.
@@ -474,7 +476,7 @@ Currently the following Portal dependencies are auto-formatted:
 
 # Contributing
 
-## Getting Started:
+## Getting Started
 
 1. Clone the Repo `git clone "https://github.com/ZanattaMichael/SelMVP.git" dirpath`
 1. Update.
@@ -484,3 +486,7 @@ Currently the following Portal dependencies are auto-formatted:
 1. Sit Back and Relax.
 
 ## Things to know
+
+- You can run the tests locally by running the "Run Pester Tests" VSCode Task.
+- If you are wanting to test the module locally without having to import the module, you can run: `SelMVP\Build\LocalLoader.ps1`. This script will dot-source the functions and dll's needed.
+- I have created a React Site that emulates the functionality of the Portal.Moving forward, I plan to add integration tests to against this portal.

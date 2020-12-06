@@ -19,6 +19,14 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}\\Tests\\test-site\\src\\Components\\NewActivity\\index.js"
+        },
+        {
+            "type": "PowerShell",
+            "request": "launch",
+            "name": "Run Pester Tests",
+            "script": "${workspaceFolder}\\Tests\\Invoke-Tests.ps1",
+            "args": ["${file}"],
+            "cwd": "${workspaceFolder}\\Tests\\"
         }
     ]
 }
