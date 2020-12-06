@@ -4,12 +4,12 @@ Write-Verbose "Building PowerShell Module:"
 
 $ModuleManifestParams = @{
     Path = ''
-    Guid = ''
+    Guid = [GUID]::NewGuid().Guid
     Author = 'Michael.Zanatta'
     ModuleVersion = ''
     Description = ''
-    PowerShellVersion = ''
-    RequiredModules = ''
+    PowerShellVersion = '5.1'
+    RequiredModules = 'Selenium'
 }
 
 $BuildDirectory = Split-Path -parent $PSCommandPath
