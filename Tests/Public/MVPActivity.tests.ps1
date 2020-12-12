@@ -1,3 +1,2 @@
-Describe "MVPActivity" {
-    TM_SELECTED_TEXT
+Describe "MVPActivity" -skip {
 }
