@@ -1,0 +1,2 @@
+Describe "MVPActivity" -skip {
+}

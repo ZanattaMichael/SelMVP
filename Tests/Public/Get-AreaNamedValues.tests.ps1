@@ -1,0 +1,2 @@
+Describe "Get-AreaNamedValues" -Skip {
+}
