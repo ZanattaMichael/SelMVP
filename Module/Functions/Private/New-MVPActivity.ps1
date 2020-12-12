@@ -118,6 +118,7 @@ function New-MVPActivity {
         #
 
         return $null
+        
     }
 
 }
