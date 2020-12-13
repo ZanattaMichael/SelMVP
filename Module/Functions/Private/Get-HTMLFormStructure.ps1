@@ -9,6 +9,9 @@ function Get-HTMLFormStructure {
 
     Write-Verbose "Get-HTMLFormStructure Started:"
 
+    # Trim the input so that we can be more forgiving.
+    $Name = $Name.Trim()
+
     $output = [System.Collections.Generic.List[PSCustomObject]]::New()
 
     # The Default Parameter Value is Prohibited
