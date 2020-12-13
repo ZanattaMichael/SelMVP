@@ -114,16 +114,6 @@ New-Variable -Name HTMLFormStructure -Scope Global -Option ReadOnly -Force -Valu
         )
     }
     @{
-        Name = "Docs.Microsoft.com Contribution"
-        Properties = @(
-            @{
-                Name = 'Pull Requests/Issues/Submissions'
-                Element = $LocalizedDataHTMLElements.AnnualQuantity
-                isRequired = $true
-            }                     
-        )
-    }
-    @{
         Name = "Forum Moderator"
         Properties = @(
             @{
