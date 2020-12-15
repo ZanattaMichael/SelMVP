@@ -3,6 +3,8 @@ Describe "Get-HTMLFormStructure" -Tag Unit {
     BeforeAll {
         # Define the HTMLFormStructure
 
+        # Take a Backup of the HTMLFormStructure 
+        $Global:BackupHTMLFormStructure = $Global:HTMLFormStructure.Clone()
         try { Remove-Variable HTMLFormStructure -Force -Scope Global -ErrorAction Stop} catch {}
 
         $Global:HTMLFormStructure = @(
@@ -72,6 +74,11 @@ Describe "Get-HTMLFormStructure" -Tag Unit {
                                             )
                                         }                                                                                 
                                     )
+    }
+
+    AfterAll {
+        # Restore from the Copy of the HTML Form Structure
+        $Global:HTMLFormStructure = $Global:BackupHTMLFormStructure.Clone()
     }
 
     it "will throw an error if the -name 'default' is used" {

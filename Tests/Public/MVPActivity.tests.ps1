@@ -1,43 +1,42 @@
 Describe "MVPActivity" {
 
-    it "CSV Input. Standard Import." {
+    if ($Script:TestRootPath) {
+        $badTestCasePath = Join-Path -Path $Script:TestRootPath -ChildPath '\Mocks\MVPActivity\BadTestCases'
+        $goodTestCasePath = Join-Path -Path $Script:TestRootPath -ChildPath '\Mocks\MVPActivity\GoodTestCases'
+    } else {
+        $badTestCasePath = '..\Mocks\MVPActivity\BadTestCases'
+        $goodTestCasePath = '..\Mocks\MVPActivity\GoodTestCases'
+    }        
 
-        Mock -CommandName 'Import-CSV' -MockWith {
-            return @(
-                [PSCustomObject]@{
-                    Date = 28/11/2020
-                    Area = 'Article'
-                    ContributionArea = 'PowerShell'
-                    SecondContriutionArea = 'Networking'
-                    Url = 'https://www.google.com'
-                    Description = 'TEST'
-                    Title = 'TITLE'
-                    'Number of Articles' = 1
-                    'Number of Views' = 1
-                }
-                [PSCustomObject]@{
-                    Date = 28/11/2021
-                    Area = 'Article'
-                    ContributionArea = 'PowerShell'
-                    SecondContriutionArea = 'Networking'
-                    Url = 'https://www.google.com'
-                    Description = 'TEST'
-                    Title = 'TITLE2'
-                    'Number of Articles' = 1
-                    'Number of Views' = 1
-                }
-            )
-        }
+    $badTestCases = (Get-ChildItem -Path $badTestCasePath -File).FullName | ForEach-Object { @{ CSVPath = $_ } }
+    $goodTestCases = (Get-ChildItem -Path $goodTestCasePath -File).FullName | ForEach-Object { @{ CSVPath = $_ } }
+
+    if ($badTestCases.Length -eq 0) { Throw "Missing badTestCases CSV Files." }
+    if ($goodTestCases.Length -eq 0) { Throw "Missing goodTestCases CSV Files." }
+    
+    it "CSV Input. Standard Import." -TestCases $goodTestCases {
+        param($CSVPath)
 
         Mock -CommandName 'New-MVPActivity' -MockWith {}
-        Mock -CommandName 'Test-Path' -MockWith { return $true }
+        Mock -CommandName 'Write-Host' -MockWith {}
 
-        $null = MVPActivity -CSVPath 'TEST'
-
+        $null = MVPActivity -CSVPath $CSVPath
+        
+        Should -Invoke "Write-Host" -Exactly 1
         Should -Invoke "New-MVPActivity" -Exactly 2
-        Should -Invoke "Test-CSVSchema" -Exactly 2
-        Should -Invoke "New-CSVFixture" -Exactly 2
-        Should -Invoke "New-CSVArguments" -Exactly 2
+
+    }
+
+    it "CSV Input. Standard Import. Bad CSV Data Should Fail" -TestCases $badTestCases {
+        param($CSVPath)
+
+        Mock -CommandName 'New-MVPActivity' -MockWith {}
+        Mock -CommandName 'Write-Host' -MockWith {}
+
+        { MVPActivity -CSVPath $CSVPath } | Should -Throw
+
+        Should -Not -Invoke 'New-MVPActivity'
+        Should -Not -Invoke 'Write-Host'
 
     }
 
