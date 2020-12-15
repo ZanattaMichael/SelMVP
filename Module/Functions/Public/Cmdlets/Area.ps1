@@ -1,4 +1,44 @@
 function Area {
+<#
+.Description
+'Area' defines the MVP Contribution Area within the Portal. Area can only be used within MVPActivity.
+
+The Current List of Areas are:
+
++   Article
++    Blog/WebSite Post
++    Book (Author)
++    Book (Co-Author)
++    Conference (Staffing)
++    Docs.Microsoft.com Contribution
++    Forum Moderator
++    Forum Participation (3rd Party forums)
++    Forum Participation (Microsoft Forums)
++    Mentorship
++    Microsoft Open Source Projects
++    Non-Microsoft Open Source Projects
++    Organizer (User Group/Meetup/Local Events)
++    Organizer of Conference
++    Other
++    Product Group Feedback
++    Sample Code/Projects/Tools
++    Site Owner
++    Speaking (Conference)
++    Speaking (User Group/Meetup/Local events)
++    Technical Social Media (Twitter, Facebook, LinkedIn...)
++    Translation Review, Feedback and Editing
++    Video/Webcast/Podcast
++    Workshop/Volunteer/Proctor
+
+.PARAMETER SelectedValue
+The MVP Area.
+.EXAMPLE
+Area 'Article'
+.EXAMPLE
+Area 'Article'
+.SYNOPSIS
+'Area' defines the MVP Contribution Area within the Portal. Area can only be used within MVPActivity.
+#>
     [CmdletBinding()]
     param(
         # Selected Value

@@ -11,19 +11,22 @@ if ($IsCoreCLR) { Throw "Due to limitations with the Selenium PowerShell Module.
 Write-Verbose "Loading Parameters:"
 
 $ModulePath = Split-Path -Path $PSCommandPath -Parent
-$HTMLAgilityPackPath = Join-Path -Path $ModulePath -ChildPath "\Libraries\HTMLAgilityPack\HtmlAgilityPack.dll"
+#$HTMLAgilityPackPath = Join-Path -Path $ModulePath -ChildPath "\Libraries\HTMLAgilityPack\HtmlAgilityPack.dll"
 
+<#
 Write-Verbose "Loaded Parameters:"
 
 Write-Debug "Parameters:"
-Write-Debug "{0}{1}" '$ModulePath', $ModulePath
-Write-Debug "{0}{1}" '$HTMLAgilityPackPath', $HTMLAgilityPackPath
+Write-Debug ("{0} {1]" -f '$ModulePath:', $ModulePath)
+Write-Debug ("{0} {1}" -f '$HTMLAgilityPackPath:', $HTMLAgilityPackPath)
+#>
 
 #
 # Add the HTML Agility Pack
 
-Write-Verbose "Loading HTML Agility Pack:"
+#Write-Verbose "Loading HTML Agility Pack:"
 
-Add-Type -LiteralPath $HTMLAgilityPackPath
+#Add-Type -LiteralPath $HTMLAgilityPackPath
 
+Write-Host "Selenium MVP Module Loaded. Use 'ConnectTo-MVPPortal' to get started." -ForegroundColor Green
 

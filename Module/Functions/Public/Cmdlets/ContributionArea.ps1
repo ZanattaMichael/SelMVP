@@ -1,5 +1,33 @@
 Function ContributionArea {
-    # Selects a Value in a DropDown box.
+<#
+.Description
+The ContributionArea is a command that defines the Contribution Areas within the MVP Portal. ContributionArea can be used as a String Array (ContributionArea 'Area1','Area2','Area3'), or by specifying multiple ContributionArea statements.
+
+Similarly to Area, if ContributionArea is included within the Param() block, it's not required to be defined and will be automatically invoked.
+
+.PARAMETER SelectedValue
+The Contribution Areas that you wish to add.
+
+.EXAMPLE
+Single Use:
+
+ContributionArea 'Area1'
+.EXAMPLE
+ContributionArea can be stacked like so:
+
+ContributionArea 'Area1'
+ContributionArea 'Area2'
+ContributionArea 'Area3'
+
+.EXAMPLE
+ContributionArea can placed in an array:
+
+ContributionArea 'Area1','Area2','Area3'
+
+.SYNOPSIS
+The ContributionArea is a command that defines the Contribution Areas within the MVP Portal.
+
+#>
     [cmdletbinding()]
     param(
         # Parameter help description
