@@ -1,4 +1,42 @@
 Function Value {
+<#
+.Description
+The Value command is used to input the data into the HTML form, using the 'Name' (Being the HTML Div Element ID or Text Name) and 'Value' (Corresponding Value) syntax. Since different Area's have different fields, you can use Get-AreaNamedValues 'AreaName' to identify the fields.
+
+    Value is mandatory, within MVPActivity and won't be automatically invoked when specified within the Param() bock.
+
+Value supports auto-formatting of inputted data to meet the requirements of the MVP Portal. Currently the following Portal dependencies are auto-formatted:
+
+    Date (Required to be US Date Format) (MM-DD-YYYY)
+    URL (Required to meet URL format) (https://site.com)
+
+To view the list of Values for a MVP Contribution Area use: Get-AreaNamedValues 'Name' (Get-AreaNamedValues 'Article')
+
+.PARAMETER Name
+The HTML Div Element ID or Text Name
+
+.PARAMETER Value
+The input value.
+
+.EXAMPLE
+In the example; 'Value' is being used to set the HTML values for the 'Article' MVP Contribution Area.
+
+MVPActivity "Test" {
+    
+    # Let's set the Area and the Contribution Area
+    Area 'Article'
+
+    # We can set the mandatory parameters
+    Value "Number or Articles" 1
+    Value Title "Test Entry"
+    Value Date "30/11/2020"
+
+}
+
+.SYNOPSIS
+The Value command is used to input the data into the HTML form, using the 'Name' (Being the HTML Div Element ID or Text Name) and 'Value' (Corresponding Value) syntax.
+
+#>       
     [CmdletBinding()]
     param (
         [Parameter(Mandatory)]

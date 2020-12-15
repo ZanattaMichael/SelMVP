@@ -1,4 +1,25 @@
 function ConnectTo-MVPPortal {
+<#
+.Description
+Connects to the MVP Portal and waits for the login to complete.
+
+.PARAMETER URLPath
+A custom URL that is provided in the MVP email. Otherwise if excluded it will prompt the user for a URL.
+
+.PARAMETER DriverType
+Selenium features multiple drivers that can be used
+
+.EXAMPLE
+Connect to Portal
+
+ConnectTo-MVPPortal -URLPath "https://Your-URL-Path-Goes-Here.com"
+.EXAMPLE
+Connect to Portal
+
+ConnectTo-MVPPortal -URLPath "https://Your-URL-Path-Goes-Here.com" -DriverType ('Firefox','Chrome' or 'Edge')
+.SYNOPSIS
+Connects to the MVP Portal and waits for the login to complete.
+#>    
     [CmdletBinding()]
     param (
         [Parameter()]
