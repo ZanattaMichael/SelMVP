@@ -2,30 +2,36 @@
 
 Write-Verbose "Building PowerShell Module:"
 
-$ModuleManifestParams = @{
-    Path = ''
-    Guid = [GUID]::NewGuid().Guid
-    Author = 'Michael.Zanatta'
-    ModuleVersion = ''
-    Description = ''
-    PowerShellVersion = '5.1'
-    RequiredModules = 'Selenium'
-}
-
 $BuildDirectory = Split-Path -parent $PSCommandPath
 $BuildModuleDirectory = [System.IO.Path]::Join($BuildDirectory, "Module")
-$BuildModuleFile = [System.IO.Path]::Join($BuildModuleDirectory, "Module.ps1")
-$BuildModuleDirectoryLibraries = [System.IO.Path]::Join($BuildModuleDirectory, "Libraries")
+$BuildModuleFile = [System.IO.Path]::Join($BuildModuleDirectory, "Module.psm1")
+$BuildModulePSDFile = [System.IO.Path]::Join($BuildModuleDirectory, "SelMVP.psd1")
+$BuildModuleDirectoryLibraries = [System.IO.Path]::Join($BuildModuleDirectory)
 $BuildModuleDirectoryContributions = [System.IO.Path]::Join($BuildModuleDirectory, "Contributions")
 
 $ModuleDirectory = $BuildDirectory -replace "Build","Module"
-$ModuleFile = [System.IO.Path]::Join($ModuleDirectory, "Module.ps1")
+$ModuleFile = [System.IO.Path]::Join($ModuleDirectory, "Module.psm1")
 $ModuleDirectoryPrivateFunctions = [System.IO.Path]::Join($ModuleDirectory, "Functions","Private")
 $ModuleDirectoryPublicFunctions = [System.IO.Path]::Join($ModuleDirectory, "Functions","Public","Cmdlets")
 $ModuleDirectoryDLLibraries = [System.IO.Path]::Join($ModuleDirectory, "Libraries")
 $ModuleDirectoryContributions = [System.IO.Path]::Join($ModuleDirectory, "Functions","Public","Contributions")
 
 $ModuleResourceData = [System.IO.Path]::Join($ModuleDirectory, "Resources")
+
+$ModuleManifestParams = @{
+    RootModule = 'Module.psm1'
+    Path = $BuildModulePSDFile
+    Guid = [GUID]::NewGuid().Guid
+    Author = 'Michael.Zanatta'
+    ModuleVersion = Get-Content -Path '.\BuildVersion.txt' | Select-Object -Last 1
+    Description = 'Selenium MVP is a PowerShell module that uses PowerShell Selenium combined with a Domain Specific Language (DSL) to automate MVP Submissions'
+    PowerShellVersion = '5.1'
+    RequiredModules = 'Selenium'
+    NestedModules = 'Selenium'
+    FunctionsToExport = @()
+    CmdletsToExport = @()
+    RequiredAssemblies = "Libraries\HTMLAgilityPack\HtmlAgilityPack.dll"
+}
 
 Write-Debug "`$BuildDirectory: $BuildDirectory"
 Write-Debug "`$BuildModuleDirectory: $BuildModuleDirectory"
@@ -81,7 +87,7 @@ Get-ChildItem -LiteralPath $ModuleResourceData | Sort-Object | ForEach-Object {
 # Interpolate the Functions
 
 # Interpolate the Localized Data 
-Get-Content -LiteralPath $ModuleLocalizedData | Out-File $PSMFile.FullName -Append
+#Get-Content -LiteralPath $ModuleLocalizedData | Out-File $PSMFile.FullName -Append
 
 # Interpolate the Private Functions in:
 Get-ChildItem -LiteralPath $ModuleDirectoryPrivateFunctions -File |
@@ -95,12 +101,18 @@ Get-ChildItem -LiteralPath $ModuleDirectoryPublicFunctions -File -Recurse |
     ForEach-Object {
         ('#BuildFileName: {0}' -f $_.Name) | Out-File $PSMFile.FullName -Append
         Get-Content $_.FullName | Out-File $PSMFile.FullName -Append
+        $ModuleManifestParams.FunctionsToExport += $_.BaseName
+        $ModuleManifestParams.CmdletsToExport += $_.BaseName
     }
+
+#
+# Add the Resources
+#
+
+Copy-Item -Path $ModuleDirectoryDLLibraries -Destination $BuildModuleDirectoryLibraries -Recurse -Force
 
 #
 # Create Module Manifest
 #
 
-
-
-#New-ModuleManifest -
+New-ModuleManifest @ModuleManifestParams
