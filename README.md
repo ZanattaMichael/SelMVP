@@ -485,6 +485,16 @@ Currently the following Portal dependencies are auto-formatted:
 1. Raise Pull Request.
 1. Sit Back and Relax.
 
+# Building the Module Locally
+
+1. Clone the Repo `git clone "https://github.com/ZanattaMichael/SelMVP.git" dirpath`
+1. Open VSCode
+1. Run 'Build Module' Task
+
+OR
+
+1. Clone the Repo `git clone "https://github.com/ZanattaMichael/SelMVP.git" dirpath`
+1. Run '\Build\BuildModule.ps1'
 ## Things to know
 
 - You can run the tests locally by running the "Run Pester Tests" VSCode Task.
