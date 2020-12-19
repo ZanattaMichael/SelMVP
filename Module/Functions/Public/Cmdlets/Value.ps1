@@ -1,7 +1,8 @@
 Function Value {
 <#
 .Description
-The Value command is used to input the data into the HTML form, using the 'Name' (Being the HTML Div Element ID or Text Name) and 'Value' (Corresponding Value) syntax. Since different Area's have different fields, you can use Get-AreaNamedValues 'AreaName' to identify the fields.
+The 'Value' command is used as input entries for the HTML form, using 'Name' (Being the HTML Div Element ID or Text Name) and 'Value' (Corresponding Value) syntax.
+Since different 'Area''s have different fields, you can use Get-AreaNamedValues 'AreaName' to locate those fields.
 
     Value is mandatory, within MVPActivity and won't be automatically invoked when specified within the Param() bock.
 

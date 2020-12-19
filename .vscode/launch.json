@@ -27,6 +27,14 @@
             "script": "${workspaceFolder}\\Tests\\Invoke-Tests.ps1",
             "args": ["${file}"],
             "cwd": "${workspaceFolder}\\Tests\\"
-        }
+        },
+        {
+            "type": "PowerShell",
+            "request": "launch",
+            "name": "Build Module",
+            "script": "${workspaceFolder}\\Build\\BuildModule.ps1",
+            "args": ["${file}"],
+            "cwd": "${workspaceFolder}\\Build\\"
+        }        
     ]
 }

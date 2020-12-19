@@ -7,7 +7,7 @@ Connects to the MVP Portal and waits for the login to complete.
 A custom URL that is provided in the MVP email. Otherwise if excluded it will prompt the user for a URL.
 
 .PARAMETER DriverType
-Selenium features multiple drivers that can be used
+Depending on the browser that you use, you can use 
 
 .EXAMPLE
 Connect to Portal

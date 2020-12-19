@@ -1,26 +1,26 @@
 function MVPActivity {
 <#
 .Description
-MVPActivity is the top-level definition command, which groups the MVP contribution types into their respective areas. 
-In the example below, I have a personal blog which I would like to group all my content:
+MVPActivity is the top-level definition command, which groups the MVP contribution types into their respective areas.
 
-MVPActivity "Personal Blogs" {
-    Area 'Article'
-    # Do Something
-}
+This command is responsible for buildup (creation) and (tear-down) of the contribution. There are two types of input with this command:
 
-MVPActivity requires 'Area', 'ContributionArea' and 'Value' to be present for execution to occur.
-MVPActivity supports CSV Import with use of the -CSVPath parameter, however is only limited to a single area.
+1. CSV Import and,
+2. The Domain Specific Language.
 
-
+The CSV Import is a 'simplified' input parameter, however *each* CSV import is limited to a seperate 'Area'.
+If you choose to use the Domain Specific Language type, commands: 'Area', 'ContributionArea' and 'Value' are mandatory. 
+MVPActivity also performs input validation ensuring that input meets the requirements of the HTML form.
 
 .PARAMETER Name
-Name is the name of the MVPActivity
+Name is the name of the MVPActivity. This provides a visual grouping of data that is being added to the MVP Portal.
 
 .PARAMETER CSVPath
-Import the CSV File and Parse it. Note that the headers for the Activity Need to be Present:
+Import the CSV File and Parse it.
+Please Note: *The headers 'Area' & 'ContributionArea' are mandatory.*
+Adding Secondary and Tertiary 'ContributionAreas' is done by using: 'SecondContributionArea' and 'ThirdContributionArea' (See Example Below)
 
-MVPActivity -CSVPath 'Path to CSV File'
+    MVPActivity -CSVPath 'Path to CSV File'
 
 Example CSV File:
 
@@ -29,10 +29,54 @@ Date,Title,URL,Description,Number of Articles,Number of Views,Area,ContributionA
 28/11/2020,TEST,https://www.google.com,TEST,1,1,Article,PowerShell,Networking,Storage
 
 .PARAMETER ArgumentList
-MVPActivity supports arguments being parsed into it using the -ArgumentList parameter, similarly to the -TestCases parameter within Pester. Input is defined as a [HashTable] or a [HashTable[]].
+MVPActivity supports arguments being parsed into it using the -ArgumentList parameter, similarly to the -TestCases parameter within Pester.
+Inputs are defined as a [HashTable] or a [HashTable[]] with the name of the parameter being the [HashTable] key and it's value being the item.
+To use the parameters that have been parsed into the fixture, use the param() block at the beginning of the fixture with the ParameterName.
+
+In the example below we declare the parameters and parse them into MVPActivity:
+
+# Declare the parameters:
+$param = @{
+    Parameter1 = 'Test'
+}
+
+# Parse the Arguments by using the -ArgumentList parameter:
+MVPActivity "Test Entry" -ArgumentList $param  {
+    # To get the value from $Parameter1, add a param() within the fixture/scriptblock.
+    param($Parameter1)
+
+    # We can reference the value by referencing the variable name '$Parameter1'
+    Area $Parameter1 'Value'
+
+}
+
+The -ArgumentList parameter also supports an array of hashtables ([HashTable[]]) with common values, providing a way to parse multiple parameters into the same fixture.
+For Example:
+
+# Declare the parameters as an array:
+$param = @(
+    @{
+        Parameter1 = 'One Value'
+    }    
+    @{
+        Parameter1 = 'Another Value'
+    }
+)
+
+MVPActivity "Test Entry" -ArgumentList $param  {
+    param($Parameter1)
+
+    Area $Parameter1 'Value'
+
+}
+
+This will process 'Parameter1' as a seperate MVP Contribution.
 
 .PARAMETER Fixture
-The ScriptBlock containing the Area, ContributionArea and Value. Powershell statements are supported.
+The Fixture/Scriptblock contains the DSL PowerShell code that adds the MVP entry to the portal.
+The Fixture is a regular Powershell scriptblock, however Area, ContributionArea and Value are mandatory commands.
+
+*Please ensure that 'Area', 'ContributionArea' are prefixed before 'Value'*.
 
 .EXAMPLE
 Import the CSV File and Parse it:
@@ -88,6 +132,7 @@ In this example below, we will parse a hashtable of arguments into the fixture:
 
    }
 .EXAMPLE
+
 For those who love complexity, the fixture supports an array of HashTables to be parsed into the fixture.
 
     $params = @(
