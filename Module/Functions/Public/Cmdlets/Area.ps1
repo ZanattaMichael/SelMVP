@@ -1,7 +1,7 @@
 function Area {
 <#
 .Description
-'Area' defines the MVP Contribution Area within the Portal. Area can only be used within MVPActivity.
+'Area' defines the MVP Contribution Area within the Portal. Area' can only be used within MVPActivity.
 
 The Current List of Areas are:
 
@@ -31,11 +31,11 @@ The Current List of Areas are:
 +    Workshop/Volunteer/Proctor
 
 .PARAMETER SelectedValue
-The MVP Area.
+When creating a new MVP Contribution, you will need to specify the Area that MVP contribution is assigned to.
+
 .EXAMPLE
 Area 'Article'
-.EXAMPLE
-Area 'Article'
+
 .SYNOPSIS
 'Area' defines the MVP Contribution Area within the Portal. Area can only be used within MVPActivity.
 #>

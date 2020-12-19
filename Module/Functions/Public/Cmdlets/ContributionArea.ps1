@@ -1,9 +1,14 @@
 Function ContributionArea {
 <#
 .Description
-The ContributionArea is a command that defines the Contribution Areas within the MVP Portal. ContributionArea can be used as a String Array (ContributionArea 'Area1','Area2','Area3'), or by specifying multiple ContributionArea statements.
+The ContributionArea is a command that defines the Contribution Areas within the MVP Portal.
+ContributionArea can be used as a String Array (ContributionArea 'Area1','Area2','Area3'), or by specifying multiple ContributionArea statements.
 
 Similarly to Area, if ContributionArea is included within the Param() block, it's not required to be defined and will be automatically invoked.
+
+The current list of 'Contribution Areas' are:
+
+
 
 .PARAMETER SelectedValue
 The Contribution Areas that you wish to add.

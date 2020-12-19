@@ -132,6 +132,7 @@ In this example below, we will parse a hashtable of arguments into the fixture:
 
    }
 .EXAMPLE
+
 For those who love complexity, the fixture supports an array of HashTables to be parsed into the fixture.
 
     $params = @(
