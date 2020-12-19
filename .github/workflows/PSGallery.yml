@@ -9,9 +9,14 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-        
+    
+      - name: Built
+        run: |
+          .\Build\BuildModule.ps1 
+        shell: pwsh        
+
       - name: Publishing
         run: |
-          Publish-Module -Path '...' -NuGetApiKey ${{ secrets.PSGALLERY }}
+          Publish-Module -Path '.\Build\Module\' -NuGetApiKey ${{ secrets.PSGALLERY }}
         shell: pwsh
 
