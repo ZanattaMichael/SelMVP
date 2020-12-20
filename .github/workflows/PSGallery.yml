@@ -10,6 +10,15 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
     
+      - name: Install Selenium
+        run:
+          $ErrorActionPreference = 'Stop';
+          Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor;
+          Set-PSRepository psgallery -InstallationPolicy trusted;
+          Install-Module Selenium -Confirm:$false -Force;
+          Write-Host "Success";
+        shell: powershell
+
       - name: Building
         run: |
           .\Build\BuildModule.ps1 
