@@ -16,9 +16,7 @@ jobs:
         shell: pwsh        
 
       - name: Publishing
-        run: |
-          $BuildDirectory = Split-Path -parent $PSCommandPath
-          $BuildModuleDirectory = [System.IO.Path]::Join($BuildDirectory, "SelMVP")        
-          Publish-Module -Path $BuildModuleDirectory -NuGetApiKey ${{ secrets.PSGALLERY }}
+        run: |      
+          Publish-Module -Path .\Build\SelMVP -NuGetApiKey ${{ secrets.PSGALLERY }}
         shell: pwsh
 
