@@ -12,12 +12,10 @@ jobs:
     
       - name: Install Selenium
         run:
-          $ErrorActionPreference = 'Stop';
           Write-host $PSVersionTable.PSVersion.Major $PSVersionTable.PSRemotingProtocolVersion.Minor;
           Set-PSRepository psgallery -InstallationPolicy trusted;
           Install-Module Selenium -Confirm:$false -Force;
-          Write-Host "Success";
-        shell: powershell
+        shell: pwsh
 
       - name: Building
         run: |
