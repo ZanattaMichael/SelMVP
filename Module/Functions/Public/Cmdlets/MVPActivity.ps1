@@ -1,4 +1,4 @@
-function MVPActivity {
+function Add-MVPActivity {
 <#
 .Description
 MVPActivity is the top-level definition command, which groups the MVP contribution types into their respective areas.
@@ -246,3 +246,5 @@ MVPActivity is the top-level definition command, which groups the MVP contributi
 
 
 }
+
+Set-Alias -Name "MVPActivity" -Value "Add-MVPActivity"
