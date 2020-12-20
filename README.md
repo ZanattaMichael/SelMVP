@@ -2,7 +2,7 @@
 
 ![Current Test Status](https://github.com/ZanattaMIchael/SelMVP/workflows/Current%20Test%20Status/badge.svg)
 
-Selenium MVP is a PowerShell module that uses PowerShell Selenium combined with a Domain Specific Language (DSL) to automate MVP Submissions. This module is built for *first time MVP nominees* who don't have access to the API.
+Selenium MVP is a PowerShell module that uses PowerShell Selenium combined with a Domain Specific Language (DSL) to automate MVP Submissions. This module is targeted for *first time MVP nominees* who don't have access to the API.
 
 This module is intended to make submitting new submissions *as simple as possible*, by using the Domain Specific Language.
 

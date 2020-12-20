@@ -3,7 +3,7 @@
 Write-Verbose "Building PowerShell Module:"
 
 $BuildDirectory = Split-Path -parent $PSCommandPath
-$BuildModuleDirectory = [System.IO.Path]::Join($BuildDirectory, "Module")
+$BuildModuleDirectory = [System.IO.Path]::Join($BuildDirectory, "SelMVP")
 $BuildModuleFile = [System.IO.Path]::Join($BuildModuleDirectory, "Module.psm1")
 $BuildModulePSDFile = [System.IO.Path]::Join($BuildModuleDirectory, "SelMVP.psd1")
 $BuildModuleDirectoryLibraries = [System.IO.Path]::Join($BuildModuleDirectory)
@@ -24,12 +24,11 @@ $ModuleManifestParams = @{
     Guid = [GUID]::NewGuid().Guid
     Author = 'Michael.Zanatta'
     ModuleVersion = Get-Content -Path (Join-Path -Path $BuildDirectory -ChildPath '.\BuildVersion.txt' ) | Select-Object -Last 1
-    Description = 'Selenium MVP is a PowerShell module that uses PowerShell Selenium combined with a Domain Specific Language (DSL) to automate MVP Submissions'
+    Description = "Selenium MVP is a PowerShell module that uses Selenium combined with a Domain Specific Language (DSL) to automate MVP Submissions. This module is targeted for first time MVP nominees who don't have access to the API."
     PowerShellVersion = '5.1'
     RequiredModules = 'Selenium'
     NestedModules = 'Selenium'
     FunctionsToExport = @()
-    CmdletsToExport = @()
     RequiredAssemblies = "Libraries\HTMLAgilityPack\HtmlAgilityPack.dll"
 }
 
@@ -102,7 +101,6 @@ Get-ChildItem -LiteralPath $ModuleDirectoryPublicFunctions -File -Recurse |
         ('#BuildFileName: {0}' -f $_.Name) | Out-File $PSMFile.FullName -Append
         Get-Content $_.FullName | Out-File $PSMFile.FullName -Append
         $ModuleManifestParams.FunctionsToExport += $_.BaseName
-        $ModuleManifestParams.CmdletsToExport += $_.BaseName
     }
 
 #
