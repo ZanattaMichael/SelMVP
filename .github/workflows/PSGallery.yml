@@ -10,13 +10,15 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
     
-      - name: Built
+      - name: Building
         run: |
           .\Build\BuildModule.ps1 
         shell: pwsh        
 
       - name: Publishing
         run: |
-          Publish-Module -Path '.\Build\Module\' -NuGetApiKey ${{ secrets.PSGALLERY }}
+          $BuildDirectory = Split-Path -parent $PSCommandPath
+          $BuildModuleDirectory = [System.IO.Path]::Join($BuildDirectory, "SelMVP")        
+          Publish-Module -Path $BuildModuleDirectory -NuGetApiKey ${{ secrets.PSGALLERY }}
         shell: pwsh
 
