@@ -1,4 +1,4 @@
-Function Add-Value {
+Function Value {
 <#
 .Description
 The 'Value' command is used as input entries for the HTML form, using 'Name' (Being the HTML Div Element ID or Text Name) and 'Value' (Corresponding Value) syntax.
@@ -95,5 +95,3 @@ The Value command is used to input the data into the HTML form, using the 'Name'
     $matched[0].isSet = $true
 
 }
-
-Set-Alias -Name "Value" -Value "Add-Value"

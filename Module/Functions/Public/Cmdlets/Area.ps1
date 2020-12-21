@@ -1,4 +1,4 @@
-function Add-Area {
+function Area {
 <#
 .Description
 'Area' defines the MVP Contribution Area within the Portal. Area' can only be used within MVPActivity.
@@ -99,5 +99,3 @@ Area 'Article'
     }
 
 }
-
-Set-Alias -Name "Area" -Value "Add-Area"

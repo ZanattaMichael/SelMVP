@@ -1,4 +1,4 @@
-Function Add-ContributionArea {
+Function ContributionArea {
 <#
 .Description
 The ContributionArea is a command that defines the Contribution Areas within the MVP Portal.
@@ -99,5 +99,3 @@ The ContributionArea is a command that defines the Contribution Areas within the
         }   
     }
 }
-
-Set-Alias -Name "ContributionArea" -Value "Add-ContributionArea"
