@@ -2,27 +2,26 @@
 
 ![Current Test Status](https://github.com/ZanattaMIchael/SelMVP/workflows/Current%20Test%20Status/badge.svg)
 
-Selenium MVP is a PowerShell module that uses PowerShell Selenium combined with a Domain Specific Language (DSL) to automate MVP Submissions. This module is targeted for *first time MVP nominees* who don't have access to the API.
-
-This module is intended to make submitting new submissions *as simple as possible*, by using the Domain Specific Language.
-
-Using this approach means that you can group different contributions areas and contribution types together in a well structured language.
+Selenium MVP is a PowerShell module that uses PowerShell Selenium combined with a Domain Specific Language (DSL) to automate MVP Submissions. This module targets *first time MVP nominees* who don't have access to the API.
 
 # About
 
 - Automates MVP Submissions using the Portal.
 - Required for Non-MVP nominees, since API is unavailable.
 - Written in a custom DSL (Domain Specific Language)
-## Requirements:
+
+## Requirements
 
 - [PowerShell Selenium](https://github.com/adamdriscoll/selenium-powershell)
 - Windows PowerShell 5.1 (Minimum)
 
-*Please note that the Module is not supported on PowerShell Core.*
+*Please note that this Module is not supported on PowerShell Core.*
+
 # Installation
 
 1. ` Install-Module SelMVP `
 1. ` Install-Module Selenium `
+
 # Usage
 
 ## Connect to the MVPPortal (Default: Firefox)
@@ -43,9 +42,10 @@ OR if you want to explicitly specify the DriverType:
 
 ```
 
+## Create an Activity (using a CSV)
 
-## Create an Activity (using a CSV):
-### Usage:
+### Usage
+
 ``` PowerShell
 # Import the CSV File and Parse it. Note that the headers for the Activity Need to be Present:
 MVPActivity -CSVPath 'Path to CSV File'
@@ -58,9 +58,9 @@ Date,Title,URL,Description,Number of Articles,Number of Views,Area,ContributionA
 28/11/2020,TEST,https://www.google.com,TEST,1,1,Article,PowerShell,Networking,Storage
 ```
 
-## Create an Activity (using DSL):
+## Create an Activity (using DSL)
 
-### Activity Syntax:
+### Activity Syntax
 
 ``` PowerShell
    # Define Activity
@@ -73,7 +73,7 @@ Date,Title,URL,Description,Number of Articles,Number of Views,Area,ContributionA
 
    }
 ```
-### Usage:
+### Usage
 
 ``` PowerShell
 
@@ -198,7 +198,7 @@ OR
 
 # Description
 
-## `MVPActivity`:
+## `MVPActivity`
 
 `MVPActivity` is the top-level definition command, which *groups* the MVP contribution types into their respective areas.
 For Example: In the example below, I have a personal blog which I would like to group all my content:
@@ -209,8 +209,8 @@ MVPActivity "Personal Blogs" {
 }
 ```
 
-This grouping is not specific to the activity, so you can have multiple `MVPActivities` with the same area.
-So what does this look like?
+This grouping is not specific to the activity to have multiple `MVPActivities` with the same area.
+For Example:
 
 ```PowerShell
 
@@ -287,10 +287,9 @@ MVPActivity "Another Random Blog" -ArgumentList $arguments {
     Value 'Annual Unique Visitors' $NumberOfVisitors
 }
 
-
 ```
 
-But we can refactor this further: The DSL enables automatic Area and ContributionArea execution within the fixture only by including `$Area` or `$ContributionArea` within the parameter:
+The code block can be refactored further. The DSL enables automatic Area and ContributionArea execution within the fixture only by including `$Area` or `$ContributionArea` within the parameter:
 
 ``` PowerShell
 
@@ -337,7 +336,7 @@ MVPActivity "Another Random Blog" -ArgumentList $arguments {
 
 ## `Area [String]'Area Name'`
 
-`Area` is a command that defines the MVP Contribution Area that in the Portal. `Area` can only be used within MVPActivity.
+`Area` is a command that defines the MVP Contribution Area in the Portal. `Area` can only be used within MVPActivity.
 
 Usage:
 
@@ -426,14 +425,13 @@ MVPActivity "Test" {
     # ContributionArea is not required when included in the Param Block.
 }
 
-
 ```
 
 ## Value `[String]'Name' [String]'Value'`
 
-The `Value` command is used to input the data into the HTML form, using the 'Name' (*Being the HTML Div Element ID or Text Name*) and 'Value' (Corresponding Value) syntax. Since different Area's have different fields, you can use `Get-AreaNamedValues 'AreaName'` to identify the fields.
+The `Value` command input's the data into the HTML form, using the 'Name' (*Being the HTML Div Element ID or Text Name*) and 'Value' (Corresponding Value) syntax. Since different Area's have various fields, you can use `Get-AreaNamedValues 'AreaName'` to identify the fields.
 
-> `Value` is *mandatory*, within  `MVPActivity` and won't be automatically invoked when specified within the `Param()` bock.
+> `Value` is *mandatory*, within  `MVPActivity` and won't invoke when specified within the `Param()` bock.
 
 In the example below, we will use `Get-AreaNamedValues 'Article'` to get the `Value` names:  
 
@@ -468,12 +466,11 @@ MVPActivity "Test" {
 
 ```
 
-`Value` supports auto-formatting of inputted data to meet the requirements of the MVP Portal.
-Currently the following Portal dependencies are auto-formatted:
+`Value` supports the auto-formatting of inputted data to meet the requirements of the MVP Portal.
+Currently, the following Portal dependencies are auto-formatted:
 
 - Date (Required to be US Date Format) (MM-DD-YYYY)
 - URL (Required to meet URL format) (https://site.com)
-
 # Contributing
 
 ## Getting Started
@@ -498,5 +495,6 @@ OR
 ## Things to know
 
 - You can run the tests locally by running the "Run Pester Tests" VSCode Task.
-- If you are wanting to test the module locally without having to import the module, you can run: `SelMVP\Build\LocalLoader.ps1`. This script will dot-source the functions and dll's needed.
-- I have created a React Site that emulates the functionality of the Portal.Moving forward, I plan to add integration tests to against this portal.
+- If you want to test the module locally without importing the module, you can run: `SelMVP\Build\LocalLoader.ps1`. This script will dot-source the functions and dll's needed.
+- I have created a React Site that emulates the functionality of the Portal.
+Moving forward, I plan to add integration tests against this Portal.
