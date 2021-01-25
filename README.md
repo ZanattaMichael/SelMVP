@@ -22,6 +22,28 @@ Selenium MVP is a PowerShell module that uses PowerShell Selenium combined with 
 1. ` Install-Module SelMVP `
 1. ` Install-Module Selenium `
 
+## (Optional) Installing the WebDriver
+
+_For the best experience, Mozilla Firefox is recommended._
+
+As newer browsers are released, older versions of the WebDrivers need to be updated. Currently there is no method for updating these automatically. When updating, download the same version that your browser currently is. To check your version you can:
+
+- [Microsoft Edge:](https://support.microsoft.com/en-us/microsoft-edge/find-out-which-version-of-microsoft-edge-you-have-c726bee8-c42e-e472-e954-4cf5123497eb)
+- [Mozilla Firefox:](https://support.mozilla.org/en-US/kb/find-what-version-firefox-you-are-using)
+- [Google Chrome:](https://support.google.com/chrome/answer/95414?co=GENIE.Platform%3DDesktop&hl=en)
+
+To update the Web Driver, head over to the following links:
+
+- [Microsoft Edge](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)
+- [Mozilla Firefox](https://github.com/mozilla/geckodriver/releases)
+- [Google Chrome](https://sites.google.com/a/chromium.org/chromedriver/downloads)
+
+Once downloaded, unblock and extract the driver to the 'Assemblies' sub-directory within the Selenium PowerShell directory.
+
+To determine the location of the module you can run the following PowerShell:
+
+`Import-Module Selenium ; Get-Module Selenium | Select-Object Path`
+
 # Usage
 
 ## Connect to the MVPPortal (Default: Firefox)
