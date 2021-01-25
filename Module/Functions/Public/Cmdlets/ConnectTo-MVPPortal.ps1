@@ -25,7 +25,7 @@ Connects to the MVP Portal and waits for the login to complete.
         [Parameter()]
         [String]
         $URLPath=(Read-Host "Enter in URL Path"),
-        [ValidateSet("Firefox","Chrome","Edge")]
+        [ValidateSet("Firefox","Chrome","Edge", "OldEdge")]
         [String]
         $DriverType = 'Firefox'
     )
@@ -35,7 +35,8 @@ Connects to the MVP Portal and waits for the login to complete.
         switch ($DriverType) {
             'Firefox' { $Global:MVPDriver = Start-SeFirefox -StartURL $URLPath }
             'Chrome'  { $Global:MVPDriver = Start-SeChrome  -StartURL $URLPath }
-            'Edge'    { $Global:MVPDriver = Start-SeEdge  -StartURL $URLPath }
+            'Edge'    { $Global:MVPDriver = Start-SeNewEdge -StartURL $URLPath }
+            'OldEdge' { $Global:MVPDriver = Start-SeEdge -StartURL $URLPath    }
         }
                 
     } catch {
