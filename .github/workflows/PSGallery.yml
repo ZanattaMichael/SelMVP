@@ -23,7 +23,14 @@ jobs:
         shell: pwsh        
 
       - name: Publishing
-        run: |      
-          Publish-Module -Path .\Build\SelMVP -NuGetApiKey ${{ secrets.PSGALLERY }}
+        run:
+          $params = @{
+            Path = ''.\Build\SelMVP'
+            NuGetApiKey = ${{ secrets.PSGALLERY }}
+            Tags = "MVP","Selenium"
+            ProjectUri = [uri]::new('https://github.com/ZanattaMichael/SelMVP')
+            LicenseUri = [uri]::new('https://github.com/ZanattaMichael/SelMVP/blob/master/LICENSE')
+          };
+          Publish-Module @params;
         shell: pwsh
 
