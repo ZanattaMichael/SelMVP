@@ -90,7 +90,7 @@ Describe "Testing Try-Tentitive Command" -Tag Unit {
             Try = $Try
             Catch = $Catch
         }
-        $Result = Try-TentitiveCommand @params
+        $Result = Try-TentativeCommand @params
 
         $Assert.Invoke()
 
