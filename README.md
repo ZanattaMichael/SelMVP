@@ -130,7 +130,7 @@ OR
         ContributionArea 'Yammer'
         ContributionArea 'Word'
 
-        Value 'Date' '08/05/2021'
+        Value -Name 'Date' -Value '08/05/2021'
         Value 'Title' 'TEST'
         Value 'URL' 'https:\\test.com'
         Value 'Description' 'THIS IS A TEST'
