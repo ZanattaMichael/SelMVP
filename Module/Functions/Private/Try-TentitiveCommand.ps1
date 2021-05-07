@@ -1,4 +1,4 @@
-function Try-TentitiveCommand {
+function Try-TentativeCommand {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory, Position = 0)]
@@ -29,10 +29,10 @@ function Try-TentitiveCommand {
         Write-Error $LocalizedData.ErrorTryTentitiveCommand
     }
 
-    Write-Debug "[Try-TentitiveCommand] Returning:"
+    Write-Debug "[Try-TentativeCommand] Returning:"
     
     return $Result
 
 }
 
-Set-Alias -Name "ttry" -Value "Try-TentitiveCommand"
+Set-Alias -Name "ttry" -Value "Try-TentativeCommand"
