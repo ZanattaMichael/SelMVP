@@ -38,7 +38,7 @@ function Invoke-MVPActivity {
     Write-Debug "[Invoke-MVPActivity] Calling Try-TentativeCommand:"
     Write-Debug ("[Invoke-MVPActivity] Try-TentativeCommand Params: {0}" -f ($params | ConvertTo-Json))
 
-    $result = Try-TentitiveCommand @params
+    $result = Try-TentativeCommand @params
 
     if ($null -eq $result) {
         # Update Verbose Stream

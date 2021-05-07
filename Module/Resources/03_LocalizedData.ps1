@@ -10,7 +10,7 @@ data LocalizedData {
     ErrorMissingActivityType=Unable to enumerate ActivityTypes from source HTML.
     ErrorMissingContributionType=Unable to enumerate ContributionAreas from source HTML.
     ErrorMissingDriver=Missing Selinum Driver. Use: ConnectTo-Selenium to connect.
-    ErrorTryTentitiveCommand=Try-TentitiveCommand: Exceeded Retry Limit.
+    ErrorTryTentitiveCommand=Try-TentativeCommand: Exceeded Retry Limit.
     ErrorMissingSelectedValue=The Parameter '-SelectedValue' value '{0}', could not be found
     ErrorTooManySelectedValue=The Parameter '-SelectedValue' value '{0}', returned too many items. Count '{1}'
     ErrorJavaScriptTimeout=Javascript Timeout.
