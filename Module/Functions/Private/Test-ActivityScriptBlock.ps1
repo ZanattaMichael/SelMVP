@@ -43,7 +43,7 @@ function Test-ActivityScriptBlock {
         # Multiple Statements of Area was defined
         Throw $LocalizedData.ErrorMissingMVPActivityAreaMultiple
     } elseif (($areaInstance.count -ne 0) -and ($null -eq $ArgumentList.Area)) {
-        $AreaValue = Get-InstanceValues -InstanceValues $areaInstance  
+        $AreaValue = Get-ASTInstanceValues -InstanceValues $areaInstance -ParameterName 'Name'
     }
 
     # Requirement 3:
@@ -68,7 +68,7 @@ function Test-ActivityScriptBlock {
     # Ensure that all Values added to the fixture are (required) AND are correct
 
     $HTMLFormStructure = Get-HTMLFormStructure -Name $AreaValue
-    $ASTInstanceValues = Get-InstanceValues -InstanceValues $valueInstances
+    $ASTInstanceValues = Get-ASTInstanceValues -InstanceValues $valueInstances -ParameterName 'Name'
 
     $testMandatoryValues = $HTMLFormStructure | Where-Object { (
         ($_.isRequired) -and 

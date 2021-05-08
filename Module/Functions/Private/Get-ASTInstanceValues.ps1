@@ -3,7 +3,10 @@ function Get-ASTInstanceValues {
     param(
         [Parameter(Mandatory)]
         [System.Management.Automation.Language.CommandAst[]]
-        $InstanceValues
+        $InstanceValues,
+        [Parameter()]
+        [string]
+        $ParameterName
     )
  
     $values = [System.Collections.Generic.List[String]]::New()
@@ -17,7 +20,7 @@ function Get-ASTInstanceValues {
     forEach ($valueInstance in $InstanceValuesWithParameterNames) {
 
         $Result = 0..$valueInstance.CommandElements.count | Where-Object { 
-            ($valueInstance.CommandElements[$_].ParameterName -eq "Name") 
+            ($valueInstance.CommandElements[$_].ParameterName -eq $ParameterName) 
         }
 
         # Get the following item in the array, which will be the value of the parameter name
