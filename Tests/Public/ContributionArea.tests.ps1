@@ -76,7 +76,7 @@ Describe "ContributionArea" {
     it "Standard Execution, shouldn't thow any errors" -TestCases $standardExecutionTestCases {
         param($Values, $Assert)
 
-        Get-ContributionAreaGlobalMock
+        Global:Get-ContributionAreaGlobalMock
         Mock -CommandName "Get-ContributionAreas" -MockWith { Get-ContributionAreasMockedData }
         Mock -CommandName "Select-DropDown" -MockWith {}
         Mock -CommandName "Wait-ForJavascript" -MockWith {}
@@ -99,7 +99,7 @@ Describe "ContributionArea" {
 
     it "Parsing a known ContributionArea Type, however Get-ContributionAreas throws a terminating error" {
 
-        Get-ContributionAreaGlobalMock
+        Global:Get-ContributionAreaGlobalMock
         Mock -CommandName "Get-ContributionAreas" -MockWith { Throw "Test" }
         Mock -CommandName "Wait-ForJavascript" -MockWith {}
         Mock -CommandName "Select-DropDown" -MockWith {}
@@ -114,7 +114,7 @@ Describe "ContributionArea" {
     it "Parsing a bad ContributionArea Type that dosen't exist, will throw a terminating error" -TestCases $badContributionTypeTestCases {
         param($values)
 
-        Get-ContributionAreaGlobalMock
+        Global:Get-ContributionAreaGlobalMock
         Mock -CommandName "Get-ContributionAreas" -MockWith { Get-ContributionAreasMockedData }
         Mock -CommandName "Wait-ForJavascript" -MockWith {}
         Mock -CommandName "Select-DropDown" -MockWith {}
@@ -128,7 +128,7 @@ Describe "ContributionArea" {
    
     it "Parsing a bad ContributionArea type that returned multiple values" {
 
-        Get-ContributionAreaGlobalMock
+        Global:Get-ContributionAreaGlobalMock
         Mock -CommandName "Get-ContributionAreas" -MockWith { 
             return @(
                 [PSCustomObject]@{
@@ -154,7 +154,7 @@ Describe "ContributionArea" {
 
     it "Standard Execution however there is a problem with selecting the dropdown box" {
 
-        Get-ContributionAreaGlobalMock
+        Global:Get-ContributionAreaGlobalMock
         Mock -CommandName "Get-ContributionAreas" -MockWith { Get-ContributionAreasMockedData }
         Mock -CommandName Select-DropDown -ParameterFilter { $selectedValue -eq 'TestGUID'} -MockWith {
             Throw "Test Error"
@@ -173,14 +173,14 @@ Describe "ContributionArea" {
     }
 
     it "Standard Execution however Wait-ForJavascript fails because the form is bad" -testCases $standardExecutionTestCases {
-        param($Values, $Assert, $Mock)
+        param($Values, $Assert)
 
-        Get-ContributionAreaGlobalMock
+        Global:Get-ContributionAreaGlobalMock
         Mock -CommandName "Get-ContributionAreas" -MockWith { Get-ContributionAreasMockedData }
         Mock -CommandName "Select-DropDown" -MockWith {}
         Mock -CommandName "Wait-ForJavascript" -MockWith { Throw "Test Error" }
-        Mock -CommandName "Find-SeElement" -MockWith {}
-        Mock -CommandName "Invoke-SeClick" -MockWith {}
+        Mock -CommandName "Find-SeElement" -MockWith { return [PSCustomObject]@{ Data = "TEST" }}
+        Mock -CommandName "Invoke-SeClick" -MockWith {} -RemoveParameterType 'Element'
 
         { ContributionArea $Values } | Should -not -Throw
         
