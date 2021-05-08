@@ -20,6 +20,7 @@ function New-MVPActivity {
         # Activity Setup        
 
         $invokeTearDown = $false
+        $isPreParse = $true
         # Setup of Contributions and Areas
         $Script:MVPArea = $null
         $Script:ContributionAreas = [System.Collections.Generic.List[PSCustomObject]]::New()
@@ -29,9 +30,12 @@ function New-MVPActivity {
 
             #
             # Test the configuration is valid.
-            $parameterCmdlets = Test-ActivityScriptBlock $Fixture
+            $parameterCmdlets = Test-ActivityScriptBlock @PSBoundParameters
             # Test that the driver is active
             Test-SEDriver
+
+            $isPreParse = $false
+
             # Test that the MVPActivity elements is present.
             Wait-ForMVPElement
             # Create new MVPActivity. Click the Button.
@@ -93,7 +97,7 @@ function New-MVPActivity {
 
         try {
 
-            if ($invokeTearDown) {
+            if ($invokeTearDown -and (-not $isPreParse)) {
                 # Close the MVP Activity
                 Stop-MVPActivity
             }

@@ -74,6 +74,7 @@ MVPActivity -CSVPath 'Path to CSV File'
 ```
 
 Example CSV File:
+
 ``` CSV
 Date,Title,URL,Description,Number of Articles,Number of Views,Area,ContributionArea,SecondContributionArea,ThirdContributionArea
 28/11/2020,TEST,https://www.google.com,TEST,1,1,Article,PowerShell,Networking,Storage
@@ -95,6 +96,7 @@ Date,Title,URL,Description,Number of Articles,Number of Views,Area,ContributionA
 
    }
 ```
+
 ### Usage
 
 ``` PowerShell
@@ -105,16 +107,15 @@ Date,Title,URL,Description,Number of Articles,Number of Views,Area,ContributionA
         # ContributionArea can accept an Array
         ContributionArea 'PowerShell','Yammer','Word'
 
-        Value 'Date' $date
+        Value 'Date' '08/05/2021'
         Value 'Title' 'TEST'
         Value 'URL' 'https:\\test.com'
         Value 'Description' 'THIS IS A TEST'
-        Value 'Number of Posts' '1'
+        Value 'Number of Articles' '1'
         # Or you can use the HTML DivId
-        Value 'Number of Subscribers' '1'
-        Value 'Annual Unique Visitors' '1'
-
+        Value 'Number of Views' 1
     }
+
 ```
 
 OR
@@ -129,17 +130,17 @@ OR
         ContributionArea 'Yammer'
         ContributionArea 'Word'
 
-        Value 'Date' $date
+        Value -Name 'Date' -Value '08/05/2021'
         Value 'Title' 'TEST'
         Value 'URL' 'https:\\test.com'
         Value 'Description' 'THIS IS A TEST'
-        Value 'Number of Posts' '1'
+        Value 'Number of Articles' '1'
         # Or you can use the HTML DivId
-        Value 'Number of Subscribers' '1'
-        Value 'Annual Unique Visitors' '1'
+        Value 'Number of Views' 1
 
     }
 ```
+
 ### Advanced Usage
 
 ``` PowerShell
@@ -237,7 +238,7 @@ For Example:
 ```PowerShell
 
 MVPActivity "Personal Blogs" {
-    Area 'Article'
+    Area 'Blog/Website Post'
     ContributionArea 'PowerShell'
     Value 'Date' '19/11/2020'
     Value 'Title' 'TEST'
@@ -250,7 +251,7 @@ MVPActivity "Personal Blogs" {
 }
 
 MVPActivity "Another Random Blog" {
-    Area 'Article'
+    Area 'Blog/Website Post'
     ContributionArea 'PowerShell'
     Value 'Date' '19/11/2020'
     Value 'Title' 'TEST2'
@@ -272,7 +273,7 @@ Now we can refactor this logic to take advantage of the `-ArgumentList` paramete
 
 $arguments = @(
     @{
-        Area = 'Article'
+        Area = 'Blog/Website Post'
         ContributionArea = 'PowerShell'
         Date = '19/11/2020'
         Title = 'TEST'
@@ -283,7 +284,7 @@ $arguments = @(
         NumberOfVisitors = 1
     },
     @{
-        Area = 'Article'
+        Area = 'Blog/Website Post'
         ContributionArea = 'PowerShell'
         Date = '19/11/2020'
         Title = 'TEST2'
@@ -317,7 +318,7 @@ The code block can be refactored further. The DSL enables automatic Area and Con
 
 $arguments = @(
     @{
-        Area = 'Article'
+        Area = 'Blog/Website Post'
         ContributionArea = 'PowerShell'
         Date = '19/11/2020'
         Title = 'TEST'
@@ -328,7 +329,7 @@ $arguments = @(
         NumberOfVisitors = 1
     },
     @{
-        Area = 'Article'
+        Area = 'Blog/Website Post'
         ContributionArea = 'PowerShell'
         Date = '19/11/2020'
         Title = 'TEST2'
