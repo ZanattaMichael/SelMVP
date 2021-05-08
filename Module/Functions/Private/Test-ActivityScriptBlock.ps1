@@ -43,7 +43,7 @@ function Test-ActivityScriptBlock {
         # Multiple Statements of Area was defined
         Throw $LocalizedData.ErrorMissingMVPActivityAreaMultiple
     } elseif (($areaInstance.count -ne 0) -and ($null -eq $ArgumentList.Area)) {
-        $AreaValue = $areaInstance.CommandElements[1].Value
+        $AreaValue = Get-InstanceValues -InstanceValues $areaInstance  
     }
 
     # Requirement 3:
@@ -64,42 +64,21 @@ function Test-ActivityScriptBlock {
         Throw $LocalizedData.ErrorMissingMVPActivityValue
     }
 
-
     # Requirement 5:
-    # Ensure that all values are correct according to the Area
+    # Ensure that all Values added to the fixture are (required) AND are correct
 
-    $ValuesAddedToScriptblock = [System.Collections.Generic.List[String]]::New()
-
-    $valueInstancesWithParameterNames,$valueInstancesWithoutParameterNames = $valueInstances.Where({
-        $_.CommandElements.Where{$_.ParameterName}
-    }, 'Split')
-
-    # Return a list of cmdlet's that have parsed parameters into the input and capture their values
-    forEach ($valueInstance in $valueInstancesWithParameterNames) {
-
-        $Result = 0..$valueInstance.CommandElements.count | Where-Object { 
-            ($valueInstance.CommandElements[$_].ParameterName -eq "Name") 
-        }
-
-        # Get the following item in the array, which will be the value of the parameter name
-        $ValuesAddedToScriptblock.Add($valueInstance.CommandElements[$Result+1].Value)
-
-    }
-
-    $valueInstancesWithoutParameterNames | ForEach-Object { $ValuesAddedToScriptblock.Add( $_.CommandElements[1].Value )  }
-
-    # Get the HTMLFormStructure and Test for the
     $HTMLFormStructure = Get-HTMLFormStructure -Name $AreaValue
+    $ASTInstanceValues = Get-InstanceValues -InstanceValues $valueInstances
 
     $testMandatoryValues = $HTMLFormStructure | Where-Object { (
         ($_.isRequired) -and 
         (
-            ($_.Name -notin $ValuesAddedToScriptblock) -and 
-            ($_.Element -notin $ValuesAddedToScriptblock)
+            ($_.Name -notin $ASTInstanceValues) -and 
+            ($_.Element -notin $ASTInstanceValues)
         )    
     )}
 
-    $testMisnamedValues = $ValuesAddedToScriptblock | Where-Object {
+    $testMisnamedValues = $ASTInstanceValues | Where-Object {
         $_ -notin $HTMLFormStructure.Name -and 
         $_ -notin $HTMLFormStructure.Element
     }
