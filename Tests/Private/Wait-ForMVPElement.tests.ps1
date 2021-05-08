@@ -22,7 +22,6 @@ Describe "Wait-ForMVPElement" -Tag Unit {
 
         Should -Invoke Find-SeElement -Exactly 1
         Should -Invoke Write-Debug -Exactly 1
-        Should -Invoke Write-Error -Exactly 0
         Should -Invoke Enter-SeUrl -Exactly 0
 
     }
@@ -41,7 +40,6 @@ Describe "Wait-ForMVPElement" -Tag Unit {
         Should -Invoke Write-Error -Exactly 1
         Should -Invoke Write-Debug -Exactly 11
         Should -Invoke Enter-SeUrl -Exactly 10
-        Should -Invoke Write-Error -Exactly 1
 
     }
 

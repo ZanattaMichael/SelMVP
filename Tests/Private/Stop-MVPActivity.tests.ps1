@@ -16,6 +16,7 @@ Describe "Stop-MVPActivity" -Tag Unit {
 
         Mock -CommandName Test-SEDriver -MockWith {}
         Mock -CommandName Find-SeElement -MockWith { Throw "TEST" }
+        Mock -CommandName Invoke-SeClick -MockWith {} -RemoveParameterType 'Element'
         
         {Stop-MVPActivity} | Should -Throw ($LocalizedData.ErrorStopMVPActivity -f "*")
         Should -Invoke "Find-SeElement" -Exactly 1
@@ -23,7 +24,7 @@ Describe "Stop-MVPActivity" -Tag Unit {
         
     }    
 
-    it "An Error is raised with Find-SeElement will cause the function to throw an error" {
+    it "An Error is raised with Invoke-SeClick will cause the function to throw an error" {
 
         Mock -CommandName Test-SEDriver -MockWith {}
         Mock -CommandName Find-SeElement -MockWith { return [PSCustomObject]@{data = "TEST"}}

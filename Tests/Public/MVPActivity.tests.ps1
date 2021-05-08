@@ -1,8 +1,8 @@
 Describe "MVPActivity" {
 
-    if ($Script:TestRootPath) {
-        $badTestCasePath = Join-Path -Path $Script:TestRootPath -ChildPath '\Mocks\MVPActivity\BadTestCases'
-        $goodTestCasePath = Join-Path -Path $Script:TestRootPath -ChildPath '\Mocks\MVPActivity\GoodTestCases'
+    if ($Global:TestRootPath) {
+        $badTestCasePath = Join-Path -Path $Global:TestRootPath -ChildPath '\Mocks\MVPActivity\BadTestCases'
+        $goodTestCasePath = Join-Path -Path $Global:TestRootPath -ChildPath '\Mocks\MVPActivity\GoodTestCases'
     } else {
         $badTestCasePath = '..\Mocks\MVPActivity\BadTestCases'
         $goodTestCasePath = '..\Mocks\MVPActivity\GoodTestCases'
