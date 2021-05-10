@@ -498,7 +498,7 @@ Currently, the following Portal dependencies are auto-formatted:
 
 ## Getting Started
 
-1. Clone the Repo `git clone "https://github.com/ZanattaMichael/SelMVP.git" dirpath`
+1. Fork and Clone the Repo `git clone "https://github.com/ZanattaMichael/SelMVP.git" dirpath`
 1. Update.
 1. Load the Module by running: `SelMVP\Build\LocalLoader.ps1`.
 1. Update Changes and Push.

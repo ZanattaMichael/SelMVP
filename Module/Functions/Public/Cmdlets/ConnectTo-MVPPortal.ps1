@@ -4,17 +4,17 @@ function ConnectTo-MVPPortal {
 Connects to the MVP Portal and waits for the login to complete.
 
 .PARAMETER URLPath
-A custom URL that is provided in the MVP email. Otherwise if excluded it will prompt the user for a URL.
+A custom URL provided in the MVP email. Otherwise, if excluded, it will prompt the user for a URL.
 
 .PARAMETER DriverType
-Depending on the browser that you use, you can use 
+You can specify different browser types. The default is Firefox. Options are: Firefox, Chrome, Edge, OldEdge
 
 .EXAMPLE
-Connect to Portal
+Connect to Portal:
 
 ConnectTo-MVPPortal -URLPath "https://Your-URL-Path-Goes-Here.com"
 .EXAMPLE
-Connect to Portal
+Connect to Portal:
 
 ConnectTo-MVPPortal -URLPath "https://Your-URL-Path-Goes-Here.com" -DriverType ('Firefox','Chrome' or 'Edge')
 .SYNOPSIS
