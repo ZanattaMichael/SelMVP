@@ -51,15 +51,15 @@ Function Global:Get-AreaGlobalMock {
     Mock -CommandName "Test-SEDriver" -MockWith {}
     Mock -CommandName "Test-CallStack" -MockWith {}
     Mock -CommandName "Start-Sleep" -MockWith {}        
-    Mock -CommandName "Get-HTMLFormStructure" -MockWith { Get-HTMLFormStructureMockedData }
+    Mock -CommandName "Get-HTMLFormStructure" -MockWith { Global:Get-HTMLFormStructureMockedData }
 }
 
 Describe "Area" {
 
     it "Standard Execution" {
 
-        Get-AreaGlobalMock
-        Mock -CommandName "Get-ActivityTypes" -MockWith { Get-ActivityTypesMockedData }
+        Global:Get-AreaGlobalMock
+        Mock -CommandName "Get-ActivityTypes" -MockWith { Global:Get-ActivityTypesMockedData }
         Mock -CommandName "Select-DropDown" -MockWith {}
         Mock -CommandName "Wait-ForJavascript" -MockWith {}
 
@@ -76,8 +76,8 @@ Describe "Area" {
 
     it "Parsing a bad activity type that dosen't exist" {
 
-        Get-AreaGlobalMock
-        Mock -CommandName "Get-ActivityTypes" -MockWith { Get-ActivityTypesMockedData }
+        Global:Get-AreaGlobalMock
+        Mock -CommandName "Get-ActivityTypes" -MockWith { Global:Get-ActivityTypesMockedData }
         Mock -CommandName "Select-DropDown" -MockWith {}
         Mock -CommandName "Wait-ForJavascript" -MockWith {}
         
@@ -91,6 +91,7 @@ Describe "Area" {
 
         Mock -CommandName Test-SEDriver -MockWith {}
         Mock -CommandName Test-CallStack -MockWith {} 
+        Mock -CommandName Get-HTMLFormStructure -MockWith {} 
         Mock -CommandName Get-ActivityTypes -MockWith {
             return @(
                 [PSCustomObject]@{
@@ -112,13 +113,14 @@ Describe "Area" {
 
     it "Standard Execution however there is a problem with selecting the dropdown box" {
 
-        Get-AreaGlobalMock
-        Mock -CommandName "Get-ActivityTypes" -MockWith { Get-ActivityTypesMockedData }
+        Global:Get-AreaGlobalMock
+        Mock -CommandName "Get-ActivityTypes" -MockWith { Global:Get-ActivityTypesMockedData }
         Mock -CommandName Select-DropDown -ParameterFilter { $selectedValue -eq 'TestGUID'} -MockWith {
             Throw "Test Error"
         }
         Mock -CommandName Select-DropDown -MockWith {} -ParameterFilter { $selectedValue -eq $LocalizedData.ElementValueArticle }
         Mock -CommandName Write-Error -MockWith {}
+        Mock -CommandName Wait-ForJavascript -MockWith {}
         
         { Area 'Test' } | Should -Throw $LocalizedData.ErrorAreaFailure
 
@@ -131,8 +133,8 @@ Describe "Area" {
 
     it "Standard Execution however Wait-ForJavascript fails because the form is bad" {
 
-        Get-AreaGlobalMock
-        Mock -CommandName "Get-ActivityTypes" -MockWith { Get-ActivityTypesMockedData }
+        Global:Get-AreaGlobalMock
+        Mock -CommandName "Get-ActivityTypes" -MockWith { Global:Get-ActivityTypesMockedData }
         Mock -CommandName "Select-DropDown" -MockWith {}
         Mock -CommandName "Wait-ForJavascript" -MockWith { Throw "TestError" }
         Mock -CommandName Write-Error -MockWith {}

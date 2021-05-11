@@ -7,7 +7,7 @@ Selenium MVP is a PowerShell module that uses PowerShell Selenium combined with 
 # About
 
 - Automates MVP Submissions using the Portal.
-- Required for Non-MVP nominees, since API is unavailable.
+- Required for Non-MVP nominees since API is unavailable.
 - Written in a custom DSL (Domain Specific Language)
 
 ## Requirements
@@ -26,7 +26,7 @@ Selenium MVP is a PowerShell module that uses PowerShell Selenium combined with 
 
 _For the best experience, Mozilla Firefox is recommended._
 
-As newer browsers are released, older versions of the WebDrivers need to be updated. Currently there is no method for updating these automatically. When updating, download the same version that your browser currently is. To check your version you can:
+As newer browsers are released, older versions of the WebDrivers need to be updated. Currently, there is no method for correcting these automatically. When updating, download the same version that your browser is. To check your version, you can:
 
 - [Microsoft Edge:](https://support.microsoft.com/en-us/microsoft-edge/find-out-which-version-of-microsoft-edge-you-have-c726bee8-c42e-e472-e954-4cf5123497eb)
 - [Mozilla Firefox:](https://support.mozilla.org/en-US/kb/find-what-version-firefox-you-are-using)
@@ -40,7 +40,7 @@ To update the Web Driver, head over to the following links:
 
 Once downloaded, unblock and extract the driver to the 'Assemblies' sub-directory within the Selenium PowerShell directory.
 
-To determine the location of the module you can run the following PowerShell:
+To determine the location of the Module, you can run the following PowerShell:
 
 `Import-Module Selenium ; Get-Module Selenium | Select-Object Path`
 
@@ -55,7 +55,7 @@ To determine the location of the module you can run the following PowerShell:
 
 ```
 
-OR if you want to explicitly specify the DriverType:
+OR if you want to specify the DriverType explicitly:
 
 ``` PowerShell
 
@@ -74,6 +74,7 @@ MVPActivity -CSVPath 'Path to CSV File'
 ```
 
 Example CSV File:
+
 ``` CSV
 Date,Title,URL,Description,Number of Articles,Number of Views,Area,ContributionArea,SecondContributionArea,ThirdContributionArea
 28/11/2020,TEST,https://www.google.com,TEST,1,1,Article,PowerShell,Networking,Storage
@@ -95,6 +96,7 @@ Date,Title,URL,Description,Number of Articles,Number of Views,Area,ContributionA
 
    }
 ```
+
 ### Usage
 
 ``` PowerShell
@@ -105,16 +107,15 @@ Date,Title,URL,Description,Number of Articles,Number of Views,Area,ContributionA
         # ContributionArea can accept an Array
         ContributionArea 'PowerShell','Yammer','Word'
 
-        Value 'Date' $date
+        Value 'Date' '08/05/2021'
         Value 'Title' 'TEST'
         Value 'URL' 'https:\\test.com'
         Value 'Description' 'THIS IS A TEST'
-        Value 'Number of Posts' '1'
+        Value 'Number of Articles' '1'
         # Or you can use the HTML DivId
-        Value 'Number of Subscribers' '1'
-        Value 'Annual Unique Visitors' '1'
-
+        Value 'Number of Views' 1
     }
+
 ```
 
 OR
@@ -129,17 +130,17 @@ OR
         ContributionArea 'Yammer'
         ContributionArea 'Word'
 
-        Value 'Date' $date
+        Value -Name 'Date' -Value '08/05/2021'
         Value 'Title' 'TEST'
         Value 'URL' 'https:\\test.com'
         Value 'Description' 'THIS IS A TEST'
-        Value 'Number of Posts' '1'
+        Value 'Number of Articles' '1'
         # Or you can use the HTML DivId
-        Value 'Number of Subscribers' '1'
-        Value 'Annual Unique Visitors' '1'
+        Value 'Number of Views' 1
 
     }
 ```
+
 ### Advanced Usage
 
 ``` PowerShell
@@ -180,8 +181,8 @@ OR
 ``` PowerShell
 
     #
-    # For those who love complexity, the fixture supports an array of HashTables to be parsed
-    # into the fixture.
+    # For those who love complexity, the Fixture supports an array of HashTables to be parsed
+    # into the Fixture.
     #
 
     $params = @(
@@ -231,13 +232,13 @@ MVPActivity "Personal Blogs" {
 }
 ```
 
-This grouping is not specific to the activity to have multiple `MVPActivities` with the same area.
+This grouping is not specific to the Activity to have multiple `MVPActivities` with the same Area.
 For Example:
 
 ```PowerShell
 
 MVPActivity "Personal Blogs" {
-    Area 'Article'
+    Area 'Blog/Website Post'
     ContributionArea 'PowerShell'
     Value 'Date' '19/11/2020'
     Value 'Title' 'TEST'
@@ -250,7 +251,7 @@ MVPActivity "Personal Blogs" {
 }
 
 MVPActivity "Another Random Blog" {
-    Area 'Article'
+    Area 'Blog/Website Post'
     ContributionArea 'PowerShell'
     Value 'Date' '19/11/2020'
     Value 'Title' 'TEST2'
@@ -272,7 +273,7 @@ Now we can refactor this logic to take advantage of the `-ArgumentList` paramete
 
 $arguments = @(
     @{
-        Area = 'Article'
+        Area = 'Blog/Website Post'
         ContributionArea = 'PowerShell'
         Date = '19/11/2020'
         Title = 'TEST'
@@ -283,7 +284,7 @@ $arguments = @(
         NumberOfVisitors = 1
     },
     @{
-        Area = 'Article'
+        Area = 'Blog/Website Post'
         ContributionArea = 'PowerShell'
         Date = '19/11/2020'
         Title = 'TEST2'
@@ -311,13 +312,13 @@ MVPActivity "Another Random Blog" -ArgumentList $arguments {
 
 ```
 
-The code block can be refactored further. The DSL enables automatic Area and ContributionArea execution within the fixture only by including `$Area` or `$ContributionArea` within the parameter:
+The code block can be refactored further. The DSL enables automatic Area and ContributionArea execution within the Fixture only by including `$Area` or `$ContributionArea` within the parameter:
 
 ``` PowerShell
 
 $arguments = @(
     @{
-        Area = 'Article'
+        Area = 'Blog/Website Post'
         ContributionArea = 'PowerShell'
         Date = '19/11/2020'
         Title = 'TEST'
@@ -328,7 +329,7 @@ $arguments = @(
         NumberOfVisitors = 1
     },
     @{
-        Area = 'Article'
+        Area = 'Blog/Website Post'
         ContributionArea = 'PowerShell'
         Date = '19/11/2020'
         Title = 'TEST2'
@@ -343,7 +344,7 @@ $arguments = @(
 MVPActivity "Another Random Blog" -ArgumentList $arguments {
     param($Area, $ContributionArea, $Date, $Title, $Url, $Description, $NumberOfPosts, $NumberOfSubscribers, $NumberOfVisitors)
 
-    # Removed $Area and $ContributionArea, since they are included in the fixture's param block.
+    # Removed $Area and $ContributionArea, since they are included in the Fixture's param block.
     Value 'Date' $Date
     Value 'Title' $Title
     Value 'URL' $Url
@@ -497,7 +498,7 @@ Currently, the following Portal dependencies are auto-formatted:
 
 ## Getting Started
 
-1. Clone the Repo `git clone "https://github.com/ZanattaMichael/SelMVP.git" dirpath`
+1. Fork and Clone the Repo `git clone "https://github.com/ZanattaMichael/SelMVP.git" dirpath`
 1. Update.
 1. Load the Module by running: `SelMVP\Build\LocalLoader.ps1`.
 1. Update Changes and Push.
@@ -517,6 +518,6 @@ OR
 ## Things to know
 
 - You can run the tests locally by running the "Run Pester Tests" VSCode Task.
-- If you want to test the module locally without importing the module, you can run: `SelMVP\Build\LocalLoader.ps1`. This script will dot-source the functions and dll's needed.
+- If you want to test the Module locally without importing the Module, you can run: `SelMVP\Build\LocalLoader.ps1`. This script will dot-source the functions and dll's needed.
 - I have created a React Site that emulates the functionality of the Portal.
 Moving forward, I plan to add integration tests against this Portal.

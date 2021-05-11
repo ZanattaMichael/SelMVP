@@ -23,7 +23,7 @@ Describe "Select-DropDown" -Tag Unit {
 
         $result = Select-DropDown -elementId 'TestID' -selectedValue 'TestValue'
         Should -Invoke 'Find-SeElement' -Exactly 1
-        Should -Invoke 'New-Object' -Exactly 1
+        { Select-DropDown -elementId 'TestID' -selectedValue 'TestValue' } | Should -Not -Throw
         
     }
 
@@ -31,8 +31,6 @@ Describe "Select-DropDown" -Tag Unit {
        
         Mock -CommandName 'Find-SeElement' -MockWith { Throw "Test" }
         {Select-DropDown -elementId "Id" -selectedValue "Value" } | Should -Throw
-        Should -Invoke 'New-Object' -Exactly 0
-        
     }
 
     it "An error is raised when selecting the dropdown on the found Element" {

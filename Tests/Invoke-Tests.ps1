@@ -10,7 +10,7 @@ if ($Location -eq 'Tests') {
 }
 
 # Set a Script Variable that sets the tests root path. This is used in Mocking with HTML
-$Script:TestRootPath = Join-Path -Path $RootPath -ChildPath "Tests"
+$Global:TestRootPath = Join-Path -Path $RootPath -ChildPath "Tests"
 $UpdatedPath = Join-Path -Path $RootPath -ChildPath 'build\LocalLoader.ps1' 
 
 if ($IsCoreCLR -and $CI) {
@@ -24,8 +24,8 @@ if ($IsCoreCLR -and $CI) {
 Import-Module Selenium -ErrorAction Stop
 
 # Invoke the Pester Tests
-Invoke-Pester -Path (Join-Path -Path $Script:TestRootPath -ChildPath 'Private') -CI:$CI
-Invoke-Pester -Path (Join-Path -Path $Script:TestRootPath -ChildPath 'Public') -CI:$CI
+Invoke-Pester -Path (Join-Path -Path $Global:TestRootPath -ChildPath 'Private') -CI:$CI
+Invoke-Pester -Path (Join-Path -Path $Global:TestRootPath -ChildPath 'Public') -CI:$CI
 
 # Clear the Variable
-Remove-Variable TestRootPath -Scope Script 
+Remove-Variable TestRootPath -Scope Script -ErrorAction SilentlyContinue

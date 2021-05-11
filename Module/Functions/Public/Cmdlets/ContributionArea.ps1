@@ -1,14 +1,128 @@
 Function ContributionArea {
 <#
 .Description
-The ContributionArea is a command that defines the Contribution Areas within the MVP Portal.
+The ContributionArea defines the Contribution Areas within a contribution.
 ContributionArea can be used as a String Array (ContributionArea 'Area1','Area2','Area3'), or by specifying multiple ContributionArea statements.
 
 Similarly to Area, if ContributionArea is included within the Param() block, it's not required to be defined and will be automatically invoked.
 
 The current list of 'Contribution Areas' are:
-
-
+ +   Chef/Puppet in Datacenter
+ +   Container Management
+ +   Datacenter Management
+ +   Enterprise Security
+ +   Group Policy
+ +   High Availability
+ +   Hyper-V
+ +   Linux in System Center/Operations Management Suite
+ +   Linux on Hyper-V
+ +   Networking
+ +   PowerShell
+ +   Storage
+ +   Windows Server for Small &amp; Medium Business
+ +   Azure Bot Service
+ +   Azure Cognitive Search
+ +   Azure Cognitive Services
+ +   Azure Machine Learning
+ +   Dynamics 365
+ +   Power Apps
+ +   Power Automate
+ +   Power Virtual Agents
+ +   Azure Arc Enabled Data Services
+ +   Azure Cosmos DB
+ +   Azure Data Catalog
+ +   Azure Data Lake
+ +   Azure Database for MySQL
+ +   Azure Database for PostgreSQL
+ +   Azure Databricks
+ +   Azure HDInsight and Hadoop &amp; Spark on Azure
+ +   Azure Search
+ +   Azure SQL (Database, Pools, Serverless, Hyperscale, Managed Instance, Virtual Machines)&nbsp;
+ +   Azure SQL Edge
+ +   Azure Stream Analytics
+ +   Azure Synapse Analytics
+ +   Big Data Clusters
+ +   Cortana Intelligence Suite
+ +   Data Warehousing (Azure SQL Data Warehouse, Fast Track &amp; APS)
+ +   Information Management (ADF, SSIS, &amp;Data Sync)
+ +   Power BI
+ +   SQL Server (on Windows, Linux, Containers)
+ +   SQL Server Machine Learning Services  (R, Python)
+ +   SQL Server Reporting Services &amp; Analysis Services
+ +   .NET
+ +   Accessibility
+ +   ASP.NET/IIS
+ +   Azure DevOps
+ +   C++
+ +   Developer Security
+ +   Front End Web Dev
+ +   Java
+ +   Javascript/Typescript
+ +   Node.js
+ +   PHP
+ +   Python
+ +   Quantum
+ +   Unity
+ +   Visual Studio Extensibility
+ +   Xamarin
+ +   Endpoint Manager
+ +   Identity and Access
+ +   Information Protection
+ +   Previous Expertise: Directory Services
+ +   Remote Desktop Services
+ +   ARM Templates (Infra as Code)
+ +   Azure API Management
+ +   Azure App Service
+ +   Azure Arc Enabled Infrastructure
+ +   Azure Backup &amp; Disaster Recovery
+ +   Azure Blockchain
+ +   Azure Core Compute (VMSS, Confidential Computing, Platform Deployment)
+ +   Azure Cost Management
+ +   Azure Edge + Platform (Azure Stack Hub, Stack Edge, Media Services)
+ +   Azure Functions
+ +   Azure IoT
+ +   Azure Kubernetes, Container Instances, Docker
+ +   Azure Lighthouse
+ +   Azure Logic Apps
+ +   Azure Migrate
+ +   Azure Monitor
+ +   Azure Networking
+ +   Azure Policy &amp; Governance
+ +   Azure SDK (Software Development Kit) and CLIs ( Az CLI, PowerShell, Terraform, Ansible)
+ +   Azure Service Fabric
+ +   Azure Storage
+ +   Cloud Infrastructure Protection
+ +   Distributed App Runtime (Dapr), Open App Model (OAM), Open Service Mesh (OSM)
+ +   Previous Expertise: Microsoft Azure
+ +   Service Bus, Event Hubs, Event Grid, Relay
+ +   Threat Protection
+ +   Access
+ +   Excel
+ +   Exchange
+ +   Microsoft Stream
+ +   Microsoft Teams
+ +   Office 365
+ +   OneDrive
+ +   OneNote
+ +   Outlook
+ +   PowerPoint
+ +   Project
+ +   SharePoint
+ +   Skype for Business
+ +   Visio
+ +   Word
+ +   Yammer
+ +   Microsoft Graph
+ +   Microsoft Teams Development
+ +   Outlook Development
+ +   SharePoint Development
+ +   W/X/P Development
+ +   Surface for IT
+ +   Windows for IT
+ +   Windows App Development
+ +   Windows Design
+ +   Windows Hardware Engineering (IoT, Mobile, and Desktop)
+ +   Windows Mixed Reality
 
 .PARAMETER SelectedValue
 The Contribution Areas that you wish to add.

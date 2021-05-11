@@ -10,7 +10,7 @@ data LocalizedData {
     ErrorMissingActivityType=Unable to enumerate ActivityTypes from source HTML.
     ErrorMissingContributionType=Unable to enumerate ContributionAreas from source HTML.
     ErrorMissingDriver=Missing Selinum Driver. Use: ConnectTo-Selenium to connect.
-    ErrorTryTentitiveCommand=Try-TentitiveCommand: Exceeded Retry Limit.
+    ErrorTryTentitiveCommand=Try-TentativeCommand: Exceeded Retry Limit.
     ErrorMissingSelectedValue=The Parameter '-SelectedValue' value '{0}', could not be found
     ErrorTooManySelectedValue=The Parameter '-SelectedValue' value '{0}', returned too many items. Count '{1}'
     ErrorJavaScriptTimeout=Javascript Timeout.
@@ -34,6 +34,7 @@ data LocalizedData {
     ErrorTestCSVSchemaMissingColumns=Error. Validation Failed: Missing Columns '{0}'
     ErrorTestCSVSchemaDifferentAreaColumn=Formatting Error. Validation Failed: Cannot have different Areas ('{0}') within the same CSV File.
     ErrorTestCSVSchemaDuplicateContributionArea=Duplicate Contribution Area Found with SecondContributionArea and ThirdContributionArea columns within the CSV File. Please correct this issue and try again!
+    ErrorPreParseValueCheck=Preparse Check Failed. Please ensure that 'Value' has the correct names added that are appropriate for the respective 'Area'. Please run "Get-AreaNamedValues -AreaName '{0}'" to get correct 'Value' names.
     WarningEntryWasNotSaved=An Error occured when attempting to add the entry. THE ENTRY WAS NOT SAVED.
     ElementIdActivityType=activityTypeSelector 
     ElementIdContributionArea=select_contributionAreasDDL
