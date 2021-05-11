@@ -7,7 +7,7 @@ Selenium MVP is a PowerShell module that uses PowerShell Selenium combined with 
 # About
 
 - Automates MVP Submissions using the Portal.
-- Required for Non-MVP nominees, since API is unavailable.
+- Required for Non-MVP nominees since API is unavailable.
 - Written in a custom DSL (Domain Specific Language)
 
 ## Requirements
@@ -26,7 +26,7 @@ Selenium MVP is a PowerShell module that uses PowerShell Selenium combined with 
 
 _For the best experience, Mozilla Firefox is recommended._
 
-As newer browsers are released, older versions of the WebDrivers need to be updated. Currently there is no method for updating these automatically. When updating, download the same version that your browser currently is. To check your version you can:
+As newer browsers are released, older versions of the WebDrivers need to be updated. Currently, there is no method for correcting these automatically. When updating, download the same version that your browser is. To check your version, you can:
 
 - [Microsoft Edge:](https://support.microsoft.com/en-us/microsoft-edge/find-out-which-version-of-microsoft-edge-you-have-c726bee8-c42e-e472-e954-4cf5123497eb)
 - [Mozilla Firefox:](https://support.mozilla.org/en-US/kb/find-what-version-firefox-you-are-using)
@@ -40,7 +40,7 @@ To update the Web Driver, head over to the following links:
 
 Once downloaded, unblock and extract the driver to the 'Assemblies' sub-directory within the Selenium PowerShell directory.
 
-To determine the location of the module you can run the following PowerShell:
+To determine the location of the Module, you can run the following PowerShell:
 
 `Import-Module Selenium ; Get-Module Selenium | Select-Object Path`
 
@@ -55,7 +55,7 @@ To determine the location of the module you can run the following PowerShell:
 
 ```
 
-OR if you want to explicitly specify the DriverType:
+OR if you want to specify the DriverType explicitly:
 
 ``` PowerShell
 
@@ -181,8 +181,8 @@ OR
 ``` PowerShell
 
     #
-    # For those who love complexity, the fixture supports an array of HashTables to be parsed
-    # into the fixture.
+    # For those who love complexity, the Fixture supports an array of HashTables to be parsed
+    # into the Fixture.
     #
 
     $params = @(
@@ -232,7 +232,7 @@ MVPActivity "Personal Blogs" {
 }
 ```
 
-This grouping is not specific to the activity to have multiple `MVPActivities` with the same area.
+This grouping is not specific to the Activity to have multiple `MVPActivities` with the same Area.
 For Example:
 
 ```PowerShell
@@ -312,7 +312,7 @@ MVPActivity "Another Random Blog" -ArgumentList $arguments {
 
 ```
 
-The code block can be refactored further. The DSL enables automatic Area and ContributionArea execution within the fixture only by including `$Area` or `$ContributionArea` within the parameter:
+The code block can be refactored further. The DSL enables automatic Area and ContributionArea execution within the Fixture only by including `$Area` or `$ContributionArea` within the parameter:
 
 ``` PowerShell
 
@@ -344,7 +344,7 @@ $arguments = @(
 MVPActivity "Another Random Blog" -ArgumentList $arguments {
     param($Area, $ContributionArea, $Date, $Title, $Url, $Description, $NumberOfPosts, $NumberOfSubscribers, $NumberOfVisitors)
 
-    # Removed $Area and $ContributionArea, since they are included in the fixture's param block.
+    # Removed $Area and $ContributionArea, since they are included in the Fixture's param block.
     Value 'Date' $Date
     Value 'Title' $Title
     Value 'URL' $Url
@@ -518,6 +518,6 @@ OR
 ## Things to know
 
 - You can run the tests locally by running the "Run Pester Tests" VSCode Task.
-- If you want to test the module locally without importing the module, you can run: `SelMVP\Build\LocalLoader.ps1`. This script will dot-source the functions and dll's needed.
+- If you want to test the Module locally without importing the Module, you can run: `SelMVP\Build\LocalLoader.ps1`. This script will dot-source the functions and dll's needed.
 - I have created a React Site that emulates the functionality of the Portal.
 Moving forward, I plan to add integration tests against this Portal.
