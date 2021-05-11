@@ -28,4 +28,4 @@ Invoke-Pester -Path (Join-Path -Path $Global:TestRootPath -ChildPath 'Private') 
 Invoke-Pester -Path (Join-Path -Path $Global:TestRootPath -ChildPath 'Public') -CI:$CI
 
 # Clear the Variable
-Remove-Variable TestRootPath -Scope Script 
+Remove-Variable TestRootPath -Scope Script -ErrorAction SilentlyContinue
