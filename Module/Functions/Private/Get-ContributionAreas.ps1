@@ -24,10 +24,22 @@ Function Get-ContributionAreas {
 
     if ($OptionElements.count -eq 0) { $PSCmdlet.ThrowTerminatingError($LocalizedData.ErrorMissingContributionType)}
 
+    # HTML Sanitization
+    $htmlSanitizer = {
+        param($value)
+
+        $value = $value -replace '&amp;', '&'
+        $value = $value -replace '&nbsp;', ''
+
+        Write-Output $value.trim()
+
+    }
+
     # Build Custom Object
     $Global:SEContributionAreas = ($OptionElements | Select-Object @{
                                         Name="Name"
-                                        Expression={$_.InnerText}}, 
+                                        Expression={ $htmlSanitizer.Invoke($_.InnerText) }
+                                    }, 
                                     @{
                                         Name="Value"
                                         Expression={($_.Attributes.Where{$_.Name -eq 'data-contributionid'}).Value}
