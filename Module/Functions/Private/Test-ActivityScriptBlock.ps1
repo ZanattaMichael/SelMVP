@@ -23,6 +23,7 @@ function Test-ActivityScriptBlock {
     # Return a list of Commands
     $CommandAst = $Fixture.ast.FindAll({$args[0] -is [System.Management.Automation.Language.CommandAst]}, $true)
     $AreaValue = $null
+    $ContributionAreaValues = $null
 
     # Requirement 1:
     # Ensure that there are no additional MVPActivity scriptblocks within it.
@@ -48,13 +49,16 @@ function Test-ActivityScriptBlock {
 
     # Requirement 3:
     # Ensure that the ContributionArea is present and that there is a maximum of two contributions.
-    $MVPContributionArea = $CommandAst -match $LocalizedData.TestActivityRegexMVPContributionArea
-    if ((($MVPContributionArea).Count -eq 0) -and ($null -eq $ArgumentList.ContributionArea)) {
+    $ContributionAreaInstance = $CommandAst -match $LocalizedData.TestActivityRegexMVPContributionArea
+    if ((($ContributionAreaInstance).Count -eq 0) -and ($null -eq $ArgumentList.ContributionArea)) {
         Throw $LocalizedData.ErrorMissingMVPActivityContributionArea
-    } elseif (($MVPContributionArea.count -eq 0) -and ($null -ne $ArgumentList.ContributionArea)) {
-        $resultObject.ParametrizedContributionArea = $true        
-    } elseif (($MVPContributionArea).Count -gt 3)  {
-        Throw ($LocalizedData.ErrorExceedMVPActivityContributionArea -f $MVPContributionArea.Count)
+    } elseif (($ContributionAreaInstance.count -eq 0) -and ($null -ne $ArgumentList.ContributionArea)) {
+        $resultObject.ParametrizedContributionArea = $true
+        $ContributionAreaValues = $ArgumentList.ContributionArea        
+    } elseif (($ContributionAreaInstance).Count -gt 3)  {
+        Throw ($LocalizedData.ErrorExceedMVPActivityContributionArea -f $ContributionAreaInstance.Count)
+    } elseif (($ContributionAreaInstance.count -ne 0) -and ($null -eq $ArgumentList.ContributionArea)) {
+        $ContributionAreaValues = Get-ASTInstanceValues -InstanceValues $ContributionAreaInstance -ParameterName 'SelectedValue'
     }
 
     # Requirement 4:
@@ -85,6 +89,13 @@ function Test-ActivityScriptBlock {
 
     if ($testMandatoryValues -or $testMisnamedValues) {
         Throw ($LocalizedData.ErrorParseValueCheck -f $AreaValue)
+    }
+
+    # Requirement 5:
+    # Ensure that all ContributionAreas are added to the fixture are (required) AND are correct
+
+    if ($ContributionAreaValues | Where-Object { $_ -notin $Global:HTMLContributionAreas}) {
+        Throw ($LocalizedData.ErrorParseContributionAreaCheck -f $AreaValue)
     }
 
     #

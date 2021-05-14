@@ -1,5 +1,14 @@
 Describe "Test-ActivityScriptBlock" -Tag Unit {
 
+    BeforeAll {
+
+        Remove-Variable -Name HTMLContributionAreas -ErrorAction SilentlyContinue
+        New-Variable -Name HTMLContributionAreas -Scope Global -Option ReadOnly -Force -Value @(
+            'TEST'
+        )
+
+    }
+
     $testCases = @(
         @{
             Fixture = {
@@ -208,7 +217,7 @@ Describe "Test-ActivityScriptBlock" -Tag Unit {
 
     }
 
-    it "Testing Value PreParser: Missing Required Values will throw an error" {
+    it "Testing Value Parser: Missing Required Values will throw an error" {
 
         Mock -CommandName Get-HTMLFormStructure -MockWith { 
             return @(
@@ -234,7 +243,7 @@ Describe "Test-ActivityScriptBlock" -Tag Unit {
 
     }
 
-    it "Testing Value PreParser: Misnamed Required Values will throw an error" {
+    it "Testing Value Parser: Misnamed Required Values will throw an error" {
 
         Mock -CommandName Get-HTMLFormStructure -MockWith { 
             return @(
@@ -260,7 +269,7 @@ Describe "Test-ActivityScriptBlock" -Tag Unit {
 
     }
 
-    it "Testing Value PreParser: Required Values will throw an error, with non-required inputted" {
+    it "Testing Value Parser: Required Values will throw an error, with non-required inputted" {
 
         Mock -CommandName Get-HTMLFormStructure -MockWith { 
             return @(
@@ -286,7 +295,7 @@ Describe "Test-ActivityScriptBlock" -Tag Unit {
 
     }
 
-    it "Testing Value PreParser: Parsing Required HTML Element Name, should not throw an error" {
+    it "Testing Value Parser: Parsing Required HTML Element Name, should not throw an error" {
 
         Mock -CommandName Get-HTMLFormStructure -MockWith { 
             return @(
@@ -312,5 +321,116 @@ Describe "Test-ActivityScriptBlock" -Tag Unit {
 
     }
 
+    it "Testing ContributionArea Parser: Invalid Contribution Area will throw an error (no parameter)" {
+
+        Mock -CommandName Get-HTMLFormStructure -MockWith { 
+            return @(
+                @{
+                    Name       = 'Test'
+                    Element    = 'TestElement'
+                    isRequired = $true
+                }
+                @{
+                    Name       = 'Mock'
+                    Element    = 'MockElement'
+                    isRequired = $false
+                }
+            )
+        }
+
+        { Test-ActivityScriptBlock -Fixture {
+                Area 'Test'
+                ContributionArea 'Not-Valid'
+                Value 'Test'
+            } 
+        } | Should -Throw ($LocalizedData.ErrorParseContributionAreaCheck)
+
+    }
+
+    it "Testing ContributionArea Parser: Invalid Contribution Area will throw an error (with parameter)" {
+
+        Mock -CommandName Get-HTMLFormStructure -MockWith { 
+            return @(
+                @{
+                    Name       = 'Test'
+                    Element    = 'TestElement'
+                    isRequired = $true
+                }
+                @{
+                    Name       = 'Mock'
+                    Element    = 'MockElement'
+                    isRequired = $false
+                }
+            )
+        }
+
+        $params = @{
+            ContributionArea = 'not-valid'
+        }
+
+        { Test-ActivityScriptBlock -Fixture {
+                param($ContributionArea)
+                Area 'Test'
+                Value 'Test'
+            } -ArgumentList $params
+        } | Should -Throw ($LocalizedData.ErrorParseContributionAreaCheck)
+
+    }
+
+    it "Testing ContributionArea Parser: Valid Contribution Area will not throw an error (no parameter)" {
+
+        Mock -CommandName Get-HTMLFormStructure -MockWith { 
+            return @(
+                @{
+                    Name       = 'Test'
+                    Element    = 'TestElement'
+                    isRequired = $true
+                }
+                @{
+                    Name       = 'Mock'
+                    Element    = 'MockElement'
+                    isRequired = $false
+                }
+            )
+        }
+
+        { Test-ActivityScriptBlock -Fixture {
+                Area 'Test'
+                ContributionArea 'test'
+                Value 'Test'
+            } 
+        } | Should -Not -Throw
+
+    }
+
+    it "Testing ContributionArea Parser: Valid Contribution Area will not throw an error (with parameter)" {
+
+        Mock -CommandName Get-HTMLFormStructure -MockWith { 
+            return @(
+                @{
+                    Name       = 'Test'
+                    Element    = 'TestElement'
+                    isRequired = $true
+                }
+                @{
+                    Name       = 'Mock'
+                    Element    = 'MockElement'
+                    isRequired = $false
+                }
+            )
+        }
+
+        $params = @{
+            ContributionArea = 'test'
+        }
+
+        { Test-ActivityScriptBlock -Fixture {
+                param($ContributionArea)
+                Area 'Test'
+                Value 'Test'
+            } -ArgumentList $params
+        } | Should -Not -Throw
+
+    }
 
 }
