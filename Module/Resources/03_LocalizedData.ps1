@@ -34,7 +34,7 @@ data LocalizedData {
     ErrorTestCSVSchemaMissingColumns=Error. Validation Failed: Missing Columns '{0}'
     ErrorTestCSVSchemaDifferentAreaColumn=Formatting Error. Validation Failed: Cannot have different Areas ('{0}') within the same CSV File.
     ErrorTestCSVSchemaDuplicateContributionArea=Duplicate Contribution Area Found with SecondContributionArea and ThirdContributionArea columns within the CSV File. Please correct this issue and try again!
-    ErrorPreParseValueCheck=Preparse Check Failed. Please ensure that 'Value' has the correct names added that are appropriate for the respective 'Area'. Please run "Get-AreaNamedValues -AreaName '{0}'" to get correct 'Value' names.
+    ErrorParseValueCheck=Parser Check Failed. Please ensure that 'Value' has the correct names added that are appropriate for the respective 'Area'. Please run "Get-AreaNamedValues -AreaName '{0}'" to get correct 'Value' names. Alternatively, you can run: 'New-MVPFixture -AreaName '{0}' to generate an example template.
     WarningEntryWasNotSaved=An Error occured when attempting to add the entry. THE ENTRY WAS NOT SAVED.
     ElementIdActivityType=activityTypeSelector 
     ElementIdContributionArea=select_contributionAreasDDL

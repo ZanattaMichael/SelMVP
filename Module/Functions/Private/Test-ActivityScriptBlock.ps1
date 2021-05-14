@@ -84,7 +84,7 @@ function Test-ActivityScriptBlock {
     }
 
     if ($testMandatoryValues -or $testMisnamedValues) {
-        Throw ($LocalizedData.ErrorPreParseValueCheck -f $AreaValue)
+        Throw ($LocalizedData.ErrorParseValueCheck -f $AreaValue)
     }
 
     #
