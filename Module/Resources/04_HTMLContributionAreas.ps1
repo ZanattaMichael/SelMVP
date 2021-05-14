@@ -37,7 +37,7 @@ New-Variable -Name HTMLContributionAreas -Scope Global -Option ReadOnly -Force -
 'Big Data Clusters'
 'Cortana Intelligence Suite'
 'Data Warehousing (Azure SQL Data Warehouse, Fast Track & APS)'
-'Information Management (ADF, SSIS, &Data Sync)'
+'Information Management (ADF, SSIS, & Data Sync)'
 'Power BI'
 'SQL Server (on Windows, Linux, Containers)'
 'SQL Server Machine Learning Services  (R, Python)'
