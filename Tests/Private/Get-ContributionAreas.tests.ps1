@@ -20,7 +20,7 @@ Describe "Get-ContributionAreas" -Tag Unit {
     It "When already invoked, will return a cached list" {
         
         Mock -CommandName Test-SEDriver -MockWith {}
-        Mock -CommandName Test-SEContributionAreas -MockWith { return "TEST" }
+        Mock -CommandName Test-SEContributionAreas -MockWith { return $true }
         Mock -CommandName Write-Verbose -MockWith {}
 
         $Result = Get-ContributionAreas
@@ -64,4 +64,21 @@ Describe "Get-ContributionAreas" -Tag Unit {
 
     }
 
+    it "It will remove HTML Formatting from the ContributionAreas" {
+
+        # Mock the Global Variable
+        $Global:MVPDriver = [PSCustomObject]@{
+            PageSource = Get-Content $Global:MockMVPDriver
+        }
+
+        Mock -CommandName Test-SEDriver -MockWith {}
+        Mock -CommandName Test-SEContributionAreas -MockWith { return $false }
+        Mock -CommandName Write-Verbose -MockWith {}
+
+        $Result = Get-ContributionAreas
+
+        $Result.Name | Where-Object { $_ -in "&amp;","&nbsp;"} | Should -be $null
+
+    } 
+ 
 }

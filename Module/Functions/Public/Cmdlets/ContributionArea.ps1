@@ -19,7 +19,7 @@ The current list of 'Contribution Areas' are:
  +   Networking
  +   PowerShell
  +   Storage
- +   Windows Server for Small &amp; Medium Business
+ +   Windows Server for Small & Medium Business
  +   Azure Bot Service
  +   Azure Cognitive Search
  +   Azure Cognitive Services
@@ -35,20 +35,20 @@ The current list of 'Contribution Areas' are:
  +   Azure Database for MySQL
  +   Azure Database for PostgreSQL
  +   Azure Databricks
- +   Azure HDInsight and Hadoop &amp; Spark on Azure
+ +   Azure HDInsight and Hadoop & Spark on Azure
  +   Azure Search
- +   Azure SQL (Database, Pools, Serverless, Hyperscale, Managed Instance, Virtual Machines)&nbsp;
+ +   Azure SQL (Database, Pools, Serverless, Hyperscale, Managed Instance, Virtual Machines)
  +   Azure SQL Edge
  +   Azure Stream Analytics
  +   Azure Synapse Analytics
  +   Big Data Clusters
  +   Cortana Intelligence Suite
- +   Data Warehousing (Azure SQL Data Warehouse, Fast Track &amp; APS)
- +   Information Management (ADF, SSIS, &amp;Data Sync)
+ +   Data Warehousing (Azure SQL Data Warehouse, Fast Track & APS)
+ +   Information Management (ADF, SSIS, &Data Sync)
  +   Power BI
  +   SQL Server (on Windows, Linux, Containers)
  +   SQL Server Machine Learning Services  (R, Python)
- +   SQL Server Reporting Services &amp; Analysis Services
+ +   SQL Server Reporting Services & Analysis Services
  +   .NET
  +   Accessibility
  +   ASP.NET/IIS
@@ -74,7 +74,7 @@ The current list of 'Contribution Areas' are:
  +   Azure API Management
  +   Azure App Service
  +   Azure Arc Enabled Infrastructure
- +   Azure Backup &amp; Disaster Recovery
+ +   Azure Backup & Disaster Recovery
  +   Azure Blockchain
  +   Azure Core Compute (VMSS, Confidential Computing, Platform Deployment)
  +   Azure Cost Management
@@ -87,7 +87,7 @@ The current list of 'Contribution Areas' are:
  +   Azure Migrate
  +   Azure Monitor
  +   Azure Networking
- +   Azure Policy &amp; Governance
+ +   Azure Policy & Governance
  +   Azure SDK (Software Development Kit) and CLIs ( Az CLI, PowerShell, Terraform, Ansible)
  +   Azure Service Fabric
  +   Azure Storage

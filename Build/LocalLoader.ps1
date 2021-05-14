@@ -21,6 +21,7 @@ Write-Host "Dot-Sourcing Localized Data Resources:"
 . "$RootPath\Module\Resources\03_LocalizedData.ps1"
 . "$RootPath\Module\Resources\00_HTMLElements.ps1"
 . "$RootPath\Module\Resources\01_HTMLFormStrucuture.ps1"
+. "$RootPath\Module\Resources\04_HTMLContributionAreas.ps1"
 
 # Dot Source the Private Directory
 Get-ChildItem -LiteralPath "$RootPath\Module\Functions\Private" -File -Recurse | ForEach-Object {
