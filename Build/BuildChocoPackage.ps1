@@ -34,10 +34,10 @@ $manifest = . $BuildModulePSDFile
 $parameters = @{
     maintainername = "Michael Zanatta"
     maintainerrepo = "https://github.com/ZanattaMichael/SelMVP"
-    packageversion = $manifest.ModuleVersion\
+    packageversion = $manifest.ModuleVersion
     installertype = 'zip'
-    url =
-    url64 =
+    url = ''
+    url64 = ''
 }
 
 choco new SelMVP maintainername="Michael Zanatta" 

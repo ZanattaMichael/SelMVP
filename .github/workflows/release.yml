@@ -17,20 +17,13 @@ jobs:
 
       - name: Packaging and Setting Environment Variable
         run:
-          $params = @{
-            Path = '.\Build\SelMVP';
-            NuGetApiKey = '${{ secrets.PSGALLERY }}';
-            Tags = "MVP","Selenium";
-            ProjectUri = [uri]::new('https://github.com/ZanattaMichael/SelMVP');
-            LicenseUri = [uri]::new('https://github.com/ZanattaMichael/SelMVP/blob/master/LICENSE');
-          };
-          Publish-Module @params;
+          Compress-Archive -Path .\Build\SelMVP\ -DestinationPath .\Build\SelMVP\SelMVP.zip
         shell: pwsh
-
 
       - name: Upload the artifacts
         uses: skx/github-action-publish-binaries@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          #INPUT_ARGS: '.\Build\SelMVP\SelMVP.zip'
         with:
-          args: 'example-*'
+          args: '.\Build\SelMVP\SelMVP.zip'
