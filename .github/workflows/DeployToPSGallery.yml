@@ -1,4 +1,4 @@
-name: PSGallery
+name: Deploy to PSGallery
 
 on:
   release:

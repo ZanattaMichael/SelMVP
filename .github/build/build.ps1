@@ -1,0 +1,1 @@
+pwsh -file .\Build\BuildModule.ps1
