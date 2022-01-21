@@ -142,7 +142,7 @@ New-Variable -Name HTMLFormStructure -Scope Global -Option ReadOnly -Force -Valu
                 isRequired = $true
             },
             @{
-                Name = 'Number of Posts'
+                Name = 'Views of answers'
                 Element = $LocalizedDataHTMLElements.AnnualReach
             }                                   
         )
@@ -163,7 +163,6 @@ New-Variable -Name HTMLFormStructure -Scope Global -Option ReadOnly -Force -Valu
             @{
                 Name = 'Number of Posts'
                 Element = $LocalizedDataHTMLElements.SecondAnnualQuantity
-                isRequired = $true
             },
             @{
                 Name = 'Views of answers'
