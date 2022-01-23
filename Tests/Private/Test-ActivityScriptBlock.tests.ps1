@@ -15,6 +15,7 @@ Describe "Test-ActivityScriptBlock" -Tag Unit {
                 Area "TEST"
                 ContributionArea "TEST"
                 Value "TEST"
+                Visibility = "TEST"
             }
             Act = {
                 $Result = Test-ActivityScriptBlock $Fixture
@@ -195,7 +196,7 @@ Describe "Test-ActivityScriptBlock" -Tag Unit {
             Assert = {
                 { Test-ActivityScriptBlock $Fixture } | Should -Throw $LocalizedData.ErrorMissingMVPActivityValue
             }
-        }          
+        }      
 
     )
 
@@ -430,6 +431,36 @@ Describe "Test-ActivityScriptBlock" -Tag Unit {
                 Value 'Test'
             } -ArgumentList $params
         } | Should -Not -Throw
+
+    }
+
+    it "Testing a multiple instances of 'Visibility' throws an error" {
+
+        Mock -CommandName Get-HTMLFormStructure -MockWith { 
+            return @(
+                @{
+                    Name       = 'Test'
+                    Element    = 'TestElement'
+                    isRequired = $False
+                }
+            )
+        }
+
+        #
+        # Arrange
+
+        $Fixture = {
+            Area "TEST"
+            ContributionArea "TEST"
+            Value "TEST"
+            Visibility "TEST"
+            Visibility "TEST"
+        }
+
+        #
+        # Act and Assert
+
+        { Test-ActivityScriptBlock $Fixture } | Should -Throw $LocalizedData.ErrorMultipleVisibilityStatements
 
     }
 
