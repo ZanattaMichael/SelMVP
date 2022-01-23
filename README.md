@@ -102,7 +102,7 @@ Date,Title,URL,Description,Number of Articles,Number of Views,Area,ContributionA
 
 ``` PowerShell
 
-    MVPActivity "Reddit Contribution" {
+    MVPActivity "Article Contributions" {
 
         Area 'Article'
         # ContributionArea can accept an Array

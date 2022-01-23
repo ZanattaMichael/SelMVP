@@ -36,7 +36,7 @@ data LocalizedData {
     ErrorTestCSVSchemaDuplicateContributionArea=Duplicate Contribution Area Found with SecondContributionArea and ThirdContributionArea columns within the CSV File. Please correct this issue and try again!
     ErrorParseValueCheck=Parser Check Failed. Please ensure that 'Value' has the correct names added that are appropriate for the respective 'Area'. Please run "Get-AreaNamedValues -AreaName '{0}'" to get correct 'Value' names. Alternatively, you can run: 'New-MVPFixture -AreaName '{0}' to generate an example template.
     ErrorParseContributionAreaCheck=Parser Check Failed. Please ensure that 'ContributionArea' has the correct names added. Please run "Get-Help ContributionArea" for a list of valid Contribution Areas.
-    ErrorMultipleVisibilityStatements=Parser Check Failed. Multiple 'Visibility' Statements found. Please ensure only a single instance of 'Visibility' is included.
+    Error500=Error 500 Detected on the MVP Portal. This is an intermittent error.
     WarningEntryWasNotSaved=An Error occured when attempting to add the entry. THE ENTRY WAS NOT SAVED.
     ElementIdActivityType=activityTypeSelector 
     ElementIdContributionArea=select_contributionAreasDDL
@@ -55,5 +55,6 @@ data LocalizedData {
     TestActivityRegexMVPVisibility=^Visibility
     TestActivityRegexMVPValue=^Value
     ConnectToMVPPortalRegexURLMatch=^https:\/\/login\.((microsoftonline)|(live))\.com
+    MVPPortal500Error=^https:\/\/mvp\.microsoft\.com\/Error\/500\?.+
 '@
 }

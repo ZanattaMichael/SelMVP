@@ -1,12 +1,13 @@
 Describe "Save-MVPActivity" -Tag Unit {
 
-    BeforeAll {
+    BeforeEach {
         # Clear the Global Variables
         $Script:MVPHTMLFormStructure = $null
         $Script:SaveActivitySleepCounter = $null
 
         $Global:MVPDriver = [PSCustomObject]@{
             Data = 'Test'
+            Url = ''
         }
 
     }
@@ -89,5 +90,27 @@ Describe "Save-MVPActivity" -Tag Unit {
         { Save-MVPActivity } | Should -Throw ($LocalizedData.ErrorFieldValidationError -f "*")
         
     }
+
+
+    it "Raises a 500 raised from Microsoft" {
+
+        Mock -CommandName Test-SEDriver -MockWith {}
+        Mock -CommandName Find-SeElement -MockWith {} -RemoveParameterType 'Target','Driver' -ParameterFilter { $Selection -eq $LocalizedData.ElementFieldValidationError}
+        Mock -CommandName Find-SeElement -MockWith { 
+            return ([PSCustomObject]@{ data = "TEST"})
+        } -RemoveParameterType 'Target','Driver' -ParameterFilter { $Id -eq $LocalizedData.ElementButtonSubmitActivity }
+        Mock -CommandName Invoke-SeClick -MockWith {
+            $Global:MVPDriver.Url = 'https://mvp.microsoft.com/Error/500?aspxerrorpath=/' 
+        } -RemoveParameterType 'Element'
+        
+        $Script:MVPHTMLFormStructure = @(
+            [PSCustomObject]@{
+                isSet = $true
+            }       
+        )
+
+        { Save-MVPActivity } | Should -Throw "*$($LocalizedData.Error500)*"
+
+    }    
 
 }
