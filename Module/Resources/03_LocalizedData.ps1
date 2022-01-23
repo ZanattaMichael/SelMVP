@@ -46,10 +46,13 @@ data LocalizedData {
     ElementValueArticle=e36464de-179a-e411-bbc8-6c3be5a82b68
     ElementValueChefPuppetInDataCenter=b803f4ef-066b-e511-810b-fc15b428ced0
     ElementFieldValidationError=field-validation-error
+    ElementVisibilityBoxXPath=//a[contains(@class,'Txt') and contains(@role,'navigation')]
+    VisibilityListItem=//li[contains(@class,'Item') and contains(@txt,'{0}')]
     VariableSaveActivitySleepCounter=SaveActivitySleepCounter
     TestActivityRegexMVPActivity=^MVPActivity
     TestActivityRegexMVPArea=^Area
     TestActivityRegexMVPContributionArea=^ContributionArea
+    TestActivityRegexMVPVisibility=^Visibility
     TestActivityRegexMVPValue=^Value
     ConnectToMVPPortalRegexURLMatch=^https:\/\/login\.((microsoftonline)|(live))\.com
     MVPPortal500Error=^https:\/\/mvp\.microsoft\.com\/Error\/500\?.+

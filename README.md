@@ -76,9 +76,9 @@ MVPActivity -CSVPath 'Path to CSV File'
 Example CSV File:
 
 ``` CSV
-Date,Title,URL,Description,Number of Articles,Number of Views,Area,ContributionArea,SecondContributionArea,ThirdContributionArea
-28/11/2020,TEST,https://www.google.com,TEST,1,1,Article,PowerShell,Networking,Storage
-28/11/2020,TEST,https://www.google.com,TEST,1,1,Article,PowerShell,Networking,Storage
+Date,Title,URL,Description,Number of Articles,Number of Views,Area,ContributionArea,SecondContributionArea,ThirdContributionArea,Visibility
+28/11/2020,TEST,https://www.google.com,TEST,1,1,Article,PowerShell,Networking,Storage,Microsoft
+28/11/2020,TEST,https://www.google.com,TEST,1,1,Article,PowerShell,Networking,Storage,Everyone
 ```
 
 ## Create an Activity (using DSL)
@@ -90,6 +90,7 @@ Date,Title,URL,Description,Number of Articles,Number of Views,Area,ContributionA
    MVPActivity [String]"Name of Activity" [-ArgumentList [Hashtable[]]$params] [-CSVPath [String]'CSVPath'] {
        param()
 
+       *[Optional]* Visibility [String]"Microsoft"
        Area [String]"Area"
        ContributionArea [String[]]"ContributionArea"
        Value [String]"TextName" [String]"TextValue"
@@ -105,6 +106,7 @@ Date,Title,URL,Description,Number of Articles,Number of Views,Area,ContributionA
 
         Area 'Article'
         # ContributionArea can accept an Array
+        Visibility 'Microsoft'
         ContributionArea 'PowerShell','Yammer','Word'
 
         Value 'Date' '08/05/2021'
@@ -125,6 +127,7 @@ OR
     MVPActivity "Reddit Contribution" {
 
         Area 'Article'
+        Visibility 'Everyone'
         # ContributionArea can be added each time.
         ContributionArea 'PowerShell'
         ContributionArea 'Yammer'
@@ -153,13 +156,14 @@ OR
         Area = "Blog/Website Post"
         ContributionArea = "PowerShell","Yammer","Word"
         date = '26/10/2020'
+        Visibility = 'Everyone'
     }
 
     # Define Activity
     MVPActivity "Name of Activity" -ArgumentList $params {
         # If the Parameters -Area or -ContributionArea are defined 
         # in the param block, the cmdlet is not required (Area or ContributionArea).
-        param($Area, $ContributionArea, $date)
+        param($Area, $ContributionArea, $Visibility, $date)
 
         # You can use the String Name
         Value 'Date' $date
@@ -189,11 +193,13 @@ OR
         @{
             Area = "Blog/Website Post"
             ContributionArea = "PowerShell","Yammer","Word"
+            Visibility = "Microsoft"
             date = '26/10/2020'
         }
         @{
             Area = "Blog/Website Post"
             ContributionArea = "PowerShell","Yammer","Word"
+            Visibility = "Everyone"
             date = '15/10/2020'
         }
     )
@@ -202,7 +208,7 @@ OR
     MVPActivity "Name of Activity" -ArgumentList $params {
         # If the Parameters -Area or -ContributionArea are defined in the param block, 
         # the cmdlet is not required (Area or ContributionArea).
-        param($Area, $ContributionArea, $date)
+        param($Area, $ContributionArea, $Visibility, $date)
 
         # You can use the String Name
         Value 'Date' $date
@@ -239,6 +245,7 @@ For Example:
 
 MVPActivity "Personal Blogs" {
     Area 'Blog/Website Post'
+    Visibility 'Everyone'
     ContributionArea 'PowerShell'
     Value 'Date' '19/11/2020'
     Value 'Title' 'TEST'
@@ -275,6 +282,7 @@ $arguments = @(
     @{
         Area = 'Blog/Website Post'
         ContributionArea = 'PowerShell'
+        Visibility = 'Everyone'
         Date = '19/11/2020'
         Title = 'TEST'
         Url = 'https:\\test.com'
@@ -286,6 +294,7 @@ $arguments = @(
     @{
         Area = 'Blog/Website Post'
         ContributionArea = 'PowerShell'
+        Visibility = 'Microsoft'
         Date = '19/11/2020'
         Title = 'TEST2'
         Url = 'https:\\test.com'
@@ -297,10 +306,11 @@ $arguments = @(
 )
 
 MVPActivity "Another Random Blog" -ArgumentList $arguments {
-    param($Area, $ContributionArea, $Date, $Title, $Url, $Description, $NumberOfPosts, $NumberOfSubscribers, $NumberOfVisitors)
+    param($Area, $ContributionArea, $Visibility, $Date, $Title, $Url, $Description, $NumberOfPosts, $NumberOfSubscribers, $NumberOfVisitors)
 
     Area $Area
     ContributionArea $ContributionArea
+    Visibility $Visibility
     Value 'Date' $Date
     Value 'Title' $Title
     Value 'URL' $Url
@@ -320,6 +330,7 @@ $arguments = @(
     @{
         Area = 'Blog/Website Post'
         ContributionArea = 'PowerShell'
+        Visibility = 'Microsoft'
         Date = '19/11/2020'
         Title = 'TEST'
         Url = 'https:\\test.com'
@@ -331,6 +342,7 @@ $arguments = @(
     @{
         Area = 'Blog/Website Post'
         ContributionArea = 'PowerShell'
+        Visibility = 'Microsoft'
         Date = '19/11/2020'
         Title = 'TEST2'
         Url = 'https:\\test.com'
@@ -342,7 +354,7 @@ $arguments = @(
 )
 
 MVPActivity "Another Random Blog" -ArgumentList $arguments {
-    param($Area, $ContributionArea, $Date, $Title, $Url, $Description, $NumberOfPosts, $NumberOfSubscribers, $NumberOfVisitors)
+    param($Area, $ContributionArea, $Visibility, $Date, $Title, $Url, $Description, $NumberOfPosts, $NumberOfSubscribers, $NumberOfVisitors)
 
     # Removed $Area and $ContributionArea, since they are included in the Fixture's param block.
     Value 'Date' $Date
@@ -568,6 +580,46 @@ MVPActivity "Test" {
     # ContributionArea is not required when included in the Param Block.
 }
 
+```
+
+## (OPTIONAL) Visibility `[String]'Name'`
+
+The 'Visibility' Parameter sets the visibility of the Activity.
+This statement can be included within the fixture or executed within the Param Block, similar to 'Area' and 'Contribution Area'.
+Multiple statements aren't allowed within the Fixture.
+
+In this example, 'Visibility' is set within the Fixture:
+
+``` PowerShell
+MVPActivity "Test" {
+    
+    # Let's set the Area and the Contribution Area
+    Area 'Article'
+    Visibility 'Microsoft'
+
+    # We can set the mandatory parameters
+    Value "Number of Articles" 1
+    Value Title "Test Entry"
+    Value Date "30/11/2020"
+
+}
+```
+
+In this example, 'Visibility' is set within the param block:
+
+``` PowerShell
+MVPActivity "Test" {
+    param($Visibility)
+    
+    # Let's set the Area and the Contribution Area
+    Area 'Article'
+
+    # We can set the mandatory parameters
+    Value "Number of Articles" 1
+    Value Title "Test Entry"
+    Value Date "30/11/2020"
+
+}
 ```
 
 ## Value `[String]'Name' [String]'Value'`
