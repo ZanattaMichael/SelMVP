@@ -17,6 +17,7 @@ function Test-ActivityScriptBlock {
     $resultObject = [PSCustomObject]@{
         ParametrizedArea = $false
         ParametrizedContributionArea = $false
+        ParametrizedVisibility = $false
     }
 
     #
@@ -69,8 +70,14 @@ function Test-ActivityScriptBlock {
     }
 
     # Requirement 5:
-    # Ensure that all Values added to the fixture are (required) AND are correct
+    # Visibility dosen't need to be included into the statement, however ensure that there are only one of them.
+    [Array]$visibilityInstances = $CommandAst -match $LocalizedData.TestActivityRegexMVPVisibility
+    if ($visibilityInstances.Count -gt 1) {
+        Throw $LocalizedData.ErrorMultipleVisibilityStatements
+    }
 
+    # Requirement 6:
+    # Ensure that all Values added to the fixture are (required) AND are correct
     $HTMLFormStructure = Get-HTMLFormStructure -Name $AreaValue
     $ASTInstanceValues = Get-ASTInstanceValues -InstanceValues $valueInstances -ParameterName 'Name'
 

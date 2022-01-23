@@ -70,6 +70,10 @@ function New-MVPActivity {
                 ContributionArea $ArgumentList.ContributionArea
             }
 
+            if ($parameterCmdlets.ParametrizedVisibility) {
+                Visibility $ArgumentList.Visibility
+            }
+
             if ($ArgumentList) {
                 # Invoke the Fixture Splatting the Args in as parameters.
                 & $Fixture @ArgumentList
