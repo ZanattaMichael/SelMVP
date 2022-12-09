@@ -102,6 +102,7 @@ Date,Title,URL,Description,Number of Articles,Number of Views,Area,ContributionA
 
 ``` PowerShell
 
+    # Name your activity
     MVPActivity "Article Contributions" {
 
         Area 'Article'
@@ -124,11 +125,12 @@ OR
 
 ``` PowerShell
 
+    # Name your activity
     MVPActivity "Reddit Contribution" {
 
-        Area 'Article'
+        Area 'Forum Participation (3rd Party forums)'
         Visibility 'Everyone'
-        # ContributionArea can be added each time.
+        # ContributionArea can be individually
         ContributionArea 'PowerShell'
         ContributionArea 'Yammer'
         ContributionArea 'Word'
