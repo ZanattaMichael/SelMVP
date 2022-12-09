@@ -4,7 +4,7 @@ function Area {
 Used inside of the MVPActivity block, the ‘Area’ Describes the Contribution Area.
 The Current List of Areas are:
 
-+   Article
++    Article
 +    Blog/WebSite Post
 +    Book (Author)
 +    Book (Co-Author)

@@ -433,7 +433,6 @@ The current list of 'Contribution Areas' are:
 - Chef/Puppet in Datacenter
 - Container Management
 - Datacenter Management
-- Enterprise Security
 - Group Policy
 - High Availability
 - Hyper-V
@@ -450,80 +449,60 @@ The current list of 'Contribution Areas' are:
 - Dynamics 365
 - Power Apps
 - Power Automate
+- Power Pages
 - Power Virtual Agents
 - Azure Arc Enabled Data Services
 - Azure Cosmos DB
 - Azure Data Catalog
+- Azure Data Explorer
 - Azure Data Lake
 - Azure Database for MySQL
 - Azure Database for PostgreSQL
 - Azure Databricks
 - Azure HDInsight and Hadoop & Spark on Azure
 - Azure Search
-- Azure SQL (Database, Pools, Serverless, Hyperscale, Managed Instance, Virtual Machines)&nbsp;
+- Azure SQL (Database, Pools, Serverless, Hyperscale, Managed Instance, Virtual Machines)
 - Azure SQL Edge
 - Azure Stream Analytics
 - Azure Synapse Analytics
 - Big Data Clusters
 - Cortana Intelligence Suite
 - Data Warehousing (Azure SQL Data Warehouse, Fast Track & APS)
-- Information Management (ADF, SSIS, &Data Sync)
+- Information Management (ADF, SSIS, & Data Sync)
+- Microsoft Purview
 - Power BI
 - SQL Server (on Windows, Linux, Containers)
-- SQL Server Machine Learning Services  (R, Python)
+- SQL Server Machine Learning Services (R, Python)
 - SQL Server Reporting Services & Analysis Services
+- Tools & Connectivity
 - .NET
 - Accessibility
 - ASP.NET/IIS
-- Azure DevOps
 - C++
 - Developer Security
 - Front End Web Dev
+- Github & Azure DevOps
 - Java
 - Javascript/Typescript
 - Node.js
-- PHP
 - Python
 - Quantum
 - Unity
+- Visual Studio Code
 - Visual Studio Extensibility
 - Xamarin
-- Endpoint Manager
-- Identity and Access
 - Information Protection
+- Microsoft Intune
 - Previous Expertise: Directory Services
 - Remote Desktop Services
-- ARM Templates (Infra as Code)
-- Azure API Management
-- Azure App Service
-- Azure Arc Enabled Infrastructure
-- Azure Backup & Disaster Recovery
-- Azure Blockchain
-- Azure Core Compute (VMSS, Confidential Computing, Platform Deployment)
-- Azure Cost Management
-- Azure Edge + Platform (Azure Stack Hub, Stack Edge, Media Services)
-- Azure Functions
-- Azure IoT
-- Azure Kubernetes, Container Instances, Docker
-- Azure Lighthouse
-- Azure Logic Apps
-- Azure Migrate
-- Azure Monitor
-- Azure Networking
-- Azure Policy & Governance
-- Azure SDK (Software Development Kit) and CLIs ( Az CLI, PowerShell, Terraform, Ansible)
-- Azure Service Fabric
-- Azure Storage
-- Cloud Infrastructure Protection
-- Distributed App Runtime (Dapr), Open App Model (OAM), Open Service Mesh (OSM)
-- Previous Expertise: Microsoft Azure
-- Service Bus, Event Hubs, Event Grid, Relay
-- Threat Protection
+- Azure Edge Devices
+- Azure IoT Services & Development
 - Access
 - Excel
 - Exchange
 - Microsoft Stream
 - Microsoft Teams
+- Microsoft Viva
 - Office 365
 - OneDrive
 - OneNote
@@ -540,12 +519,40 @@ The current list of 'Contribution Areas' are:
 - Outlook Development
 - SharePoint Development
 - W/X/P Development
+- ARM Templates (Infra as Code)
+- Azure API Management
+- Azure App Service
+- Azure Arc Enabled Infrastructure
+- Azure Backup & Disaster Recovery
+- Azure Blockchain
+- Azure Core Compute (VMSS, Confidential Computing, Platform Deployment)
+- Azure Cost Management
+- Azure Functions
+- Azure Hybrid
+- Azure Kubernetes, Container Instances, Docker
+- Azure Lighthouse
+- Azure Logic Apps
+- Azure Migrate
+- Azure Monitor
+- Azure Networking
+- Azure Policy & Governance
+- Azure SDK (Software Development Kit) and CLIs ( Az CLI, PowerShell, Terraform, Ansible)
+- Azure Service Fabric
+- Azure Storage
+- Distributed App Runtime (Dapr), Open App Model (OAM), Open Service Mesh (OSM)
+- Previous Expertise: Microsoft Azure
+- Service Bus, Event Hubs, Event Grid, Relay
+- D365 Mixed Reality
+- MR Design
+- MR Development
+- Cloud Security
+- Identity & Access
+- SIEM & XDR
 - Surface for IT
+- Windows 365
 - Windows for IT
-- Windows App Development
 - Windows Design
-- Windows Hardware Engineering (IoT, Mobile, and Desktop)
-- Windows Mixed Reality
+- Windows Development
 
 Single:
 
