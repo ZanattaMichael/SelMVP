@@ -1,4 +1,4 @@
-function Try-TentativeCommand {
+function ttry {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory, Position = 0)]
@@ -35,4 +35,5 @@ function Try-TentativeCommand {
 
 }
 
-Set-Alias -Name "ttry" -Value "Try-TentativeCommand"
+#Yup it's gotta be flipped, because I need to mock ttry and I can't mock and alias.
+Set-Alias -Name "Try-TentativeCommand" -Value "ttry"

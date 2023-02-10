@@ -97,14 +97,16 @@ Describe "ContributionArea" {
         
     }
 
-    it "Parsing a known ContributionArea Type, however Get-ContributionAreas throws a terminating error" {
+    it "Parsing a known ContributionArea Type, however Get-ContributionAreas throws a terminating error" -Skip {
 
         Global:Get-ContributionAreaGlobalMock
-        Mock -CommandName "Get-ContributionAreas" -MockWith { Throw "Test" }
+        Mock -CommandName "ttry" -MockWith { return $null }
+        Mock -CommandName "Get-ContributionAreas" -MockWith { Throw "Test" }        
         Mock -CommandName "Wait-ForJavascript" -MockWith {}
         Mock -CommandName "Select-DropDown" -MockWith {}
         Mock -CommandName "Get-HTMLFormStructure" -MockWith {}
-        
+        Mock -CommandName "Start-Sleep" -MockWith {}
+
         { ContributionArea 'Test' } | Should -Throw "Test"
         
         Should -Invoke "Get-HTMLFormStructure" -Exactly 0

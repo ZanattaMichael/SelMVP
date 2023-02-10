@@ -176,8 +176,15 @@ The ContributionArea is a command that defines the Contribution Areas within the
         # Multiple Contribution Areas can be parsed in.
         ForEach ($Param in $SelectedValue) {
 
+            # Fetch the Contribution Areas (sometimes the browser is too quick)
+            $HTMLContributionAreas = ttry {
+                Get-ContributionAreas
+            } -Catch { 
+                Start-Sleep -Milliseconds 500
+            } -RetryLimit 5
+
             # Validate the $SelectedValue Parameters
-            [Array]$matchedActivityType = Get-ContributionAreas | Where-Object { $_.Name -eq $Param }
+            [Array]$matchedActivityType = $HTMLContributionAreas | Where-Object { $_.Name -eq $Param }
             if ($matchedActivityType.Count -eq 0) { Throw ($LocalizedData.ErrorMissingSelectedValue -f $Param) }
             if ($matchedActivityType.Count -ne 1) { Throw ($LocalizedData.ErrorTooManySelectedValue -f $Param, $matchedActivityType.count) }
             
