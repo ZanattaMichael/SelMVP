@@ -1,2 +1,4 @@
 Tests/Public/Loader.ps1
 Tests/Public/PublicLoader.ps1
+Build/SelMVP/
+Tests/testResults.xml

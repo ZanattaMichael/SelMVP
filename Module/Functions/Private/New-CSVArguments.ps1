@@ -23,6 +23,10 @@ function New-CSVArguments {
             ContributionArea = ($row.ContributionArea, $row.SecondContributionArea, $row.ThirdContributionArea | Where-Object {$null -ne $_})
         }
 
+        if ($CSVColumnNames -contains 'Visibility') {
+            $params.Visibility = $row.Visibility
+        }
+
         # Iterate Through the Matched Items and Add them
         $FormStructure | ForEach-Object {
             $params.('{0}' -f $_.Name) = $row."$($_.Name)"

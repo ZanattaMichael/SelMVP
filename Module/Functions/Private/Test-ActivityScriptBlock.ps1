@@ -74,6 +74,10 @@ function Test-ActivityScriptBlock {
     [Array]$visibilityInstances = $CommandAst -match $LocalizedData.TestActivityRegexMVPVisibility
     if ($visibilityInstances.Count -gt 1) {
         Throw $LocalizedData.ErrorMultipleVisibilityStatements
+    } 
+    # If Visability is included as a parameter, process it.
+    elseif (($visibilityInstances.count -eq 0) -and ($null -ne $ArgumentList.Visibility)) {
+        $resultObject.ParametrizedVisibility = $true          
     }
 
     # Requirement 6:

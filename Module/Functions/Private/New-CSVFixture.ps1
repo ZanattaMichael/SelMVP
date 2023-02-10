@@ -6,16 +6,29 @@ Function New-CSVFixture {
     )
 
     # Import the CSV File
-    $CSV = Import-Csv @PSBoundParameters
+    [Array]$CSV = Import-Csv @PSBoundParameters
+
+    # Single CSV Entry
+    if ($CSV.Count -eq 1) {
+        $Area = $CSV.Area
+    } else {
+        $Area = $CSV.Area[0]
+    }
 
     # Get the CSV Column Names, excluding 'Area' & ContributionArea
-    $CSVColumnNames = ($CSV | Get-Member).Name
+    $CSVColumnNames = ($CSV | Get-Member -MemberType NoteProperty).Name
 
     # Get the HTMLForm Structure and Get the Column Names Match from the CSV File
-    $FormStructure = Get-HTMLFormStructure $CSV.Area[0] | Where-Object { $_.Name -in $CSVColumnNames }
+    $FormStructure = Get-HTMLFormStructure $Area | Where-Object { $_.Name -in $CSVColumnNames }
+
+    # If the Visability is present, manually interpolate.
+    $VisabilityParameter = $(
+        if ($CSVColumnNames -contains 'Visibility') { Write-Output ',$Visibility'}
+        else { Write-Output '' }
+    )
 
     # Param Block
-    $ParamBlock = 'param($Area,$ContributionArea,{0});' -f (($FormStructure.Name | ForEach-Object { "`${$_}" }) -join ',')
+    $ParamBlock = 'param($Area,$ContributionArea,{0}{1});' -f (($FormStructure.Name | ForEach-Object { "`${$_}" }) -join ','), $VisabilityParameter
 
     # Create the Scriptblock
     $ScriptBlock = $FormStructure | ForEach-Object -Begin {
