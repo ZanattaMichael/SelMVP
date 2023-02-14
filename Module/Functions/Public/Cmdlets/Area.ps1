@@ -71,9 +71,12 @@ Area 'Article'
 
             Select-DropDown -elementId $LocalizedData.ElementIdActivityType -selectedValue $matchedActivityType.Value
 
-            # We are using Views of Answers to dertmine if the Javascript has ran
+            # Iterate through the HTML Structure and validate if the fields exist.
             $HTMLFormStructure | ForEach-Object {
-                Wait-ForJavascript -ElementText $_.Name
+                $Element = Find-SeElement -Driver ($Global:MVPDriver) -Id $_.Element -Timeout 2
+                if (-not($Element)) {
+                    Throw $LocalizedData.ErrorJavaScriptTimeout
+                }
             }
 
             # Update the Area
