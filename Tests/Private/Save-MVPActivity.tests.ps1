@@ -63,13 +63,14 @@ Describe "Save-MVPActivity" -Tag Unit {
 
     }
 
-    it "Alternative Execution with non-set HTML values - will Throw an Error " {
+    it "Alternative Execution with required non-set HTML values - will Throw an Error " {
 
         Mock -CommandName Test-SEDriver -MockWith {}
 
         $Script:MVPHTMLFormStructure = @(
             [PSCustomObject]@{
                 isSet = $false
+                isRequired = $true
             }       
         )
 
