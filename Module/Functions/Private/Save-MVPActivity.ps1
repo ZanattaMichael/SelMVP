@@ -6,8 +6,8 @@ function Save-MVPActivity {
     Test-SEDriver
     
     # Validate that HTML Form Strucuture Prior to Submission
-
-    $missingRequiredEntries = $Script:MVPHTMLFormStructure.Where{$_.isSet -contains $false}
+    # Ensure that all required items are set.
+    $missingRequiredEntries = $Script:MVPHTMLFormStructure.Where{($_.isSet -eq $false) -and ($_.isRequired -eq $true)}
     if ($missingRequiredEntries) {
         Throw ($LocalizedData.ErrorMissingRequiredEntries -f (-join $missingRequiredEntries.Name))
         # Fail the Submission and Tidy Up
