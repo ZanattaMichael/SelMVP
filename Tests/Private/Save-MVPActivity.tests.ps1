@@ -34,6 +34,7 @@ Describe "Save-MVPActivity" -Tag Unit {
         $Script:MVPHTMLFormStructure = @(
             [PSCustomObject]@{
                 isSet = $true
+                isRequired = $true
             }       
         )
 
