@@ -34,6 +34,8 @@ As newer browsers are released, older versions of the WebDrivers need to be upda
 
 To update the Web Driver, head over to the following links:
 
+> Note: Please download the x64 bit build of the driver. The x86 version will not work.
+
 - [Microsoft Edge](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)
 - [Mozilla Firefox](https://github.com/mozilla/geckodriver/releases)
 - [Google Chrome](https://sites.google.com/a/chromium.org/chromedriver/downloads)
