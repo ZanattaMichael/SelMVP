@@ -73,7 +73,7 @@ Area 'Article'
 
             # Iterate through the HTML Structure and validate if the fields exist.
             $HTMLFormStructure | ForEach-Object {
-                $Element = Find-SeElement -Driver ($Global:MVPDriver) -Id $_.Element -Timeout 2
+                $Element = Find-SeElement -Driver ($Global:MVPDriver) -Id $_.Element -Timeout 1
                 if (-not($Element)) {
                     Throw $LocalizedData.ErrorJavaScriptTimeout
                 }
@@ -90,7 +90,7 @@ Area 'Article'
             # it will retrigger by select the "Article"
             Start-Sleep -Seconds 1
             Select-DropDown -elementId $LocalizedData.ElementIdActivityType -selectedValue $LocalizedData.ElementValueArticle   
-        } -RetryLimit 10
+        } -RetryLimit 5
         
         # If it failed to select the Area, we need to fail the cmdlet
         if ($output -ne $true) {

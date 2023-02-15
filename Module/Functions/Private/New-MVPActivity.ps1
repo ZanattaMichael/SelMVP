@@ -103,7 +103,11 @@ function New-MVPActivity {
 
             if ($invokeTearDown -and (-not $isPreParse)) {
                 # Close the MVP Activity
-                Stop-MVPActivity
+                try {
+                    Stop-MVPActivity
+                } catch {
+                    Write-Warning $_
+                }
             }
 
         } finally {

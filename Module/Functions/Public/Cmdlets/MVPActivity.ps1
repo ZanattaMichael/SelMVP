@@ -232,9 +232,16 @@ MVPActivity is the top-level definition command, which groups the MVP contributi
         foreach($Argument in $ArgumentList) {
 
             $params.ArgumentList = $Argument
-
-            New-MVPActivity @params
-
+            
+            ttry {                
+                New-MVPActivity @params
+            } -catch {
+                Write-Warning "Failed to Add Activity. Retrying."
+                # Refresh the page
+                Enter-SeUrl 'https://mvp.microsoft.com/en-us/MyProfile/EditActivity' -Driver $Global:MVPDriver
+                Start-Sleep -Seconds 5
+            }
+            
         }
 
     } else {
