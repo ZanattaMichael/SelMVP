@@ -233,13 +233,19 @@ MVPActivity is the top-level definition command, which groups the MVP contributi
 
             $params.ArgumentList = $Argument
             
-            ttry {                
+            ttry {
+                
+                #Adding more feedback to the user.
+                Write-Host ("[ADDING] TITLE: '{0}' - DATE: '{1}'" -f $params.ArgumentList.Title, $params.ArgumentList.Date)
                 New-MVPActivity @params
+
             } -catch {
-                Write-Warning "Failed to Add Activity. Retrying."
+
+                Write-Warning "[ERROR] Failed to Add Activity (Most likley to bad Javascript). Retrying."
                 # Refresh the page
                 Enter-SeUrl 'https://mvp.microsoft.com/en-us/MyProfile/EditActivity' -Driver $Global:MVPDriver
                 Start-Sleep -Seconds 5
+
             }
             
         }
