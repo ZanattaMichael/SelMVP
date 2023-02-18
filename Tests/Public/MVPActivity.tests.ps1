@@ -22,7 +22,7 @@ Describe "MVPActivity" {
 
         $null = MVPActivity -CSVPath $CSVPath
         
-        Should -Invoke "Write-Host" -Exactly 1
+        Should -Invoke "Write-Host" -Exactly 3
         Should -Invoke "New-MVPActivity" -Exactly 2
 
     }
@@ -37,6 +37,29 @@ Describe "MVPActivity" {
 
         Should -Not -Invoke 'New-MVPActivity'
         Should -Not -Invoke 'Write-Host'
+
+    }
+
+    it "Should retry multiple times when the 'Add Activity' Form fails." -TestCases $goodTestCases {
+        param($CSVPath)
+
+        Mock -CommandName 'New-MVPActivity' -MockWith { throw "Error" }
+        Mock -CommandName 'Write-Host' -MockWith {}
+        Mock -CommandName 'Write-Warning' -MockWith {}
+        Mock -CommandName 'Enter-SeUrl' -MockWith {}
+        Mock -CommandName 'Start-Sleep' -MockWith {}
+        Mock -CommandName 'Write-Error' -MockWith {}
+
+        $Result = MVPActivity -CSVPath $CSVPath
+
+        $Result | Should -BeNullOrEmpty
+
+        Should -Invoke 'Write-Error' -Times 2
+        Should -Invoke 'New-MVPActivity' -Times 1
+        Should -Invoke 'Write-Host' -Times 1
+        Should -Invoke 'Write-Warning' -Times 1
+        Should -Invoke 'Enter-SeUrl' -Times 1
+        Should -Invoke 'Start-Sleep' -Times 1
 
     }
 
