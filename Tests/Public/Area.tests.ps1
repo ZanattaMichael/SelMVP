@@ -61,7 +61,7 @@ Describe "Area" {
         Global:Get-AreaGlobalMock
         Mock -CommandName "Get-ActivityTypes" -MockWith { Global:Get-ActivityTypesMockedData }
         Mock -CommandName "Select-DropDown" -MockWith {}
-        Mock -CommandName "Wait-ForJavascript" -MockWith {}
+        Mock -CommandName "Find-SeElement" -MockWith { return "MOCK VALUE" }
 
         $Result = Area 'Test'
         
@@ -69,7 +69,7 @@ Describe "Area" {
         Should -Invoke "Test-SEDriver" -Exactly 1
         Should -Invoke "Test-CallStack" -Exactly 1
         Should -Invoke "Get-ActivityTypes" -Exactly 1
-        Should -Invoke "Wait-ForJavascript" -Times 1
+        Should -Invoke "Find-SeElement" -Times 1
         Should -Invoke "Start-Sleep" -Exactly 0
         
     }
@@ -131,17 +131,17 @@ Describe "Area" {
         
     }
 
-    it "Standard Execution however Wait-ForJavascript fails because the form is bad" {
+    it "Standard Execution however the javascript fails (using Find-SeElement) and dosen't add an extra element" {
 
         Global:Get-AreaGlobalMock
         Mock -CommandName "Get-ActivityTypes" -MockWith { Global:Get-ActivityTypesMockedData }
         Mock -CommandName "Select-DropDown" -MockWith {}
-        Mock -CommandName "Wait-ForJavascript" -MockWith { Throw "TestError" }
+        Mock -CommandName "Find-SeElement" -MockWith {}
         Mock -CommandName Write-Error -MockWith {}
 
-        { Area 'Test' } | Should -Throw $LocalizedData.ErrorAreaFailur6e
+        { Area 'Test' } | Should -Throw $LocalizedData.ErrorAreaFailure
         
-        Should -Invoke "Wait-ForJavascript" -Times 1
+        Should -Invoke "Find-SeElement" -Times 1
         Should -Invoke "Select-DropDown" -Times 2
         Should -Invoke "Write-Error" -Times 1
         Should -Invoke "Start-Sleep" -Times 1
