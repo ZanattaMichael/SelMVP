@@ -55,10 +55,7 @@ Function Visibility {
     # Test the Callstack.
     Test-CallStack $PSCmdlet.MyInvocation.MyCommand.Name   
 
-    # Locate the Visability Element.
-    $VisibilityElement = Find-SeElement -Driver ($Global:MVPDriver) -By XPath -Selection $LocalizedData.ElementVisibilityBoxXPath
-    if ($null -eq $VisibilityElement) { return }
-    if ($Name -eq $VisibilityElement.Text) { return }
+    Write-Verbose "[Visibility()] Invoked. Parameter `$Name: $Name"
 
     # Locate the ListItem Permission
     $PermissionsParams = @{
@@ -70,16 +67,39 @@ Function Visibility {
     $sleepTimer = 250
 
     ttry {
+
+        # Locate the Visibility Element.
+        $VisibilityElement = Find-SeElement -Driver ($Global:MVPDriver) -By XPath -Selection $LocalizedData.ElementVisibilityBoxXPath
+
+        Write-Verbose "[Visibility()] `$VisibilityElement isNull: $($null -eq $VisibilityElement)"
+        Write-Verbose "[Visibility()] `$VisibilityElement.Text : $($VisibilityElement.Text)"
+
+        if ($null -eq $VisibilityElement) { return }
+        if ($Name -eq $VisibilityElement.Text) { return }
+
+        Write-Verbose "[Visibility()] Selecting VisibilityElement"
+
         # Select the Element and Select the Correct Item
         Invoke-SeClick -Element $VisibilityElement
-        $PermissionElement = Find-SeElement @PermissionsParams
+
         Start-Sleep -Milliseconds $sleepTimer
-            # Select the DropDown Item
+
+        Write-Verbose "[Visibility()] Finding VisibilityListItem:"
+        $PermissionElement = Find-SeElement @PermissionsParams
+
+        Write-Verbose "[Visibility()] `$VisibilityListItem isNull: $($null -eq $PermissionElement)"
+
+        Start-Sleep -Milliseconds $sleepTimer
+        # Select the DropDown Item
+
+        Write-Verbose "[Visibility()] Selecting Visibility From Dropdown : $Name"
         Invoke-SeClick -Element $PermissionElement
+
     } -catch {
+
         Write-Warning "[ERROR]. Failed to set Visibility. Retrying:"
         $SleepTimer += 100
+
     } -RetryLimit 5
         
 }
-    
